@@ -1,0 +1,7 @@
+build/*
+*.o
+test/out/**/*.o
+test/out/**/*.i
+test/out/**/*.asm
+test/out/*.gb
+node_modules

@@ -1,0 +1,655 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Thu Nov 21 08:53:19 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc631400
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _input_script_ptrs
+                             12 	.globl _scene_height
+                             13 	.globl _scene_width
+                             14 	.globl _shake_time
+                             15 	.globl _wait_time
+                             16 	.globl _camera_speed
+                             17 	.globl _camera_settings
+                             18 	.globl _camera_dest
+                             19 	.globl _await_input
+                             20 	.globl _scene_next_index
+                             21 	.globl _scene_index
+                             22 	.globl _triggers
+                             23 	.globl _actors
+                             24 	.globl _map_next_sprite
+                             25 	.globl _map_next_dir
+                             26 	.globl _map_next_pos
+                             27 	.globl _SceneInit
+                             28 	.globl _SceneUpdate
+                             29 	.globl _SceneSetEmote
+                             30 	.globl _SceneIsEmoting
+                             31 	.globl _SceneCameraAtDest
+                             32 	.globl _SceneRenderActor
+                             33 ;--------------------------------------------------------
+                             34 ; special function registers
+                             35 ;--------------------------------------------------------
+                             36 ;--------------------------------------------------------
+                             37 ; special function bits 
+                             38 ;--------------------------------------------------------
+                             39 ;--------------------------------------------------------
+                             40 ; internal ram data
+                             41 ;--------------------------------------------------------
+                             42 	.area _DATA
+   0000                      43 _map_next_pos::
+   0000                      44 	.ds 2
+   0002                      45 _map_next_dir::
+   0002                      46 	.ds 2
+   0004                      47 _map_next_sprite::
+   0004                      48 	.ds 1
+   0005                      49 _actors::
+   0005                      50 	.ds 242
+   00F7                      51 _triggers::
+   00F7                      52 	.ds 90
+   0151                      53 _scene_index::
+   0151                      54 	.ds 2
+   0153                      55 _scene_next_index::
+   0153                      56 	.ds 2
+   0155                      57 _await_input::
+   0155                      58 	.ds 1
+   0156                      59 _camera_dest::
+   0156                      60 	.ds 2
+   0158                      61 _camera_settings::
+   0158                      62 	.ds 1
+   0159                      63 _camera_speed::
+   0159                      64 	.ds 1
+   015A                      65 _wait_time::
+   015A                      66 	.ds 1
+   015B                      67 _shake_time::
+   015B                      68 	.ds 1
+   015C                      69 _scene_width::
+   015C                      70 	.ds 1
+   015D                      71 _scene_height::
+   015D                      72 	.ds 1
+   015E                      73 _input_script_ptrs::
+   015E                      74 	.ds 24
+                             75 ;--------------------------------------------------------
+                             76 ; overlayable items in internal ram 
+                             77 ;--------------------------------------------------------
+                             78 	.area _OVERLAY
+                             79 ;--------------------------------------------------------
+                             80 ; indirectly addressable internal ram data
+                             81 ;--------------------------------------------------------
+                             82 	.area _ISEG
+                             83 ;--------------------------------------------------------
+                             84 ; bit data
+                             85 ;--------------------------------------------------------
+                             86 	.area _BSEG
+                             87 ;--------------------------------------------------------
+                             88 ; external ram data
+                             89 ;--------------------------------------------------------
+                             90 	.area _XSEG
+                             91 ;--------------------------------------------------------
+                             92 ; global & static initialisations
+                             93 ;--------------------------------------------------------
+                             94 	.area _GSINIT
+                             95 	.area _GSFINAL
+                             96 	.area _GSINIT
+                             97 ;	src/Scene.c 29
+                             98 ;	genAssign
+                             99 ;	AOP_HL for _camera_settings
+   0000 21 58 01            100 	ld	hl,#_camera_settings
+   0003 36 10               101 	ld	(hl),#0x10
+                            102 ;	src/Scene.c 31
+                            103 ;	genAssign
+                            104 ;	AOP_HL for _wait_time
+   0005 21 5A 01            105 	ld	hl,#_wait_time
+   0008 36 00               106 	ld	(hl),#0x00
+                            107 ;	src/Scene.c 32
+                            108 ;	genAssign
+                            109 ;	AOP_HL for _shake_time
+   000A 21 5B 01            110 	ld	hl,#_shake_time
+   000D 36 00               111 	ld	(hl),#0x00
+                            112 ;	src/Scene.c 130
+                            113 ;	genAssign (pointer)
+   000F 11 5E 01            114 	ld	de,#_input_script_ptrs
+   0012 3E 00               115 	ld	a,#0x00
+   0014 12                  116 	ld	(de),a
+                            117 ;--------------------------------------------------------
+                            118 ; Home
+                            119 ;--------------------------------------------------------
+                            120 	.area _HOME
+                            121 	.area _CODE
+                            122 ;--------------------------------------------------------
+                            123 ; code
+                            124 ;--------------------------------------------------------
+                            125 	.area _CODE
+                            126 ;	src/Scene.c 37
+                            127 ;	genLabel
+                            128 ;	genFunction
+                            129 ;	---------------------------------
+                            130 ; Function SceneInit
+                            131 ; ---------------------------------
+   0000                     132 ___SceneInit_start:
+   0000                     133 _SceneInit:
+                            134 	
+                            135 ;	src/Scene.c 39
+                            136 ;	genIpush
+                            137 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            138 ;	AOP_HL for _scene_bank
+   0000 21 00 00            139 	ld	hl,#_scene_bank
+   0003 7E                  140 	ld	a,(hl)
+   0004 F5                  141 	push	af
+   0005 33                  142 	inc	sp
+                            143 ;	genCall
+   0006 CD 00 00            144 	call	_PushBank
+   0009 E8 01               145 	lda	sp,1(sp)
+                            146 ;	src/Scene.c 40
+                            147 ;	genCall
+                            148 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   000B CD 00 00            149 	call	_SceneInit_b1
+                            150 ;	src/Scene.c 41
+                            151 ;	genCall
+                            152 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   000E CD 00 00            153 	call	_PopBank
+                            154 ;	src/Scene.c 42
+                            155 ;	genCall
+                            156 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0011 CD 00 00            157 	call	_gbt_update
+                            158 ;	src/Scene.c 43
+                            159 ;	genCall
+                            160 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0014 CD 00 00            161 	call	_wait_vbl_done
+                            162 ;	src/Scene.c 45
+                            163 ;	genIpush
+                            164 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            165 ;	AOP_HL for _scene_bank
+   0017 21 00 00            166 	ld	hl,#_scene_bank
+   001A 7E                  167 	ld	a,(hl)
+   001B F5                  168 	push	af
+   001C 33                  169 	inc	sp
+                            170 ;	genCall
+   001D CD 00 00            171 	call	_PushBank
+   0020 E8 01               172 	lda	sp,1(sp)
+                            173 ;	src/Scene.c 46
+                            174 ;	genCall
+                            175 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0022 CD 00 00            176 	call	_SceneInit_b2
+                            177 ;	src/Scene.c 47
+                            178 ;	genCall
+                            179 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0025 CD 00 00            180 	call	_PopBank
+                            181 ;	src/Scene.c 48
+                            182 ;	genCall
+                            183 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0028 CD 00 00            184 	call	_gbt_update
+                            185 ;	src/Scene.c 49
+                            186 ;	genCall
+                            187 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   002B CD 00 00            188 	call	_wait_vbl_done
+                            189 ;	src/Scene.c 51
+                            190 ;	genIpush
+                            191 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            192 ;	AOP_HL for _scene_bank
+   002E 21 00 00            193 	ld	hl,#_scene_bank
+   0031 7E                  194 	ld	a,(hl)
+   0032 F5                  195 	push	af
+   0033 33                  196 	inc	sp
+                            197 ;	genCall
+   0034 CD 00 00            198 	call	_PushBank
+   0037 E8 01               199 	lda	sp,1(sp)
+                            200 ;	src/Scene.c 52
+                            201 ;	genCall
+                            202 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0039 CD 00 00            203 	call	_SceneInit_b3
+                            204 ;	src/Scene.c 53
+                            205 ;	genCall
+                            206 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   003C CD 00 00            207 	call	_PopBank
+                            208 ;	src/Scene.c 54
+                            209 ;	genCall
+                            210 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   003F CD 00 00            211 	call	_gbt_update
+                            212 ;	src/Scene.c 55
+                            213 ;	genCall
+                            214 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0042 CD 00 00            215 	call	_wait_vbl_done
+                            216 ;	src/Scene.c 57
+                            217 ;	genIpush
+                            218 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            219 ;	AOP_HL for _scene_bank
+   0045 21 00 00            220 	ld	hl,#_scene_bank
+   0048 7E                  221 	ld	a,(hl)
+   0049 F5                  222 	push	af
+   004A 33                  223 	inc	sp
+                            224 ;	genCall
+   004B CD 00 00            225 	call	_PushBank
+   004E E8 01               226 	lda	sp,1(sp)
+                            227 ;	src/Scene.c 58
+                            228 ;	genCall
+                            229 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0050 CD 00 00            230 	call	_SceneInit_b4
+                            231 ;	src/Scene.c 59
+                            232 ;	genCall
+                            233 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0053 CD 00 00            234 	call	_PopBank
+                            235 ;	src/Scene.c 60
+                            236 ;	genCall
+                            237 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0056 CD 00 00            238 	call	_gbt_update
+                            239 ;	src/Scene.c 61
+                            240 ;	genCall
+                            241 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0059 CD 00 00            242 	call	_wait_vbl_done
+                            243 ;	src/Scene.c 63
+                            244 ;	genIpush
+                            245 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            246 ;	AOP_HL for _scene_bank
+   005C 21 00 00            247 	ld	hl,#_scene_bank
+   005F 7E                  248 	ld	a,(hl)
+   0060 F5                  249 	push	af
+   0061 33                  250 	inc	sp
+                            251 ;	genCall
+   0062 CD 00 00            252 	call	_PushBank
+   0065 E8 01               253 	lda	sp,1(sp)
+                            254 ;	src/Scene.c 64
+                            255 ;	genCall
+                            256 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0067 CD 00 00            257 	call	_SceneInit_b5
+                            258 ;	src/Scene.c 65
+                            259 ;	genCall
+                            260 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   006A CD 00 00            261 	call	_PopBank
+                            262 ;	src/Scene.c 66
+                            263 ;	genCall
+                            264 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   006D CD 00 00            265 	call	_gbt_update
+                            266 ;	src/Scene.c 67
+                            267 ;	genCall
+                            268 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0070 CD 00 00            269 	call	_wait_vbl_done
+                            270 ;	src/Scene.c 69
+                            271 ;	genIpush
+                            272 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            273 ;	AOP_HL for _scene_bank
+   0073 21 00 00            274 	ld	hl,#_scene_bank
+   0076 7E                  275 	ld	a,(hl)
+   0077 F5                  276 	push	af
+   0078 33                  277 	inc	sp
+                            278 ;	genCall
+   0079 CD 00 00            279 	call	_PushBank
+   007C E8 01               280 	lda	sp,1(sp)
+                            281 ;	src/Scene.c 70
+                            282 ;	genCall
+                            283 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   007E CD 00 00            284 	call	_SceneInit_b6
+                            285 ;	src/Scene.c 71
+                            286 ;	genCall
+                            287 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0081 CD 00 00            288 	call	_PopBank
+                            289 ;	src/Scene.c 72
+                            290 ;	genCall
+                            291 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0084 CD 00 00            292 	call	_gbt_update
+                            293 ;	src/Scene.c 73
+                            294 ;	genCall
+                            295 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0087 CD 00 00            296 	call	_wait_vbl_done
+                            297 ;	src/Scene.c 75
+                            298 ;	genIpush
+                            299 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            300 ;	AOP_HL for _scene_bank
+   008A 21 00 00            301 	ld	hl,#_scene_bank
+   008D 7E                  302 	ld	a,(hl)
+   008E F5                  303 	push	af
+   008F 33                  304 	inc	sp
+                            305 ;	genCall
+   0090 CD 00 00            306 	call	_PushBank
+   0093 E8 01               307 	lda	sp,1(sp)
+                            308 ;	src/Scene.c 76
+                            309 ;	genCall
+                            310 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0095 CD 00 00            311 	call	_SceneInit_b7
+                            312 ;	src/Scene.c 77
+                            313 ;	genCall
+                            314 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0098 CD 00 00            315 	call	_PopBank
+                            316 ;	src/Scene.c 78
+                            317 ;	genCall
+                            318 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   009B CD 00 00            319 	call	_gbt_update
+                            320 ;	src/Scene.c 79
+                            321 ;	genCall
+                            322 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   009E CD 00 00            323 	call	_wait_vbl_done
+                            324 ;	src/Scene.c 81
+                            325 ;	genIpush
+                            326 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            327 ;	AOP_HL for _scene_bank
+   00A1 21 00 00            328 	ld	hl,#_scene_bank
+   00A4 7E                  329 	ld	a,(hl)
+   00A5 F5                  330 	push	af
+   00A6 33                  331 	inc	sp
+                            332 ;	genCall
+   00A7 CD 00 00            333 	call	_PushBank
+   00AA E8 01               334 	lda	sp,1(sp)
+                            335 ;	src/Scene.c 82
+                            336 ;	genCall
+                            337 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00AC CD 00 00            338 	call	_SceneInit_b8
+                            339 ;	src/Scene.c 83
+                            340 ;	genCall
+                            341 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00AF CD 00 00            342 	call	_PopBank
+                            343 ;	src/Scene.c 84
+                            344 ;	genCall
+                            345 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00B2 CD 00 00            346 	call	_gbt_update
+                            347 ;	src/Scene.c 85
+                            348 ;	genCall
+                            349 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00B5 CD 00 00            350 	call	_wait_vbl_done
+                            351 ;	src/Scene.c 87
+                            352 ;	genIpush
+                            353 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            354 ;	AOP_HL for _scene_bank
+   00B8 21 00 00            355 	ld	hl,#_scene_bank
+   00BB 7E                  356 	ld	a,(hl)
+   00BC F5                  357 	push	af
+   00BD 33                  358 	inc	sp
+                            359 ;	genCall
+   00BE CD 00 00            360 	call	_PushBank
+   00C1 E8 01               361 	lda	sp,1(sp)
+                            362 ;	src/Scene.c 88
+                            363 ;	genCall
+                            364 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00C3 CD 00 00            365 	call	_SceneInit_b9
+                            366 ;	src/Scene.c 89
+                            367 ;	genCall
+                            368 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00C6 CD 00 00            369 	call	_PopBank
+                            370 ;	genLabel
+   00C9                     371 00101$:
+                            372 ;	genEndFunction
+                            373 	
+   00C9 C9                  374 	ret
+   00CA                     375 ___SceneInit_end:
+                            376 ;	src/Scene.c 92
+                            377 ;	genLabel
+                            378 ;	genFunction
+                            379 ;	---------------------------------
+                            380 ; Function SceneUpdate
+                            381 ; ---------------------------------
+   00CA                     382 ___SceneUpdate_start:
+   00CA                     383 _SceneUpdate:
+                            384 	
+                            385 ;	src/Scene.c 94
+                            386 ;	genIpush
+                            387 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            388 ;	AOP_HL for _scene_bank
+   00CA 21 00 00            389 	ld	hl,#_scene_bank
+   00CD 7E                  390 	ld	a,(hl)
+   00CE F5                  391 	push	af
+   00CF 33                  392 	inc	sp
+                            393 ;	genCall
+   00D0 CD 00 00            394 	call	_PushBank
+   00D3 E8 01               395 	lda	sp,1(sp)
+                            396 ;	src/Scene.c 95
+                            397 ;	genCall
+                            398 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00D5 CD 00 00            399 	call	_SceneUpdate_b
+                            400 ;	src/Scene.c 96
+                            401 ;	genCall
+                            402 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00D8 CD 00 00            403 	call	_PopBank
+                            404 ;	genLabel
+   00DB                     405 00101$:
+                            406 ;	genEndFunction
+                            407 	
+   00DB C9                  408 	ret
+   00DC                     409 ___SceneUpdate_end:
+                            410 ;	src/Scene.c 99
+                            411 ;	genLabel
+                            412 ;	genFunction
+                            413 ;	---------------------------------
+                            414 ; Function SceneSetEmote
+                            415 ; ---------------------------------
+   00DC                     416 ___SceneSetEmote_start:
+   00DC                     417 _SceneSetEmote:
+                            418 	
+                            419 ;	src/Scene.c 101
+                            420 ;	genIpush
+                            421 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            422 ;	AOP_HL for _scene_bank
+   00DC 21 00 00            423 	ld	hl,#_scene_bank
+   00DF 7E                  424 	ld	a,(hl)
+   00E0 F5                  425 	push	af
+   00E1 33                  426 	inc	sp
+                            427 ;	genCall
+   00E2 CD 00 00            428 	call	_PushBank
+   00E5 E8 01               429 	lda	sp,1(sp)
+                            430 ;	src/Scene.c 102
+                            431 ;	genIpush
+                            432 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            433 ;	AOP_STK for 
+   00E7 F8 03               434 	lda	hl,3(sp)
+   00E9 7E                  435 	ld	a,(hl)
+   00EA F5                  436 	push	af
+   00EB 33                  437 	inc	sp
+                            438 ;	genIpush
+                            439 ;	AOP_STK for 
+   00EC 2B                  440 	dec	hl
+   00ED 7E                  441 	ld	a,(hl)
+   00EE F5                  442 	push	af
+   00EF 33                  443 	inc	sp
+                            444 ;	genCall
+   00F0 CD 00 00            445 	call	_SceneSetEmote_b
+   00F3 E8 02               446 	lda	sp,2(sp)
+                            447 ;	src/Scene.c 103
+                            448 ;	genCall
+                            449 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00F5 CD 00 00            450 	call	_PopBank
+                            451 ;	genLabel
+   00F8                     452 00101$:
+                            453 ;	genEndFunction
+                            454 	
+   00F8 C9                  455 	ret
+   00F9                     456 ___SceneSetEmote_end:
+                            457 ;	src/Scene.c 106
+                            458 ;	genLabel
+                            459 ;	genFunction
+                            460 ;	---------------------------------
+                            461 ; Function SceneIsEmoting
+                            462 ; ---------------------------------
+   00F9                     463 ___SceneIsEmoting_start:
+   00F9                     464 _SceneIsEmoting:
+                            465 	
+                            466 ;	src/Scene.c 109
+                            467 ;	genIpush
+                            468 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            469 ;	AOP_HL for _scene_bank
+   00F9 21 00 00            470 	ld	hl,#_scene_bank
+   00FC 7E                  471 	ld	a,(hl)
+   00FD F5                  472 	push	af
+   00FE 33                  473 	inc	sp
+                            474 ;	genCall
+   00FF CD 00 00            475 	call	_PushBank
+   0102 E8 01               476 	lda	sp,1(sp)
+                            477 ;	src/Scene.c 110
+                            478 ;	genCall
+                            479 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0104 CD 00 00            480 	call	_SceneIsEmoting_b
+   0107 4B                  481 	ld	c,e
+                            482 ;	genAssign
+                            483 ;	(registers are the same)
+                            484 ;	src/Scene.c 111
+                            485 ;	genCall
+                            486 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0108 C5                  487 	push	bc
+   0109 CD 00 00            488 	call	_PopBank
+   010C E1                  489 	pop	hl
+   010D 4D                  490 	ld	c,l
+                            491 ;	src/Scene.c 112
+                            492 ;	genRet
+   010E 59                  493 	ld	e,c
+                            494 ;	genLabel
+   010F                     495 00101$:
+                            496 ;	genEndFunction
+                            497 	
+   010F C9                  498 	ret
+   0110                     499 ___SceneIsEmoting_end:
+                            500 ;	src/Scene.c 115
+                            501 ;	genLabel
+                            502 ;	genFunction
+                            503 ;	---------------------------------
+                            504 ; Function SceneCameraAtDest
+                            505 ; ---------------------------------
+   0110                     506 ___SceneCameraAtDest_start:
+   0110                     507 _SceneCameraAtDest:
+                            508 	
+                            509 ;	src/Scene.c 118
+                            510 ;	genIpush
+                            511 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            512 ;	AOP_HL for _scene_bank
+   0110 21 00 00            513 	ld	hl,#_scene_bank
+   0113 7E                  514 	ld	a,(hl)
+   0114 F5                  515 	push	af
+   0115 33                  516 	inc	sp
+                            517 ;	genCall
+   0116 CD 00 00            518 	call	_PushBank
+   0119 E8 01               519 	lda	sp,1(sp)
+                            520 ;	src/Scene.c 119
+                            521 ;	genCall
+                            522 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   011B CD 00 00            523 	call	_SceneCameraAtDest_b
+   011E 4B                  524 	ld	c,e
+                            525 ;	genAssign
+                            526 ;	(registers are the same)
+                            527 ;	src/Scene.c 120
+                            528 ;	genCall
+                            529 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   011F C5                  530 	push	bc
+   0120 CD 00 00            531 	call	_PopBank
+   0123 E1                  532 	pop	hl
+   0124 4D                  533 	ld	c,l
+                            534 ;	src/Scene.c 121
+                            535 ;	genRet
+   0125 59                  536 	ld	e,c
+                            537 ;	genLabel
+   0126                     538 00101$:
+                            539 ;	genEndFunction
+                            540 	
+   0126 C9                  541 	ret
+   0127                     542 ___SceneCameraAtDest_end:
+                            543 ;	src/Scene.c 124
+                            544 ;	genLabel
+                            545 ;	genFunction
+                            546 ;	---------------------------------
+                            547 ; Function SceneRenderActor
+                            548 ; ---------------------------------
+   0127                     549 ___SceneRenderActor_start:
+   0127                     550 _SceneRenderActor:
+                            551 	
+                            552 ;	src/Scene.c 126
+                            553 ;	genIpush
+                            554 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            555 ;	AOP_HL for _scene_bank
+   0127 21 00 00            556 	ld	hl,#_scene_bank
+   012A 7E                  557 	ld	a,(hl)
+   012B F5                  558 	push	af
+   012C 33                  559 	inc	sp
+                            560 ;	genCall
+   012D CD 00 00            561 	call	_PushBank
+   0130 E8 01               562 	lda	sp,1(sp)
+                            563 ;	src/Scene.c 127
+                            564 ;	genIpush
+                            565 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            566 ;	AOP_STK for 
+   0132 F8 02               567 	lda	hl,2(sp)
+   0134 7E                  568 	ld	a,(hl)
+   0135 F5                  569 	push	af
+   0136 33                  570 	inc	sp
+                            571 ;	genCall
+   0137 CD 00 00            572 	call	_SceneRenderActor_b
+   013A E8 01               573 	lda	sp,1(sp)
+                            574 ;	src/Scene.c 128
+                            575 ;	genCall
+                            576 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   013C CD 00 00            577 	call	_PopBank
+                            578 ;	genLabel
+   013F                     579 00101$:
+                            580 ;	genEndFunction
+                            581 	
+   013F C9                  582 	ret
+   0140                     583 ___SceneRenderActor_end:
+                            584 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+    _PopBank                           **** GX
+    _PushBank                          **** GX
+  0 _SceneCameraAtDest                 0110 GR
+    _SceneCameraAtDest_b               **** GX
+  0 _SceneInit                         0000 GR
+    _SceneInit_b1                      **** GX
+    _SceneInit_b2                      **** GX
+    _SceneInit_b3                      **** GX
+    _SceneInit_b4                      **** GX
+    _SceneInit_b5                      **** GX
+    _SceneInit_b6                      **** GX
+    _SceneInit_b7                      **** GX
+    _SceneInit_b8                      **** GX
+    _SceneInit_b9                      **** GX
+  0 _SceneIsEmoting                    00F9 GR
+    _SceneIsEmoting_b                  **** GX
+  0 _SceneRenderActor                  0127 GR
+    _SceneRenderActor_b                **** GX
+  0 _SceneSetEmote                     00DC GR
+    _SceneSetEmote_b                   **** GX
+  0 _SceneUpdate                       00CA GR
+    _SceneUpdate_b                     **** GX
+  0 ___SceneCameraAtDest_end           0127 R
+  0 ___SceneCameraAtDest_start         0110 R
+  0 ___SceneInit_end                   00CA R
+  0 ___SceneInit_start                 0000 R
+  0 ___SceneIsEmoting_end              0110 R
+  0 ___SceneIsEmoting_start            00F9 R
+  0 ___SceneRenderActor_end            0140 R
+  0 ___SceneRenderActor_start          0127 R
+  0 ___SceneSetEmote_end               00F9 R
+  0 ___SceneSetEmote_start             00DC R
+  0 ___SceneUpdate_end                 00DC R
+  0 ___SceneUpdate_start               00CA R
+  1 _actors                            0005 GR
+  1 _await_input                       0155 GR
+  1 _camera_dest                       0156 GR
+  1 _camera_settings                   0158 GR
+  1 _camera_speed                      0159 GR
+    _gbt_update                        **** GX
+  1 _input_script_ptrs                 015E GR
+  1 _map_next_dir                      0002 GR
+  1 _map_next_pos                      0000 GR
+  1 _map_next_sprite                   0004 GR
+    _scene_bank                        **** GX
+  1 _scene_height                      015D GR
+  1 _scene_index                       0151 GR
+  1 _scene_next_index                  0153 GR
+  1 _scene_width                       015C GR
+  1 _shake_time                        015B GR
+  1 _triggers                          00F7 GR
+  1 _wait_time                         015A GR
+    _wait_vbl_done                     **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size  140   flags 0
+   1 _DATA                              size  176   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size   15   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

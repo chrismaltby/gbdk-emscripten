@@ -1,0 +1,483 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Mon Nov 25 14:16:02 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc553250
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _ApplyPaletteChange
+                             12 	.globl _fade_running
+                             13 	.globl _FadeInit
+                             14 	.globl _FadeIn
+                             15 	.globl _FadeOut
+                             16 	.globl _FadeUpdate
+                             17 	.globl _FadeSetSpeed
+                             18 	.globl _IsFading
+                             19 ;--------------------------------------------------------
+                             20 ; special function registers
+                             21 ;--------------------------------------------------------
+                             22 ;--------------------------------------------------------
+                             23 ; special function bits 
+                             24 ;--------------------------------------------------------
+                             25 ;--------------------------------------------------------
+                             26 ; internal ram data
+                             27 ;--------------------------------------------------------
+                             28 	.area _DATA
+   0000                      29 _fade_running::
+   0000                      30 	.ds 1
+   0001                      31 _fade_frame:
+   0001                      32 	.ds 1
+   0002                      33 _fade_frames_per_step:
+   0002                      34 	.ds 1
+   0003                      35 _fade_timer:
+   0003                      36 	.ds 1
+   0004                      37 _fade_direction:
+   0004                      38 	.ds 1
+   0005                      39 _ApplyPaletteChange_sloc0_1_0:
+   0005                      40 	.ds 2
+                             41 ;--------------------------------------------------------
+                             42 ; overlayable items in internal ram 
+                             43 ;--------------------------------------------------------
+                             44 	.area _OVERLAY
+                             45 ;--------------------------------------------------------
+                             46 ; indirectly addressable internal ram data
+                             47 ;--------------------------------------------------------
+                             48 	.area _ISEG
+                             49 ;--------------------------------------------------------
+                             50 ; bit data
+                             51 ;--------------------------------------------------------
+                             52 	.area _BSEG
+                             53 ;--------------------------------------------------------
+                             54 ; external ram data
+                             55 ;--------------------------------------------------------
+                             56 	.area _XSEG
+                             57 ;--------------------------------------------------------
+                             58 ; global & static initialisations
+                             59 ;--------------------------------------------------------
+                             60 	.area _GSINIT
+                             61 	.area _GSFINAL
+                             62 	.area _GSINIT
+                             63 ;--------------------------------------------------------
+                             64 ; Home
+                             65 ;--------------------------------------------------------
+                             66 	.area _HOME
+                             67 	.area _CODE
+                             68 ;--------------------------------------------------------
+                             69 ; code
+                             70 ;--------------------------------------------------------
+                             71 	.area _CODE
+                             72 ;	src/FadeManager.c 17
+                             73 ;	genLabel
+                             74 ;	genFunction
+                             75 ;	---------------------------------
+                             76 ; Function ApplyPaletteChange
+                             77 ; ---------------------------------
+   0000                      78 ___ApplyPaletteChange_start:
+   0000                      79 _ApplyPaletteChange:
+                             80 	
+                             81 ;	src/FadeManager.c 50
+                             82 ;	genAssign
+   0000 01 48 FF             83 	ld	bc,#0xFF48
+                             84 ;	genPlus
+                             85 ;	AOP_STK for 
+                             86 ;	AOP_HL for _ApplyPaletteChange_sloc0_1_0
+                             87 ;	Can't optimise plus by inc, falling back to the normal way
+   0003 11 34 00             88 	ld	de,#_obj_fade_vals
+   0006 F8 02                89 	lda	hl,2(sp)
+   0008 6E                   90 	ld	l,(hl)
+   0009 26 00                91 	ld	h,#0x00
+   000B 19                   92 	add	hl,de
+   000C 7D                   93 	ld	a,l
+   000D 54                   94 	ld	d,h
+   000E 21 05 00             95 	ld	hl,#_ApplyPaletteChange_sloc0_1_0
+                             96 ;	genPointerGet
+                             97 ;	AOP_HL for _ApplyPaletteChange_sloc0_1_0
+   0011 22                   98 	ld	(hl+),a
+   0012 72                   99 	ld	(hl),d
+   0013 5F                  100 	ld	e,a
+   0014 1A                  101 	ld	a,(de)
+                            102 ;	genAssign (pointer)
+   0015 02                  103 	ld	(bc),a
+                            104 ;	src/FadeManager.c 51
+                            105 ;	genAssign
+   0016 01 47 FF            106 	ld	bc,#0xFF47
+                            107 ;	genPlus
+                            108 ;	AOP_STK for 
+                            109 ;	AOP_HL for _ApplyPaletteChange_sloc0_1_0
+                            110 ;	Can't optimise plus by inc, falling back to the normal way
+   0019 11 3A 00            111 	ld	de,#_bgp_fade_vals
+   001C F8 02               112 	lda	hl,2(sp)
+   001E 6E                  113 	ld	l,(hl)
+   001F 26 00               114 	ld	h,#0x00
+   0021 19                  115 	add	hl,de
+   0022 7D                  116 	ld	a,l
+   0023 54                  117 	ld	d,h
+   0024 21 05 00            118 	ld	hl,#_ApplyPaletteChange_sloc0_1_0
+                            119 ;	genPointerGet
+                            120 ;	AOP_HL for _ApplyPaletteChange_sloc0_1_0
+   0027 22                  121 	ld	(hl+),a
+   0028 72                  122 	ld	(hl),d
+   0029 5F                  123 	ld	e,a
+   002A 1A                  124 	ld	a,(de)
+                            125 ;	genAssign (pointer)
+   002B 02                  126 	ld	(bc),a
+                            127 ;	genLabel
+   002C                     128 00101$:
+                            129 ;	genEndFunction
+                            130 	
+   002C C9                  131 	ret
+   002D                     132 ___ApplyPaletteChange_end:
+   002D                     133 _fade_speeds:
+   002D 00                  134 	.db #0x00
+   002E 01                  135 	.db #0x01
+   002F 03                  136 	.db #0x03
+   0030 07                  137 	.db #0x07
+   0031 0F                  138 	.db #0x0F
+   0032 1F                  139 	.db #0x1F
+   0033 3F                  140 	.db #0x3F
+   0034                     141 _obj_fade_vals:
+   0034 00                  142 	.db #0x00
+   0035 00                  143 	.db #0x00
+   0036 42                  144 	.db #0x42
+   0037 82                  145 	.db #0x82
+   0038 D2                  146 	.db #0xD2
+   0039 D2                  147 	.db #0xD2
+   003A                     148 _bgp_fade_vals:
+   003A 00                  149 	.db #0x00
+   003B 00                  150 	.db #0x00
+   003C 40                  151 	.db #0x40
+   003D 90                  152 	.db #0x90
+   003E A4                  153 	.db #0xA4
+   003F E4                  154 	.db #0xE4
+                            155 ;	src/FadeManager.c 55
+                            156 ;	genLabel
+                            157 ;	genFunction
+                            158 ;	---------------------------------
+                            159 ; Function FadeInit
+                            160 ; ---------------------------------
+   0040                     161 ___FadeInit_start:
+   0040                     162 _FadeInit:
+                            163 	
+                            164 ;	src/FadeManager.c 57
+                            165 ;	genPlus
+                            166 ;	genPlusIncr
+   0040 01 2F 00            167 	ld	bc,#_fade_speeds + 2
+                            168 ;	genPointerGet
+                            169 ;	AOP_HL for _fade_frames_per_step
+   0043 0A                  170 	ld	a,(bc)
+   0044 21 02 00            171 	ld	hl,#_fade_frames_per_step
+   0047 77                  172 	ld	(hl),a
+                            173 ;	genLabel
+   0048                     174 00101$:
+                            175 ;	genEndFunction
+                            176 	
+   0048 C9                  177 	ret
+   0049                     178 ___FadeInit_end:
+                            179 ;	src/FadeManager.c 60
+                            180 ;	genLabel
+                            181 ;	genFunction
+                            182 ;	---------------------------------
+                            183 ; Function FadeIn
+                            184 ; ---------------------------------
+   0049                     185 ___FadeIn_start:
+   0049                     186 _FadeIn:
+                            187 	
+                            188 ;	src/FadeManager.c 62
+                            189 ;	genAssign
+                            190 ;	AOP_HL for _fade_frame
+   0049 21 01 00            191 	ld	hl,#_fade_frame
+   004C 36 00               192 	ld	(hl),#0x00
+                            193 ;	src/FadeManager.c 63
+                            194 ;	genAssign
+                            195 ;	AOP_HL for _fade_direction
+   004E 21 04 00            196 	ld	hl,#_fade_direction
+   0051 36 00               197 	ld	(hl),#0x00
+                            198 ;	src/FadeManager.c 64
+                            199 ;	genAssign
+                            200 ;	AOP_HL for _fade_running
+   0053 21 00 00            201 	ld	hl,#_fade_running
+   0056 36 01               202 	ld	(hl),#0x01
+                            203 ;	src/FadeManager.c 65
+                            204 ;	genAssign
+                            205 ;	AOP_HL for _fade_timer
+   0058 21 03 00            206 	ld	hl,#_fade_timer
+   005B 36 00               207 	ld	(hl),#0x00
+                            208 ;	src/FadeManager.c 66
+                            209 ;	genIpush
+                            210 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   005D 3E 00               211 	ld	a,#0x00
+   005F F5                  212 	push	af
+   0060 33                  213 	inc	sp
+                            214 ;	genCall
+   0061 CD 00 00            215 	call	_ApplyPaletteChange
+   0064 E8 01               216 	lda	sp,1(sp)
+                            217 ;	genLabel
+   0066                     218 00101$:
+                            219 ;	genEndFunction
+                            220 	
+   0066 C9                  221 	ret
+   0067                     222 ___FadeIn_end:
+                            223 ;	src/FadeManager.c 69
+                            224 ;	genLabel
+                            225 ;	genFunction
+                            226 ;	---------------------------------
+                            227 ; Function FadeOut
+                            228 ; ---------------------------------
+   0067                     229 ___FadeOut_start:
+   0067                     230 _FadeOut:
+                            231 	
+                            232 ;	src/FadeManager.c 71
+                            233 ;	genAssign
+                            234 ;	AOP_HL for _fade_frame
+   0067 21 01 00            235 	ld	hl,#_fade_frame
+   006A 36 00               236 	ld	(hl),#0x00
+                            237 ;	src/FadeManager.c 72
+                            238 ;	genAssign
+                            239 ;	AOP_HL for _fade_direction
+   006C 21 04 00            240 	ld	hl,#_fade_direction
+   006F 36 01               241 	ld	(hl),#0x01
+                            242 ;	src/FadeManager.c 73
+                            243 ;	genAssign
+                            244 ;	AOP_HL for _fade_running
+   0071 21 00 00            245 	ld	hl,#_fade_running
+   0074 36 01               246 	ld	(hl),#0x01
+                            247 ;	src/FadeManager.c 74
+                            248 ;	genAssign
+                            249 ;	AOP_HL for _fade_timer
+   0076 21 03 00            250 	ld	hl,#_fade_timer
+   0079 36 05               251 	ld	(hl),#0x05
+                            252 ;	src/FadeManager.c 75
+                            253 ;	genIpush
+                            254 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   007B 3E 05               255 	ld	a,#0x05
+   007D F5                  256 	push	af
+   007E 33                  257 	inc	sp
+                            258 ;	genCall
+   007F CD 00 00            259 	call	_ApplyPaletteChange
+   0082 E8 01               260 	lda	sp,1(sp)
+                            261 ;	genLabel
+   0084                     262 00101$:
+                            263 ;	genEndFunction
+                            264 	
+   0084 C9                  265 	ret
+   0085                     266 ___FadeOut_end:
+                            267 ;	src/FadeManager.c 78
+                            268 ;	genLabel
+                            269 ;	genFunction
+                            270 ;	---------------------------------
+                            271 ; Function FadeUpdate
+                            272 ; ---------------------------------
+   0085                     273 ___FadeUpdate_start:
+   0085                     274 _FadeUpdate:
+                            275 	
+                            276 ;	src/FadeManager.c 80
+                            277 ;	genIfx
+                            278 ;	AOP_HL for _fade_running
+   0085 AF                  279 	xor	a,a
+   0086 21 00 00            280 	ld	hl,#_fade_running
+   0089 B6                  281 	or	a,(hl)
+   008A CA E5 00            282 	jp	z,00112$
+                            283 ;	src/FadeManager.c 82
+                            284 ;	genAnd
+                            285 ;	AOP_HL for _fade_frame
+                            286 ;	AOP_HL for _fade_frames_per_step
+   008D 21 01 00            287 	ld	hl,#_fade_frame
+   0090 7E                  288 	ld	a,(hl)
+   0091 21 02 00            289 	ld	hl,#_fade_frames_per_step
+   0094 A6                  290 	and	a,(hl)
+                            291 ;	genCmpEq
+                            292 ; genCmpEq: left 1, right 1, result 0
+   0095 4F                  293 	ld	c,a
+   0096 B7                  294 	or	a,a
+   0097 C2 D6 00            295 	jp	nz,00109$
+   009A 18 03               296 	jr	00120$
+   009C                     297 00119$:
+   009C C3 D6 00            298 	jp	00109$
+   009F                     299 00120$:
+                            300 ;	src/FadeManager.c 84
+                            301 ;	genCmpEq
+                            302 ;	AOP_HL for _fade_direction
+                            303 ; genCmpEq: left 1, right 1, result 0
+   009F 21 04 00            304 	ld	hl,#_fade_direction
+   00A2 7E                  305 	ld	a,(hl)
+   00A3 B7                  306 	or	a,a
+   00A4 C2 C3 00            307 	jp	nz,00106$
+   00A7 18 03               308 	jr	00122$
+   00A9                     309 00121$:
+   00A9 C3 C3 00            310 	jp	00106$
+   00AC                     311 00122$:
+                            312 ;	src/FadeManager.c 86
+                            313 ;	genPlus
+                            314 ;	AOP_HL for _fade_timer
+                            315 ;	genPlusIncr
+   00AC 21 03 00            316 	ld	hl,#_fade_timer
+   00AF 34                  317 	inc	(hl)
+                            318 ;	src/FadeManager.c 87
+                            319 ;	genCmpEq
+                            320 ;	AOP_HL for _fade_timer
+                            321 ; genCmpEq: left 1, right 1, result 0
+   00B0 7E                  322 	ld	a,(hl)
+   00B1 FE 05               323 	cp	a,#0x05
+   00B3 C2 D6 00            324 	jp	nz,00109$
+   00B6 18 03               325 	jr	00124$
+   00B8                     326 00123$:
+   00B8 C3 D6 00            327 	jp	00109$
+   00BB                     328 00124$:
+                            329 ;	src/FadeManager.c 89
+                            330 ;	genAssign
+                            331 ;	AOP_HL for _fade_running
+   00BB 21 00 00            332 	ld	hl,#_fade_running
+   00BE 36 00               333 	ld	(hl),#0x00
+                            334 ;	genGoto
+   00C0 C3 D6 00            335 	jp	00109$
+                            336 ;	genLabel
+   00C3                     337 00106$:
+                            338 ;	src/FadeManager.c 94
+                            339 ;	genMinus
+                            340 ;	AOP_HL for _fade_timer
+   00C3 21 03 00            341 	ld	hl,#_fade_timer
+   00C6 35                  342 	dec	(hl)
+                            343 ;	src/FadeManager.c 95
+                            344 ;	genCmpEq
+                            345 ;	AOP_HL for _fade_timer
+                            346 ; genCmpEq: left 1, right 1, result 0
+   00C7 7E                  347 	ld	a,(hl)
+   00C8 B7                  348 	or	a,a
+   00C9 C2 D6 00            349 	jp	nz,00109$
+   00CC 18 03               350 	jr	00126$
+   00CE                     351 00125$:
+   00CE C3 D6 00            352 	jp	00109$
+   00D1                     353 00126$:
+                            354 ;	src/FadeManager.c 97
+                            355 ;	genAssign
+                            356 ;	AOP_HL for _fade_running
+   00D1 21 00 00            357 	ld	hl,#_fade_running
+   00D4 36 00               358 	ld	(hl),#0x00
+                            359 ;	genLabel
+   00D6                     360 00109$:
+                            361 ;	src/FadeManager.c 102
+                            362 ;	genIpush
+                            363 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            364 ;	AOP_HL for _fade_timer
+   00D6 21 03 00            365 	ld	hl,#_fade_timer
+   00D9 7E                  366 	ld	a,(hl)
+   00DA F5                  367 	push	af
+   00DB 33                  368 	inc	sp
+                            369 ;	genCall
+   00DC CD 00 00            370 	call	_ApplyPaletteChange
+   00DF E8 01               371 	lda	sp,1(sp)
+                            372 ;	src/FadeManager.c 103
+                            373 ;	genPlus
+                            374 ;	AOP_HL for _fade_frame
+                            375 ;	genPlusIncr
+   00E1 21 01 00            376 	ld	hl,#_fade_frame
+   00E4 34                  377 	inc	(hl)
+                            378 ;	genLabel
+   00E5                     379 00112$:
+                            380 ;	genEndFunction
+                            381 	
+   00E5 C9                  382 	ret
+   00E6                     383 ___FadeUpdate_end:
+                            384 ;	src/FadeManager.c 107
+                            385 ;	genLabel
+                            386 ;	genFunction
+                            387 ;	---------------------------------
+                            388 ; Function FadeSetSpeed
+                            389 ; ---------------------------------
+   00E6                     390 ___FadeSetSpeed_start:
+   00E6                     391 _FadeSetSpeed:
+                            392 	
+                            393 ;	src/FadeManager.c 109
+                            394 ;	genPlus
+                            395 ;	AOP_STK for 
+                            396 ;	Can't optimise plus by inc, falling back to the normal way
+   00E6 11 2D 00            397 	ld	de,#_fade_speeds
+   00E9 F8 02               398 	lda	hl,2(sp)
+   00EB 6E                  399 	ld	l,(hl)
+   00EC 26 00               400 	ld	h,#0x00
+   00EE 19                  401 	add	hl,de
+   00EF 4D                  402 	ld	c,l
+   00F0 44                  403 	ld	b,h
+                            404 ;	genPointerGet
+                            405 ;	AOP_HL for _fade_frames_per_step
+   00F1 0A                  406 	ld	a,(bc)
+   00F2 21 02 00            407 	ld	hl,#_fade_frames_per_step
+   00F5 77                  408 	ld	(hl),a
+                            409 ;	genLabel
+   00F6                     410 00101$:
+                            411 ;	genEndFunction
+                            412 	
+   00F6 C9                  413 	ret
+   00F7                     414 ___FadeSetSpeed_end:
+                            415 ;	src/FadeManager.c 112
+                            416 ;	genLabel
+                            417 ;	genFunction
+                            418 ;	---------------------------------
+                            419 ; Function IsFading
+                            420 ; ---------------------------------
+   00F7                     421 ___IsFading_start:
+   00F7                     422 _IsFading:
+                            423 	
+                            424 ;	src/FadeManager.c 114
+                            425 ;	genRet
+                            426 ;	AOP_HL for _fade_running
+   00F7 21 00 00            427 	ld	hl,#_fade_running
+   00FA 5E                  428 	ld	e,(hl)
+                            429 ;	genLabel
+   00FB                     430 00101$:
+                            431 ;	genEndFunction
+                            432 	
+   00FB C9                  433 	ret
+   00FC                     434 ___IsFading_end:
+                            435 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+  0 _ApplyPaletteChange                0000 GR
+  1 _ApplyPaletteChange_sloc0_1_0      0005 R
+  0 _FadeIn                            0049 GR
+  0 _FadeInit                          0040 GR
+  0 _FadeOut                           0067 GR
+  0 _FadeSetSpeed                      00E6 GR
+  0 _FadeUpdate                        0085 GR
+  0 _IsFading                          00F7 GR
+  0 ___ApplyPaletteChange_end          002D R
+  0 ___ApplyPaletteChange_start        0000 R
+  0 ___FadeIn_end                      0067 R
+  0 ___FadeIn_start                    0049 R
+  0 ___FadeInit_end                    0049 R
+  0 ___FadeInit_start                  0040 R
+  0 ___FadeOut_end                     0085 R
+  0 ___FadeOut_start                   0067 R
+  0 ___FadeSetSpeed_end                00F7 R
+  0 ___FadeSetSpeed_start              00E6 R
+  0 ___FadeUpdate_end                  00E6 R
+  0 ___FadeUpdate_start                0085 R
+  0 ___IsFading_end                    00FC R
+  0 ___IsFading_start                  00F7 R
+  0 _bgp_fade_vals                     003A R
+  1 _fade_direction                    0004 R
+  1 _fade_frame                        0001 R
+  1 _fade_frames_per_step              0002 R
+  1 _fade_running                      0000 GR
+  0 _fade_speeds                       002D R
+  1 _fade_timer                        0003 R
+  0 _obj_fade_vals                     0034 R
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size   FC   flags 0
+   1 _DATA                              size    7   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size    0   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

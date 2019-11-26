@@ -1,0 +1,14 @@
+-muxi
+-b CODE_3 = 0x0200
+-b DATA = 0xc000
+-b XSEG = 0x0000
+-b ISEG = 0x0080
+-b BSEG = 0x0000
+-k /opt/gbdk/share/sdcc/lib/small
+-l libsdcc
+-l libint
+-l liblong
+-l libfloat
+-l ang-c++
+/Users/cmaltby/Desktop/gbdk-mac/test/test2_gbstudio/src/Scene_b 
+-e

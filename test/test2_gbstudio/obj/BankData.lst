@@ -1,0 +1,727 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Mon Nov 25 14:16:01 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc552970
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _SetBankedBkgData
+                             12 	.globl _SetBankedBkgTiles
+                             13 	.globl _SetBankedWinTiles
+                             14 	.globl _SetBankedSpriteData
+                             15 	.globl _ReadBankedUBYTE
+                             16 	.globl _ReadBankedUBYTEArray
+                             17 	.globl _ReadBankedUWORD
+                             18 	.globl _StrCpyBanked
+                             19 	.globl _ReadBankedBankPtr
+                             20 ;--------------------------------------------------------
+                             21 ; special function registers
+                             22 ;--------------------------------------------------------
+                             23 ;--------------------------------------------------------
+                             24 ; special function bits 
+                             25 ;--------------------------------------------------------
+                             26 ;--------------------------------------------------------
+                             27 ; internal ram data
+                             28 ;--------------------------------------------------------
+                             29 	.area _DATA
+                             30 ;--------------------------------------------------------
+                             31 ; overlayable items in internal ram 
+                             32 ;--------------------------------------------------------
+                             33 	.area _OVERLAY
+                             34 ;--------------------------------------------------------
+                             35 ; indirectly addressable internal ram data
+                             36 ;--------------------------------------------------------
+                             37 	.area _ISEG
+                             38 ;--------------------------------------------------------
+                             39 ; bit data
+                             40 ;--------------------------------------------------------
+                             41 	.area _BSEG
+                             42 ;--------------------------------------------------------
+                             43 ; external ram data
+                             44 ;--------------------------------------------------------
+                             45 	.area _XSEG
+                             46 ;--------------------------------------------------------
+                             47 ; global & static initialisations
+                             48 ;--------------------------------------------------------
+                             49 	.area _GSINIT
+                             50 	.area _GSFINAL
+                             51 	.area _GSINIT
+                             52 ;--------------------------------------------------------
+                             53 ; Home
+                             54 ;--------------------------------------------------------
+                             55 	.area _HOME
+                             56 	.area _CODE
+                             57 ;--------------------------------------------------------
+                             58 ; code
+                             59 ;--------------------------------------------------------
+                             60 	.area _CODE
+                             61 ;	src/BankData.c 5
+                             62 ;	genLabel
+                             63 ;	genFunction
+                             64 ;	---------------------------------
+                             65 ; Function SetBankedBkgData
+                             66 ; ---------------------------------
+   0000                      67 ___SetBankedBkgData_start:
+   0000                      68 _SetBankedBkgData:
+                             69 	
+                             70 ;	src/BankData.c 7
+                             71 ;	genIpush
+                             72 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                             73 ;	AOP_STK for 
+   0000 F8 02                74 	lda	hl,2(sp)
+   0002 7E                   75 	ld	a,(hl)
+   0003 F5                   76 	push	af
+   0004 33                   77 	inc	sp
+                             78 ;	genCall
+   0005 CD 00 00             79 	call	_PushBank
+   0008 E8 01                80 	lda	sp,1(sp)
+                             81 ;	src/BankData.c 8
+                             82 ;	genIpush
+                             83 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                             84 ;	AOP_STK for 
+   000A F8 05                85 	lda	hl,5(sp)
+   000C 2A                   86 	ld	a,(hl+)
+   000D 66                   87 	ld	h,(hl)
+   000E 6F                   88 	ld	l,a
+   000F E5                   89 	push	hl
+                             90 ;	genIpush
+                             91 ;	AOP_STK for 
+   0010 F8 06                92 	lda	hl,6(sp)
+   0012 7E                   93 	ld	a,(hl)
+   0013 F5                   94 	push	af
+   0014 33                   95 	inc	sp
+                             96 ;	genIpush
+                             97 ;	AOP_STK for 
+   0015 2B                   98 	dec	hl
+   0016 7E                   99 	ld	a,(hl)
+   0017 F5                  100 	push	af
+   0018 33                  101 	inc	sp
+                            102 ;	genCall
+   0019 CD 00 00            103 	call	_set_bkg_data
+   001C E8 04               104 	lda	sp,4(sp)
+                            105 ;	src/BankData.c 9
+                            106 ;	genCall
+                            107 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   001E CD 00 00            108 	call	_PopBank
+                            109 ;	genLabel
+   0021                     110 00101$:
+                            111 ;	genEndFunction
+                            112 	
+   0021 C9                  113 	ret
+   0022                     114 ___SetBankedBkgData_end:
+                            115 ;	src/BankData.c 12
+                            116 ;	genLabel
+                            117 ;	genFunction
+                            118 ;	---------------------------------
+                            119 ; Function SetBankedBkgTiles
+                            120 ; ---------------------------------
+   0022                     121 ___SetBankedBkgTiles_start:
+   0022                     122 _SetBankedBkgTiles:
+                            123 	
+                            124 ;	src/BankData.c 15
+                            125 ;	genIpush
+                            126 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            127 ;	AOP_STK for 
+   0022 F8 02               128 	lda	hl,2(sp)
+   0024 7E                  129 	ld	a,(hl)
+   0025 F5                  130 	push	af
+   0026 33                  131 	inc	sp
+                            132 ;	genCall
+   0027 CD 00 00            133 	call	_PushBank
+   002A E8 01               134 	lda	sp,1(sp)
+                            135 ;	src/BankData.c 16
+                            136 ;	genIpush
+                            137 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            138 ;	AOP_STK for 
+   002C F8 07               139 	lda	hl,7(sp)
+   002E 2A                  140 	ld	a,(hl+)
+   002F 66                  141 	ld	h,(hl)
+   0030 6F                  142 	ld	l,a
+   0031 E5                  143 	push	hl
+                            144 ;	genIpush
+                            145 ;	AOP_STK for 
+   0032 F8 08               146 	lda	hl,8(sp)
+   0034 7E                  147 	ld	a,(hl)
+   0035 F5                  148 	push	af
+   0036 33                  149 	inc	sp
+                            150 ;	genIpush
+                            151 ;	AOP_STK for 
+   0037 2B                  152 	dec	hl
+   0038 7E                  153 	ld	a,(hl)
+   0039 F5                  154 	push	af
+   003A 33                  155 	inc	sp
+                            156 ;	genIpush
+                            157 ;	AOP_STK for 
+   003B 2B                  158 	dec	hl
+   003C 7E                  159 	ld	a,(hl)
+   003D F5                  160 	push	af
+   003E 33                  161 	inc	sp
+                            162 ;	genIpush
+                            163 ;	AOP_STK for 
+   003F 2B                  164 	dec	hl
+   0040 7E                  165 	ld	a,(hl)
+   0041 F5                  166 	push	af
+   0042 33                  167 	inc	sp
+                            168 ;	genCall
+   0043 CD 00 00            169 	call	_set_bkg_tiles
+   0046 E8 06               170 	lda	sp,6(sp)
+                            171 ;	src/BankData.c 17
+                            172 ;	genCall
+                            173 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0048 CD 00 00            174 	call	_PopBank
+                            175 ;	genLabel
+   004B                     176 00101$:
+                            177 ;	genEndFunction
+                            178 	
+   004B C9                  179 	ret
+   004C                     180 ___SetBankedBkgTiles_end:
+                            181 ;	src/BankData.c 20
+                            182 ;	genLabel
+                            183 ;	genFunction
+                            184 ;	---------------------------------
+                            185 ; Function SetBankedWinTiles
+                            186 ; ---------------------------------
+   004C                     187 ___SetBankedWinTiles_start:
+   004C                     188 _SetBankedWinTiles:
+                            189 	
+                            190 ;	src/BankData.c 23
+                            191 ;	genIpush
+                            192 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            193 ;	AOP_STK for 
+   004C F8 02               194 	lda	hl,2(sp)
+   004E 7E                  195 	ld	a,(hl)
+   004F F5                  196 	push	af
+   0050 33                  197 	inc	sp
+                            198 ;	genCall
+   0051 CD 00 00            199 	call	_PushBank
+   0054 E8 01               200 	lda	sp,1(sp)
+                            201 ;	src/BankData.c 24
+                            202 ;	genIpush
+                            203 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            204 ;	AOP_STK for 
+   0056 F8 07               205 	lda	hl,7(sp)
+   0058 2A                  206 	ld	a,(hl+)
+   0059 66                  207 	ld	h,(hl)
+   005A 6F                  208 	ld	l,a
+   005B E5                  209 	push	hl
+                            210 ;	genIpush
+                            211 ;	AOP_STK for 
+   005C F8 08               212 	lda	hl,8(sp)
+   005E 7E                  213 	ld	a,(hl)
+   005F F5                  214 	push	af
+   0060 33                  215 	inc	sp
+                            216 ;	genIpush
+                            217 ;	AOP_STK for 
+   0061 2B                  218 	dec	hl
+   0062 7E                  219 	ld	a,(hl)
+   0063 F5                  220 	push	af
+   0064 33                  221 	inc	sp
+                            222 ;	genIpush
+                            223 ;	AOP_STK for 
+   0065 2B                  224 	dec	hl
+   0066 7E                  225 	ld	a,(hl)
+   0067 F5                  226 	push	af
+   0068 33                  227 	inc	sp
+                            228 ;	genIpush
+                            229 ;	AOP_STK for 
+   0069 2B                  230 	dec	hl
+   006A 7E                  231 	ld	a,(hl)
+   006B F5                  232 	push	af
+   006C 33                  233 	inc	sp
+                            234 ;	genCall
+   006D CD 00 00            235 	call	_set_win_tiles
+   0070 E8 06               236 	lda	sp,6(sp)
+                            237 ;	src/BankData.c 25
+                            238 ;	genCall
+                            239 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0072 CD 00 00            240 	call	_PopBank
+                            241 ;	genLabel
+   0075                     242 00101$:
+                            243 ;	genEndFunction
+                            244 	
+   0075 C9                  245 	ret
+   0076                     246 ___SetBankedWinTiles_end:
+                            247 ;	src/BankData.c 28
+                            248 ;	genLabel
+                            249 ;	genFunction
+                            250 ;	---------------------------------
+                            251 ; Function SetBankedSpriteData
+                            252 ; ---------------------------------
+   0076                     253 ___SetBankedSpriteData_start:
+   0076                     254 _SetBankedSpriteData:
+                            255 	
+                            256 ;	src/BankData.c 30
+                            257 ;	genIpush
+                            258 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            259 ;	AOP_STK for 
+   0076 F8 02               260 	lda	hl,2(sp)
+   0078 7E                  261 	ld	a,(hl)
+   0079 F5                  262 	push	af
+   007A 33                  263 	inc	sp
+                            264 ;	genCall
+   007B CD 00 00            265 	call	_PushBank
+   007E E8 01               266 	lda	sp,1(sp)
+                            267 ;	src/BankData.c 31
+                            268 ;	genIpush
+                            269 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            270 ;	AOP_STK for 
+   0080 F8 05               271 	lda	hl,5(sp)
+   0082 2A                  272 	ld	a,(hl+)
+   0083 66                  273 	ld	h,(hl)
+   0084 6F                  274 	ld	l,a
+   0085 E5                  275 	push	hl
+                            276 ;	genIpush
+                            277 ;	AOP_STK for 
+   0086 F8 06               278 	lda	hl,6(sp)
+   0088 7E                  279 	ld	a,(hl)
+   0089 F5                  280 	push	af
+   008A 33                  281 	inc	sp
+                            282 ;	genIpush
+                            283 ;	AOP_STK for 
+   008B 2B                  284 	dec	hl
+   008C 7E                  285 	ld	a,(hl)
+   008D F5                  286 	push	af
+   008E 33                  287 	inc	sp
+                            288 ;	genCall
+   008F CD 00 00            289 	call	_set_sprite_data
+   0092 E8 04               290 	lda	sp,4(sp)
+                            291 ;	src/BankData.c 32
+                            292 ;	genCall
+                            293 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0094 CD 00 00            294 	call	_PopBank
+                            295 ;	genLabel
+   0097                     296 00101$:
+                            297 ;	genEndFunction
+                            298 	
+   0097 C9                  299 	ret
+   0098                     300 ___SetBankedSpriteData_end:
+                            301 ;	src/BankData.c 35
+                            302 ;	genLabel
+                            303 ;	genFunction
+                            304 ;	---------------------------------
+                            305 ; Function ReadBankedUBYTE
+                            306 ; ---------------------------------
+   0098                     307 ___ReadBankedUBYTE_start:
+   0098                     308 _ReadBankedUBYTE:
+                            309 	
+                            310 ;	src/BankData.c 38
+                            311 ;	genIpush
+                            312 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            313 ;	AOP_STK for 
+   0098 F8 02               314 	lda	hl,2(sp)
+   009A 7E                  315 	ld	a,(hl)
+   009B F5                  316 	push	af
+   009C 33                  317 	inc	sp
+                            318 ;	genCall
+   009D CD 00 00            319 	call	_PushBank
+   00A0 E8 01               320 	lda	sp,1(sp)
+                            321 ;	src/BankData.c 39
+                            322 ;	genAssign
+                            323 ;	AOP_STK for 
+   00A2 F8 03               324 	lda	hl,3(sp)
+   00A4 4E                  325 	ld	c,(hl)
+   00A5 23                  326 	inc	hl
+   00A6 46                  327 	ld	b,(hl)
+                            328 ;	genPointerGet
+   00A7 0A                  329 	ld	a,(bc)
+   00A8 4F                  330 	ld	c,a
+                            331 ;	genAssign
+                            332 ;	(registers are the same)
+                            333 ;	src/BankData.c 40
+                            334 ;	genCall
+                            335 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   00A9 C5                  336 	push	bc
+   00AA CD 00 00            337 	call	_PopBank
+   00AD E1                  338 	pop	hl
+   00AE 4D                  339 	ld	c,l
+                            340 ;	src/BankData.c 41
+                            341 ;	genRet
+   00AF 59                  342 	ld	e,c
+                            343 ;	genLabel
+   00B0                     344 00101$:
+                            345 ;	genEndFunction
+                            346 	
+   00B0 C9                  347 	ret
+   00B1                     348 ___ReadBankedUBYTE_end:
+                            349 ;	src/BankData.c 44
+                            350 ;	genLabel
+                            351 ;	genFunction
+                            352 ;	---------------------------------
+                            353 ; Function ReadBankedUBYTEArray
+                            354 ; ---------------------------------
+   00B1                     355 ___ReadBankedUBYTEArray_start:
+   00B1                     356 _ReadBankedUBYTEArray:
+   00B1 E8 FE               357 	lda	sp,-2(sp)
+                            358 ;	src/BankData.c 46
+                            359 ;	genIpush
+                            360 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            361 ;	AOP_STK for 
+   00B3 F8 04               362 	lda	hl,4(sp)
+   00B5 7E                  363 	ld	a,(hl)
+   00B6 F5                  364 	push	af
+   00B7 33                  365 	inc	sp
+                            366 ;	genCall
+   00B8 CD 00 00            367 	call	_PushBank
+   00BB E8 01               368 	lda	sp,1(sp)
+                            369 ;	src/BankData.c 48
+                            370 ;	genCast
+                            371 ;	AOP_STK for 
+                            372 ;	AOP_STK for _ReadBankedUBYTEArray_sloc0_1_0
+   00BD F8 09               373 	lda	hl,9(sp)
+   00BF 7E                  374 	ld	a,(hl)
+   00C0 F8 00               375 	lda	hl,0(sp)
+   00C2 77                  376 	ld	(hl),a
+   00C3 F8 09               377 	lda	hl,9(sp)
+   00C5 7E                  378 	ld	a,(hl)
+   00C6 17                  379 	rla	
+   00C7 9F                  380 	sbc	a,a
+   00C8 F8 01               381 	lda	hl,1(sp)
+   00CA 77                  382 	ld	(hl),a
+                            383 ;	genAssign
+                            384 ;	(operands are equal 3)
+                            385 ;	genAddrOf
+   00CB F8 05               386 	lda	hl,5(sp)
+   00CD 4D                  387 	ld	c,l
+   00CE 44                  388 	ld	b,h
+                            389 ;	genIpush
+                            390 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            391 ;	AOP_STK for _ReadBankedUBYTEArray_sloc0_1_0
+   00CF F8 00               392 	lda	hl,0(sp)
+   00D1 2A                  393 	ld	a,(hl+)
+   00D2 66                  394 	ld	h,(hl)
+   00D3 6F                  395 	ld	l,a
+   00D4 E5                  396 	push	hl
+                            397 ;	genIpush
+                            398 ;	AOP_STK for 
+   00D5 F8 09               399 	lda	hl,9(sp)
+   00D7 2A                  400 	ld	a,(hl+)
+   00D8 66                  401 	ld	h,(hl)
+   00D9 6F                  402 	ld	l,a
+   00DA E5                  403 	push	hl
+                            404 ;	genIpush
+   00DB C5                  405 	push	bc
+                            406 ;	genCall
+   00DC CD 00 00            407 	call	_memcpy
+   00DF E8 06               408 	lda	sp,6(sp)
+                            409 ;	src/BankData.c 50
+                            410 ;	genCall
+                            411 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00E1 CD 00 00            412 	call	_PopBank
+                            413 ;	genLabel
+   00E4                     414 00101$:
+                            415 ;	genEndFunction
+   00E4 E8 02               416 	lda	sp,2(sp)
+   00E6 C9                  417 	ret
+   00E7                     418 ___ReadBankedUBYTEArray_end:
+                            419 ;	src/BankData.c 53
+                            420 ;	genLabel
+                            421 ;	genFunction
+                            422 ;	---------------------------------
+                            423 ; Function ReadBankedUWORD
+                            424 ; ---------------------------------
+   00E7                     425 ___ReadBankedUWORD_start:
+   00E7                     426 _ReadBankedUWORD:
+   00E7 E8 FC               427 	lda	sp,-4(sp)
+                            428 ;	src/BankData.c 57
+                            429 ;	genIpush
+                            430 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            431 ;	AOP_STK for 
+   00E9 F8 06               432 	lda	hl,6(sp)
+   00EB 7E                  433 	ld	a,(hl)
+   00EC F5                  434 	push	af
+   00ED 33                  435 	inc	sp
+                            436 ;	genCall
+   00EE CD 00 00            437 	call	_PushBank
+   00F1 E8 01               438 	lda	sp,1(sp)
+                            439 ;	src/BankData.c 58
+                            440 ;	genAssign
+                            441 ;	AOP_STK for 
+   00F3 F8 07               442 	lda	hl,7(sp)
+   00F5 4E                  443 	ld	c,(hl)
+   00F6 23                  444 	inc	hl
+   00F7 46                  445 	ld	b,(hl)
+                            446 ;	genPointerGet
+                            447 ;	AOP_STK for _ReadBankedUWORD_hi_1_1
+   00F8 0A                  448 	ld	a,(bc)
+   00F9 F8 03               449 	lda	hl,3(sp)
+   00FB 77                  450 	ld	(hl),a
+                            451 ;	genAssign
+                            452 ;	AOP_STK for _ReadBankedUWORD_hi_1_1
+                            453 ;	(registers are the same)
+                            454 ;	src/BankData.c 59
+                            455 ;	genPlus
+                            456 ;	genPlusIncr
+   00FC 03                  457 	inc	bc
+                            458 ;	genPointerGet
+   00FD 0A                  459 	ld	a,(bc)
+   00FE 4F                  460 	ld	c,a
+                            461 ;	genAssign
+                            462 ;	AOP_STK for _ReadBankedUWORD_lo_1_1
+   00FF 2B                  463 	dec	hl
+   0100 71                  464 	ld	(hl),c
+                            465 ;	src/BankData.c 60
+                            466 ;	genMult
+                            467 ;	AOP_STK for _ReadBankedUWORD_hi_1_1
+   0101 23                  468 	inc	hl
+   0102 5E                  469 	ld	e,(hl)
+   0103 16 00               470 	ld	d,#0x00
+   0105 6B                  471 	ld	l,e
+   0106 62                  472 	ld	h,d
+   0107 29                  473 	add	hl,hl
+   0108 19                  474 	add	hl,de
+   0109 29                  475 	add	hl,hl
+   010A 19                  476 	add	hl,de
+   010B 29                  477 	add	hl,hl
+   010C 19                  478 	add	hl,de
+   010D 29                  479 	add	hl,hl
+   010E 19                  480 	add	hl,de
+   010F 29                  481 	add	hl,hl
+   0110 19                  482 	add	hl,de
+   0111 29                  483 	add	hl,hl
+   0112 19                  484 	add	hl,de
+   0113 29                  485 	add	hl,hl
+   0114 19                  486 	add	hl,de
+   0115 45                  487 	ld	b,l
+   0116 4C                  488 	ld	c,h
+                            489 ;	genCast
+                            490 ;	AOP_STK for _ReadBankedUWORD_lo_1_1
+                            491 ;	AOP_STK for _ReadBankedUWORD_sloc0_1_0
+   0117 F8 02               492 	lda	hl,2(sp)
+   0119 7E                  493 	ld	a,(hl)
+   011A 2B                  494 	dec	hl
+   011B 2B                  495 	dec	hl
+   011C 22                  496 	ld	(hl+),a
+   011D 36 00               497 	ld	(hl),#0x00
+                            498 ;	genPlus
+                            499 ;	AOP_STK for _ReadBankedUWORD_sloc0_1_0
+                            500 ;	Can't optimise plus by inc, falling back to the normal way
+   011F 58                  501 	ld	e,b
+   0120 51                  502 	ld	d,c
+   0121 2B                  503 	dec	hl
+   0122 2A                  504 	ld	a,(hl+)
+   0123 66                  505 	ld	h,(hl)
+   0124 6F                  506 	ld	l,a
+   0125 19                  507 	add	hl,de
+   0126 45                  508 	ld	b,l
+   0127 4C                  509 	ld	c,h
+                            510 ;	genAssign
+                            511 ;	(registers are the same)
+                            512 ;	src/BankData.c 61
+                            513 ;	genCall
+                            514 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0128 C5                  515 	push	bc
+   0129 CD 00 00            516 	call	_PopBank
+   012C C1                  517 	pop	bc
+                            518 ;	src/BankData.c 62
+                            519 ;	genRet
+   012D 58                  520 	ld	e,b
+   012E 51                  521 	ld	d,c
+                            522 ;	genLabel
+   012F                     523 00101$:
+                            524 ;	genEndFunction
+   012F E8 04               525 	lda	sp,4(sp)
+   0131 C9                  526 	ret
+   0132                     527 ___ReadBankedUWORD_end:
+                            528 ;	src/BankData.c 65
+                            529 ;	genLabel
+                            530 ;	genFunction
+                            531 ;	---------------------------------
+                            532 ; Function StrCpyBanked
+                            533 ; ---------------------------------
+   0132                     534 ___StrCpyBanked_start:
+   0132                     535 _StrCpyBanked:
+   0132 E8 EE               536 	lda	sp,-18(sp)
+                            537 ;	src/BankData.c 68
+                            538 ;	genIpush
+                            539 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            540 ;	AOP_STK for 
+   0134 F8 14               541 	lda	hl,20(sp)
+   0136 7E                  542 	ld	a,(hl)
+   0137 F5                  543 	push	af
+   0138 33                  544 	inc	sp
+                            545 ;	genCall
+   0139 CD 00 00            546 	call	_PushBank
+   013C E8 01               547 	lda	sp,1(sp)
+                            548 ;	src/BankData.c 69
+                            549 ;	genAssign
+                            550 ;	(operands are equal 3)
+                            551 ;	genAddrOf
+   013E F8 00               552 	lda	hl,0(sp)
+   0140 4D                  553 	ld	c,l
+   0141 44                  554 	ld	b,h
+                            555 ;	genIpush
+                            556 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0142 C5                  557 	push	bc
+                            558 ;	AOP_STK for 
+   0143 F8 19               559 	lda	hl,25(sp)
+   0145 2A                  560 	ld	a,(hl+)
+   0146 66                  561 	ld	h,(hl)
+   0147 6F                  562 	ld	l,a
+   0148 E5                  563 	push	hl
+                            564 ;	genIpush
+   0149 C5                  565 	push	bc
+                            566 ;	genCall
+   014A CD 00 00            567 	call	_strcpy
+   014D E8 04               568 	lda	sp,4(sp)
+   014F C1                  569 	pop	bc
+                            570 ;	src/BankData.c 70
+                            571 ;	genCall
+                            572 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0150 C5                  573 	push	bc
+   0151 CD 00 00            574 	call	_PopBank
+   0154 C1                  575 	pop	bc
+                            576 ;	src/BankData.c 71
+                            577 ;	genAssign
+                            578 ;	(operands are equal 3)
+                            579 ;	genIpush
+                            580 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0155 C5                  581 	push	bc
+                            582 ;	genIpush
+                            583 ;	AOP_STK for 
+   0156 F8 17               584 	lda	hl,23(sp)
+   0158 2A                  585 	ld	a,(hl+)
+   0159 66                  586 	ld	h,(hl)
+   015A 6F                  587 	ld	l,a
+   015B E5                  588 	push	hl
+                            589 ;	genCall
+   015C CD 00 00            590 	call	_strcpy
+   015F E8 04               591 	lda	sp,4(sp)
+                            592 ;	genLabel
+   0161                     593 00101$:
+                            594 ;	genEndFunction
+   0161 E8 12               595 	lda	sp,18(sp)
+   0163 C9                  596 	ret
+   0164                     597 ___StrCpyBanked_end:
+                            598 ;	src/BankData.c 74
+                            599 ;	genLabel
+                            600 ;	genFunction
+                            601 ;	---------------------------------
+                            602 ; Function ReadBankedBankPtr
+                            603 ; ---------------------------------
+   0164                     604 ___ReadBankedBankPtr_start:
+   0164                     605 _ReadBankedBankPtr:
+   0164 E8 FD               606 	lda	sp,-3(sp)
+                            607 ;	src/BankData.c 78
+                            608 ;	genIpush
+                            609 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            610 ;	AOP_STK for 
+   0166 F8 05               611 	lda	hl,5(sp)
+   0168 7E                  612 	ld	a,(hl)
+   0169 F5                  613 	push	af
+   016A 33                  614 	inc	sp
+                            615 ;	genCall
+   016B CD 00 00            616 	call	_PushBank
+   016E E8 01               617 	lda	sp,1(sp)
+                            618 ;	src/BankData.c 81
+                            619 ;	genAssign
+                            620 ;	(operands are equal 3)
+                            621 ;	genAddrOf
+   0170 F8 00               622 	lda	hl,0(sp)
+   0172 4D                  623 	ld	c,l
+   0173 44                  624 	ld	b,h
+                            625 ;	genIpush
+                            626 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0174 C5                  627 	push	bc
+   0175 21 03 00            628 	ld	hl,#0x0003
+   0178 E5                  629 	push	hl
+                            630 ;	genIpush
+                            631 ;	AOP_STK for 
+   0179 F8 0C               632 	lda	hl,12(sp)
+   017B 2A                  633 	ld	a,(hl+)
+   017C 66                  634 	ld	h,(hl)
+   017D 6F                  635 	ld	l,a
+   017E E5                  636 	push	hl
+                            637 ;	genIpush
+   017F C5                  638 	push	bc
+                            639 ;	genCall
+   0180 CD 00 00            640 	call	_memcpy
+   0183 E8 06               641 	lda	sp,6(sp)
+   0185 C1                  642 	pop	bc
+                            643 ;	src/BankData.c 86
+                            644 ;	genCall
+                            645 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0186 C5                  646 	push	bc
+   0187 CD 00 00            647 	call	_PopBank
+   018A C1                  648 	pop	bc
+                            649 ;	src/BankData.c 88
+                            650 ;	genAssign
+                            651 ;	(operands are equal 3)
+                            652 ;	genIpush
+                            653 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   018B 21 03 00            654 	ld	hl,#0x0003
+   018E E5                  655 	push	hl
+                            656 ;	genIpush
+   018F C5                  657 	push	bc
+                            658 ;	genIpush
+                            659 ;	AOP_STK for 
+   0190 F8 0A               660 	lda	hl,10(sp)
+   0192 2A                  661 	ld	a,(hl+)
+   0193 66                  662 	ld	h,(hl)
+   0194 6F                  663 	ld	l,a
+   0195 E5                  664 	push	hl
+                            665 ;	genCall
+   0196 CD 00 00            666 	call	_memcpy
+   0199 E8 06               667 	lda	sp,6(sp)
+                            668 ;	genLabel
+   019B                     669 00101$:
+                            670 ;	genEndFunction
+   019B E8 03               671 	lda	sp,3(sp)
+   019D C9                  672 	ret
+   019E                     673 ___ReadBankedBankPtr_end:
+                            674 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+    _PopBank                           **** GX
+    _PushBank                          **** GX
+  0 _ReadBankedBankPtr                 0164 GR
+  0 _ReadBankedUBYTE                   0098 GR
+  0 _ReadBankedUBYTEArray              00B1 GR
+  0 _ReadBankedUWORD                   00E7 GR
+  0 _SetBankedBkgData                  0000 GR
+  0 _SetBankedBkgTiles                 0022 GR
+  0 _SetBankedSpriteData               0076 GR
+  0 _SetBankedWinTiles                 004C GR
+  0 _StrCpyBanked                      0132 GR
+  0 ___ReadBankedBankPtr_end           019E R
+  0 ___ReadBankedBankPtr_start         0164 R
+  0 ___ReadBankedUBYTEArray_end        00E7 R
+  0 ___ReadBankedUBYTEArray_start      00B1 R
+  0 ___ReadBankedUBYTE_end             00B1 R
+  0 ___ReadBankedUBYTE_start           0098 R
+  0 ___ReadBankedUWORD_end             0132 R
+  0 ___ReadBankedUWORD_start           00E7 R
+  0 ___SetBankedBkgData_end            0022 R
+  0 ___SetBankedBkgData_start          0000 R
+  0 ___SetBankedBkgTiles_end           004C R
+  0 ___SetBankedBkgTiles_start         0022 R
+  0 ___SetBankedSpriteData_end         0098 R
+  0 ___SetBankedSpriteData_start       0076 R
+  0 ___SetBankedWinTiles_end           0076 R
+  0 ___SetBankedWinTiles_start         004C R
+  0 ___StrCpyBanked_end                0164 R
+  0 ___StrCpyBanked_start              0132 R
+    _memcpy                            **** GX
+    _set_bkg_data                      **** GX
+    _set_bkg_tiles                     **** GX
+    _set_sprite_data                   **** GX
+    _set_win_tiles                     **** GX
+    _strcpy                            **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size  19E   flags 0
+   1 _DATA                              size    0   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size    0   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

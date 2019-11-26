@@ -1,0 +1,2823 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Mon Nov 25 14:16:02 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc553500
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _script_cmds
+                             12 	.globl _script_start_stack
+                             13 	.globl _script_stack
+                             14 	.globl _script_stack_ptr
+                             15 	.globl _last_fn
+                             16 	.globl _script_cmd_args_len
+                             17 	.globl _script_cmd_args
+                             18 	.globl _script_start_ptr
+                             19 	.globl _script_ptr_y
+                             20 	.globl _script_ptr_x
+                             21 	.globl _script_ptr
+                             22 	.globl _script_ptr_bank
+                             23 	.globl _ptr_div_reg
+                             24 	.globl _ScriptStart
+                             25 	.globl _ScriptRunnerUpdate
+                             26 	.globl _ScriptLastFnComplete
+                             27 ;--------------------------------------------------------
+                             28 ; special function registers
+                             29 ;--------------------------------------------------------
+                             30 ;--------------------------------------------------------
+                             31 ; special function bits 
+                             32 ;--------------------------------------------------------
+                             33 ;--------------------------------------------------------
+                             34 ; internal ram data
+                             35 ;--------------------------------------------------------
+                             36 	.area _DATA
+   0000                      37 _ptr_div_reg::
+   0000                      38 	.ds 2
+   0002                      39 _script_ptr_bank::
+   0002                      40 	.ds 1
+   0003                      41 _script_ptr::
+   0003                      42 	.ds 2
+   0005                      43 _script_ptr_x::
+   0005                      44 	.ds 2
+   0007                      45 _script_ptr_y::
+   0007                      46 	.ds 2
+   0009                      47 _script_start_ptr::
+   0009                      48 	.ds 2
+   000B                      49 _script_cmd_args::
+   000B                      50 	.ds 6
+   0011                      51 _script_cmd_args_len::
+   0011                      52 	.ds 1
+   0012                      53 _last_fn::
+   0012                      54 	.ds 2
+   0014                      55 _script_stack_ptr::
+   0014                      56 	.ds 1
+   0015                      57 _script_stack::
+   0015                      58 	.ds 16
+   0025                      59 _script_start_stack::
+   0025                      60 	.ds 16
+   0035                      61 _script_cmds::
+   0035                      62 	.ds 279
+                             63 ;--------------------------------------------------------
+                             64 ; overlayable items in internal ram 
+                             65 ;--------------------------------------------------------
+                             66 	.area _OVERLAY
+                             67 ;--------------------------------------------------------
+                             68 ; indirectly addressable internal ram data
+                             69 ;--------------------------------------------------------
+                             70 	.area _ISEG
+                             71 ;--------------------------------------------------------
+                             72 ; bit data
+                             73 ;--------------------------------------------------------
+                             74 	.area _BSEG
+                             75 ;--------------------------------------------------------
+                             76 ; external ram data
+                             77 ;--------------------------------------------------------
+                             78 	.area _XSEG
+                             79 ;--------------------------------------------------------
+                             80 ; global & static initialisations
+                             81 ;--------------------------------------------------------
+                             82 	.area _GSINIT
+                             83 	.area _GSFINAL
+                             84 	.area _GSINIT
+                             85 ;	src/ScriptRunner.c 10
+                             86 ;	genAssign
+                             87 ;	AOP_HL for _ptr_div_reg
+   0000 21 00 00             88 	ld	hl,#_ptr_div_reg
+   0003 36 04                89 	ld	(hl),#0x04
+   0005 23                   90 	inc	hl
+   0006 36 FF                91 	ld	(hl),#0xFF
+                             92 ;	src/ScriptRunner.c 11
+                             93 ;	genAssign
+                             94 ;	AOP_HL for _script_ptr_bank
+   0008 21 02 00             95 	ld	hl,#_script_ptr_bank
+   000B 36 00                96 	ld	(hl),#0x00
+                             97 ;	src/ScriptRunner.c 12
+                             98 ;	genAssign
+                             99 ;	AOP_HL for _script_ptr
+   000D 21 03 00            100 	ld	hl,#_script_ptr
+   0010 36 00               101 	ld	(hl),#0x00
+   0012 23                  102 	inc	hl
+   0013 36 00               103 	ld	(hl),#0x00
+                            104 ;	src/ScriptRunner.c 13
+                            105 ;	genAssign
+                            106 ;	AOP_HL for _script_ptr_x
+   0015 21 05 00            107 	ld	hl,#_script_ptr_x
+   0018 36 00               108 	ld	(hl),#0x00
+   001A 23                  109 	inc	hl
+   001B 36 00               110 	ld	(hl),#0x00
+                            111 ;	src/ScriptRunner.c 14
+                            112 ;	genAssign
+                            113 ;	AOP_HL for _script_ptr_y
+   001D 21 07 00            114 	ld	hl,#_script_ptr_y
+   0020 36 00               115 	ld	(hl),#0x00
+   0022 23                  116 	inc	hl
+   0023 36 00               117 	ld	(hl),#0x00
+                            118 ;	src/ScriptRunner.c 15
+                            119 ;	genAssign
+                            120 ;	AOP_HL for _script_start_ptr
+   0025 21 09 00            121 	ld	hl,#_script_start_ptr
+   0028 36 00               122 	ld	(hl),#0x00
+   002A 23                  123 	inc	hl
+   002B 36 00               124 	ld	(hl),#0x00
+                            125 ;	src/ScriptRunner.c 16
+                            126 ;	src/ScriptRunner.c 278
+                            127 ;	genArrayInit
+                            128 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   002D 21 0B 00            129 	ld	hl,#_script_cmd_args
+   0030 CD 00 00            130 	call	__initrleblock
+   0033 01                  131 	.db	1
+   0034 00                  132 	.db	0x00
+   0035 00                  133 	.db	0
+                            134 ;	src/ScriptRunner.c 20
+                            135 ;	genAssign
+                            136 ;	AOP_HL for _script_stack_ptr
+   0036 21 14 00            137 	ld	hl,#_script_stack_ptr
+   0039 36 00               138 	ld	(hl),#0x00
+                            139 ;	src/ScriptRunner.c 21
+                            140 ;	src/ScriptRunner.c 278
+                            141 ;	genArrayInit
+                            142 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   003B 21 15 00            143 	ld	hl,#_script_stack
+   003E CD 00 00            144 	call	__initrleblock
+   0041 02                  145 	.db	2
+   0042 00 00               146 	.db	0x00, 0x00
+   0044 00                  147 	.db	0
+                            148 ;	src/ScriptRunner.c 22
+                            149 ;	src/ScriptRunner.c 278
+                            150 ;	genArrayInit
+                            151 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0045 21 25 00            152 	ld	hl,#_script_start_stack
+   0048 CD 00 00            153 	call	__initrleblock
+   004B 02                  154 	.db	2
+   004C 00 00               155 	.db	0x00, 0x00
+   004E 00                  156 	.db	0
+                            157 ;	src/ScriptRunner.c 278
+                            158 ;	genAssign (pointer)
+   004F 11 35 00            159 	ld	de,#_script_cmds
+   0052 3E 00               160 	ld	a,#<_Script_End_b
+   0054 12                  161 	ld	(de),a
+   0055 13                  162 	inc	de
+   0056 3E 00               163 	ld	a,#>_Script_End_b
+   0058 12                  164 	ld	(de),a
+                            165 ;	genPlus
+                            166 ;	genPlusIncr
+   0059 21 37 00            167 	ld	hl,#_script_cmds + 2
+                            168 ;	genAssign (pointer)
+   005C 36 00               169 	ld	(hl),#0x00
+                            170 ;	genPlus
+                            171 ;	genPlusIncr
+   005E 23                  172 	inc	hl
+                            173 ;	genAssign (pointer)
+   005F 5D                  174 	ld	e,l
+   0060 54                  175 	ld	d,h
+   0061 3E 00               176 	ld	a,#<_Script_Text_b
+   0063 12                  177 	ld	(de),a
+   0064 13                  178 	inc	de
+   0065 3E 00               179 	ld	a,#>_Script_Text_b
+   0067 12                  180 	ld	(de),a
+                            181 ;	genPlus
+                            182 ;	genPlusIncr
+   0068 23                  183 	inc	hl
+   0069 23                  184 	inc	hl
+                            185 ;	genAssign (pointer)
+   006A 36 02               186 	ld	(hl),#0x02
+                            187 ;	genPlus
+                            188 ;	genPlusIncr
+   006C 23                  189 	inc	hl
+                            190 ;	genAssign (pointer)
+   006D 5D                  191 	ld	e,l
+   006E 54                  192 	ld	d,h
+   006F 3E 00               193 	ld	a,#<_Script_Goto_b
+   0071 12                  194 	ld	(de),a
+   0072 13                  195 	inc	de
+   0073 3E 00               196 	ld	a,#>_Script_Goto_b
+   0075 12                  197 	ld	(de),a
+                            198 ;	genPlus
+                            199 ;	genPlusIncr
+   0076 23                  200 	inc	hl
+   0077 23                  201 	inc	hl
+                            202 ;	genAssign (pointer)
+   0078 36 02               203 	ld	(hl),#0x02
+                            204 ;	genPlus
+                            205 ;	genPlusIncr
+   007A 23                  206 	inc	hl
+                            207 ;	genAssign (pointer)
+   007B 5D                  208 	ld	e,l
+   007C 54                  209 	ld	d,h
+   007D 3E 00               210 	ld	a,#<_Script_IfFlag_b
+   007F 12                  211 	ld	(de),a
+   0080 13                  212 	inc	de
+   0081 3E 00               213 	ld	a,#>_Script_IfFlag_b
+   0083 12                  214 	ld	(de),a
+                            215 ;	genPlus
+                            216 ;	genPlusIncr
+   0084 23                  217 	inc	hl
+   0085 23                  218 	inc	hl
+                            219 ;	genAssign (pointer)
+   0086 36 04               220 	ld	(hl),#0x04
+                            221 ;	genPlus
+                            222 ;	genPlusIncr
+   0088 23                  223 	inc	hl
+                            224 ;	genAssign (pointer)
+   0089 5D                  225 	ld	e,l
+   008A 54                  226 	ld	d,h
+   008B 3E 00               227 	ld	a,#<_Script_Noop_b
+   008D 12                  228 	ld	(de),a
+   008E 13                  229 	inc	de
+   008F 3E 00               230 	ld	a,#>_Script_Noop_b
+   0091 12                  231 	ld	(de),a
+                            232 ;	genPlus
+                            233 ;	genPlusIncr
+   0092 23                  234 	inc	hl
+   0093 23                  235 	inc	hl
+                            236 ;	genAssign (pointer)
+   0094 36 00               237 	ld	(hl),#0x00
+                            238 ;	genPlus
+                            239 ;	genPlusIncr
+   0096 23                  240 	inc	hl
+                            241 ;	genAssign (pointer)
+   0097 5D                  242 	ld	e,l
+   0098 54                  243 	ld	d,h
+   0099 3E 00               244 	ld	a,#<_Script_SetFlag_b
+   009B 12                  245 	ld	(de),a
+   009C 13                  246 	inc	de
+   009D 3E 00               247 	ld	a,#>_Script_SetFlag_b
+   009F 12                  248 	ld	(de),a
+                            249 ;	genPlus
+                            250 ;	genPlusIncr
+   00A0 23                  251 	inc	hl
+   00A1 23                  252 	inc	hl
+                            253 ;	genAssign (pointer)
+   00A2 36 02               254 	ld	(hl),#0x02
+                            255 ;	genPlus
+                            256 ;	genPlusIncr
+   00A4 23                  257 	inc	hl
+                            258 ;	genAssign (pointer)
+   00A5 5D                  259 	ld	e,l
+   00A6 54                  260 	ld	d,h
+   00A7 3E 00               261 	ld	a,#<_Script_ClearFlag_b
+   00A9 12                  262 	ld	(de),a
+   00AA 13                  263 	inc	de
+   00AB 3E 00               264 	ld	a,#>_Script_ClearFlag_b
+   00AD 12                  265 	ld	(de),a
+                            266 ;	genPlus
+                            267 ;	genPlusIncr
+   00AE 23                  268 	inc	hl
+   00AF 23                  269 	inc	hl
+                            270 ;	genAssign (pointer)
+   00B0 36 02               271 	ld	(hl),#0x02
+                            272 ;	genPlus
+                            273 ;	genPlusIncr
+   00B2 23                  274 	inc	hl
+                            275 ;	genAssign (pointer)
+   00B3 5D                  276 	ld	e,l
+   00B4 54                  277 	ld	d,h
+   00B5 3E 00               278 	ld	a,#<_Script_ActorSetDir_b
+   00B7 12                  279 	ld	(de),a
+   00B8 13                  280 	inc	de
+   00B9 3E 00               281 	ld	a,#>_Script_ActorSetDir_b
+   00BB 12                  282 	ld	(de),a
+                            283 ;	genPlus
+                            284 ;	genPlusIncr
+   00BC 23                  285 	inc	hl
+   00BD 23                  286 	inc	hl
+                            287 ;	genAssign (pointer)
+   00BE 36 01               288 	ld	(hl),#0x01
+                            289 ;	genPlus
+                            290 ;	genPlusIncr
+   00C0 23                  291 	inc	hl
+                            292 ;	genAssign (pointer)
+   00C1 5D                  293 	ld	e,l
+   00C2 54                  294 	ld	d,h
+   00C3 3E 00               295 	ld	a,#<_Script_ActorActivate_b
+   00C5 12                  296 	ld	(de),a
+   00C6 13                  297 	inc	de
+   00C7 3E 00               298 	ld	a,#>_Script_ActorActivate_b
+   00C9 12                  299 	ld	(de),a
+                            300 ;	genPlus
+                            301 ;	genPlusIncr
+   00CA 23                  302 	inc	hl
+   00CB 23                  303 	inc	hl
+                            304 ;	genAssign (pointer)
+   00CC 36 01               305 	ld	(hl),#0x01
+                            306 ;	genPlus
+                            307 ;	genPlusIncr
+   00CE 23                  308 	inc	hl
+                            309 ;	genAssign (pointer)
+   00CF 5D                  310 	ld	e,l
+   00D0 54                  311 	ld	d,h
+   00D1 3E 00               312 	ld	a,#<_Script_CameraMoveTo_b
+   00D3 12                  313 	ld	(de),a
+   00D4 13                  314 	inc	de
+   00D5 3E 00               315 	ld	a,#>_Script_CameraMoveTo_b
+   00D7 12                  316 	ld	(de),a
+                            317 ;	genPlus
+                            318 ;	genPlusIncr
+   00D8 23                  319 	inc	hl
+   00D9 23                  320 	inc	hl
+                            321 ;	genAssign (pointer)
+   00DA 36 03               322 	ld	(hl),#0x03
+                            323 ;	genPlus
+                            324 ;	genPlusIncr
+   00DC 23                  325 	inc	hl
+                            326 ;	genAssign (pointer)
+   00DD 5D                  327 	ld	e,l
+   00DE 54                  328 	ld	d,h
+   00DF 3E 00               329 	ld	a,#<_Script_CameraLock_b
+   00E1 12                  330 	ld	(de),a
+   00E2 13                  331 	inc	de
+   00E3 3E 00               332 	ld	a,#>_Script_CameraLock_b
+   00E5 12                  333 	ld	(de),a
+                            334 ;	genPlus
+                            335 ;	genPlusIncr
+   00E6 23                  336 	inc	hl
+   00E7 23                  337 	inc	hl
+                            338 ;	genAssign (pointer)
+   00E8 36 01               339 	ld	(hl),#0x01
+                            340 ;	genPlus
+                            341 ;	genPlusIncr
+   00EA 23                  342 	inc	hl
+                            343 ;	genAssign (pointer)
+   00EB 5D                  344 	ld	e,l
+   00EC 54                  345 	ld	d,h
+   00ED 3E 00               346 	ld	a,#<_Script_Wait_b
+   00EF 12                  347 	ld	(de),a
+   00F0 13                  348 	inc	de
+   00F1 3E 00               349 	ld	a,#>_Script_Wait_b
+   00F3 12                  350 	ld	(de),a
+                            351 ;	genPlus
+                            352 ;	genPlusIncr
+   00F4 23                  353 	inc	hl
+   00F5 23                  354 	inc	hl
+                            355 ;	genAssign (pointer)
+   00F6 36 01               356 	ld	(hl),#0x01
+                            357 ;	genPlus
+                            358 ;	genPlusIncr
+   00F8 23                  359 	inc	hl
+                            360 ;	genAssign (pointer)
+   00F9 5D                  361 	ld	e,l
+   00FA 54                  362 	ld	d,h
+   00FB 3E 00               363 	ld	a,#<_Script_FadeOut_b
+   00FD 12                  364 	ld	(de),a
+   00FE 13                  365 	inc	de
+   00FF 3E 00               366 	ld	a,#>_Script_FadeOut_b
+   0101 12                  367 	ld	(de),a
+                            368 ;	genPlus
+                            369 ;	genPlusIncr
+   0102 23                  370 	inc	hl
+   0103 23                  371 	inc	hl
+                            372 ;	genAssign (pointer)
+   0104 36 01               373 	ld	(hl),#0x01
+                            374 ;	genPlus
+                            375 ;	genPlusIncr
+   0106 23                  376 	inc	hl
+                            377 ;	genAssign (pointer)
+   0107 5D                  378 	ld	e,l
+   0108 54                  379 	ld	d,h
+   0109 3E 00               380 	ld	a,#<_Script_FadeIn_b
+   010B 12                  381 	ld	(de),a
+   010C 13                  382 	inc	de
+   010D 3E 00               383 	ld	a,#>_Script_FadeIn_b
+   010F 12                  384 	ld	(de),a
+                            385 ;	genPlus
+                            386 ;	genPlusIncr
+   0110 23                  387 	inc	hl
+   0111 23                  388 	inc	hl
+                            389 ;	genAssign (pointer)
+   0112 36 01               390 	ld	(hl),#0x01
+                            391 ;	genPlus
+                            392 ;	genPlusIncr
+   0114 23                  393 	inc	hl
+                            394 ;	genAssign (pointer)
+   0115 5D                  395 	ld	e,l
+   0116 54                  396 	ld	d,h
+   0117 3E 00               397 	ld	a,#<_Script_LoadScene_b
+   0119 12                  398 	ld	(de),a
+   011A 13                  399 	inc	de
+   011B 3E 00               400 	ld	a,#>_Script_LoadScene_b
+   011D 12                  401 	ld	(de),a
+                            402 ;	genPlus
+                            403 ;	genPlusIncr
+   011E 23                  404 	inc	hl
+   011F 23                  405 	inc	hl
+                            406 ;	genAssign (pointer)
+   0120 36 06               407 	ld	(hl),#0x06
+                            408 ;	genPlus
+                            409 ;	genPlusIncr
+   0122 23                  410 	inc	hl
+                            411 ;	genAssign (pointer)
+   0123 5D                  412 	ld	e,l
+   0124 54                  413 	ld	d,h
+   0125 3E 00               414 	ld	a,#<_Script_ActorSetPos_b
+   0127 12                  415 	ld	(de),a
+   0128 13                  416 	inc	de
+   0129 3E 00               417 	ld	a,#>_Script_ActorSetPos_b
+   012B 12                  418 	ld	(de),a
+                            419 ;	genPlus
+                            420 ;	genPlusIncr
+   012C 23                  421 	inc	hl
+   012D 23                  422 	inc	hl
+                            423 ;	genAssign (pointer)
+   012E 36 02               424 	ld	(hl),#0x02
+                            425 ;	genPlus
+                            426 ;	genPlusIncr
+   0130 23                  427 	inc	hl
+                            428 ;	genAssign (pointer)
+   0131 5D                  429 	ld	e,l
+   0132 54                  430 	ld	d,h
+   0133 3E 00               431 	ld	a,#<_Script_ActorMoveTo_b
+   0135 12                  432 	ld	(de),a
+   0136 13                  433 	inc	de
+   0137 3E 00               434 	ld	a,#>_Script_ActorMoveTo_b
+   0139 12                  435 	ld	(de),a
+                            436 ;	genPlus
+                            437 ;	genPlusIncr
+   013A 23                  438 	inc	hl
+   013B 23                  439 	inc	hl
+                            440 ;	genAssign (pointer)
+   013C 36 02               441 	ld	(hl),#0x02
+                            442 ;	genPlus
+                            443 ;	genPlusIncr
+   013E 23                  444 	inc	hl
+                            445 ;	genAssign (pointer)
+   013F 5D                  446 	ld	e,l
+   0140 54                  447 	ld	d,h
+   0141 3E 00               448 	ld	a,#<_Script_ShowSprites_b
+   0143 12                  449 	ld	(de),a
+   0144 13                  450 	inc	de
+   0145 3E 00               451 	ld	a,#>_Script_ShowSprites_b
+   0147 12                  452 	ld	(de),a
+                            453 ;	genPlus
+                            454 ;	genPlusIncr
+   0148 23                  455 	inc	hl
+   0149 23                  456 	inc	hl
+                            457 ;	genAssign (pointer)
+   014A 36 00               458 	ld	(hl),#0x00
+                            459 ;	genPlus
+                            460 ;	genPlusIncr
+   014C 23                  461 	inc	hl
+                            462 ;	genAssign (pointer)
+   014D 5D                  463 	ld	e,l
+   014E 54                  464 	ld	d,h
+   014F 3E 00               465 	ld	a,#<_Script_HideSprites_b
+   0151 12                  466 	ld	(de),a
+   0152 13                  467 	inc	de
+   0153 3E 00               468 	ld	a,#>_Script_HideSprites_b
+   0155 12                  469 	ld	(de),a
+                            470 ;	genPlus
+                            471 ;	genPlusIncr
+   0156 23                  472 	inc	hl
+   0157 23                  473 	inc	hl
+                            474 ;	genAssign (pointer)
+   0158 36 00               475 	ld	(hl),#0x00
+                            476 ;	genPlus
+                            477 ;	genPlusIncr
+   015A 23                  478 	inc	hl
+                            479 ;	genAssign (pointer)
+   015B 5D                  480 	ld	e,l
+   015C 54                  481 	ld	d,h
+   015D 3E 00               482 	ld	a,#<_Script_PlayerSetSprite_b
+   015F 12                  483 	ld	(de),a
+   0160 13                  484 	inc	de
+   0161 3E 00               485 	ld	a,#>_Script_PlayerSetSprite_b
+   0163 12                  486 	ld	(de),a
+                            487 ;	genPlus
+                            488 ;	genPlusIncr
+   0164 23                  489 	inc	hl
+   0165 23                  490 	inc	hl
+                            491 ;	genAssign (pointer)
+   0166 36 01               492 	ld	(hl),#0x01
+                            493 ;	genPlus
+                            494 ;	genPlusIncr
+   0168 23                  495 	inc	hl
+                            496 ;	genAssign (pointer)
+   0169 5D                  497 	ld	e,l
+   016A 54                  498 	ld	d,h
+   016B 3E 00               499 	ld	a,#<_Script_ActorShow_b
+   016D 12                  500 	ld	(de),a
+   016E 13                  501 	inc	de
+   016F 3E 00               502 	ld	a,#>_Script_ActorShow_b
+   0171 12                  503 	ld	(de),a
+                            504 ;	genPlus
+                            505 ;	genPlusIncr
+   0172 23                  506 	inc	hl
+   0173 23                  507 	inc	hl
+                            508 ;	genAssign (pointer)
+   0174 36 00               509 	ld	(hl),#0x00
+                            510 ;	genPlus
+                            511 ;	genPlusIncr
+   0176 23                  512 	inc	hl
+                            513 ;	genAssign (pointer)
+   0177 5D                  514 	ld	e,l
+   0178 54                  515 	ld	d,h
+   0179 3E 00               516 	ld	a,#<_Script_ActorHide_b
+   017B 12                  517 	ld	(de),a
+   017C 13                  518 	inc	de
+   017D 3E 00               519 	ld	a,#>_Script_ActorHide_b
+   017F 12                  520 	ld	(de),a
+                            521 ;	genPlus
+                            522 ;	genPlusIncr
+   0180 23                  523 	inc	hl
+   0181 23                  524 	inc	hl
+                            525 ;	genAssign (pointer)
+   0182 36 00               526 	ld	(hl),#0x00
+                            527 ;	genPlus
+                            528 ;	genPlusIncr
+   0184 23                  529 	inc	hl
+                            530 ;	genAssign (pointer)
+   0185 5D                  531 	ld	e,l
+   0186 54                  532 	ld	d,h
+   0187 3E 00               533 	ld	a,#<_Script_ActorSetEmote_b
+   0189 12                  534 	ld	(de),a
+   018A 13                  535 	inc	de
+   018B 3E 00               536 	ld	a,#>_Script_ActorSetEmote_b
+   018D 12                  537 	ld	(de),a
+                            538 ;	genPlus
+                            539 ;	genPlusIncr
+   018E 23                  540 	inc	hl
+   018F 23                  541 	inc	hl
+                            542 ;	genAssign (pointer)
+   0190 36 01               543 	ld	(hl),#0x01
+                            544 ;	genPlus
+                            545 ;	genPlusIncr
+   0192 23                  546 	inc	hl
+                            547 ;	genAssign (pointer)
+   0193 5D                  548 	ld	e,l
+   0194 54                  549 	ld	d,h
+   0195 3E 00               550 	ld	a,#<_Script_CameraShake_b
+   0197 12                  551 	ld	(de),a
+   0198 13                  552 	inc	de
+   0199 3E 00               553 	ld	a,#>_Script_CameraShake_b
+   019B 12                  554 	ld	(de),a
+                            555 ;	genPlus
+                            556 ;	genPlusIncr
+   019C 23                  557 	inc	hl
+   019D 23                  558 	inc	hl
+                            559 ;	genAssign (pointer)
+   019E 36 01               560 	ld	(hl),#0x01
+                            561 ;	genPlus
+                            562 ;	genPlusIncr
+   01A0 23                  563 	inc	hl
+                            564 ;	genAssign (pointer)
+   01A1 5D                  565 	ld	e,l
+   01A2 54                  566 	ld	d,h
+   01A3 3E 00               567 	ld	a,#<_Script_Noop_b
+   01A5 12                  568 	ld	(de),a
+   01A6 13                  569 	inc	de
+   01A7 3E 00               570 	ld	a,#>_Script_Noop_b
+   01A9 12                  571 	ld	(de),a
+                            572 ;	genPlus
+                            573 ;	genPlusIncr
+   01AA 23                  574 	inc	hl
+   01AB 23                  575 	inc	hl
+                            576 ;	genAssign (pointer)
+   01AC 36 00               577 	ld	(hl),#0x00
+                            578 ;	genPlus
+                            579 ;	genPlusIncr
+   01AE 23                  580 	inc	hl
+                            581 ;	genAssign (pointer)
+   01AF 5D                  582 	ld	e,l
+   01B0 54                  583 	ld	d,h
+   01B1 3E 00               584 	ld	a,#<_Script_ShowOverlay_b
+   01B3 12                  585 	ld	(de),a
+   01B4 13                  586 	inc	de
+   01B5 3E 00               587 	ld	a,#>_Script_ShowOverlay_b
+   01B7 12                  588 	ld	(de),a
+                            589 ;	genPlus
+                            590 ;	genPlusIncr
+   01B8 23                  591 	inc	hl
+   01B9 23                  592 	inc	hl
+                            593 ;	genAssign (pointer)
+   01BA 36 03               594 	ld	(hl),#0x03
+                            595 ;	genPlus
+                            596 ;	genPlusIncr
+   01BC 23                  597 	inc	hl
+                            598 ;	genAssign (pointer)
+   01BD 5D                  599 	ld	e,l
+   01BE 54                  600 	ld	d,h
+   01BF 3E 00               601 	ld	a,#<_Script_HideOverlay_b
+   01C1 12                  602 	ld	(de),a
+   01C2 13                  603 	inc	de
+   01C3 3E 00               604 	ld	a,#>_Script_HideOverlay_b
+   01C5 12                  605 	ld	(de),a
+                            606 ;	genPlus
+                            607 ;	genPlusIncr
+   01C6 23                  608 	inc	hl
+   01C7 23                  609 	inc	hl
+                            610 ;	genAssign (pointer)
+   01C8 36 00               611 	ld	(hl),#0x00
+                            612 ;	genPlus
+                            613 ;	genPlusIncr
+   01CA 23                  614 	inc	hl
+                            615 ;	genAssign (pointer)
+   01CB 5D                  616 	ld	e,l
+   01CC 54                  617 	ld	d,h
+   01CD 3E 00               618 	ld	a,#<_Script_Noop_b
+   01CF 12                  619 	ld	(de),a
+   01D0 13                  620 	inc	de
+   01D1 3E 00               621 	ld	a,#>_Script_Noop_b
+   01D3 12                  622 	ld	(de),a
+                            623 ;	genPlus
+                            624 ;	genPlusIncr
+   01D4 23                  625 	inc	hl
+   01D5 23                  626 	inc	hl
+                            627 ;	genAssign (pointer)
+   01D6 36 00               628 	ld	(hl),#0x00
+                            629 ;	genPlus
+                            630 ;	genPlusIncr
+   01D8 23                  631 	inc	hl
+                            632 ;	genAssign (pointer)
+   01D9 5D                  633 	ld	e,l
+   01DA 54                  634 	ld	d,h
+   01DB 3E 00               635 	ld	a,#<_Script_OverlayMoveTo_b
+   01DD 12                  636 	ld	(de),a
+   01DE 13                  637 	inc	de
+   01DF 3E 00               638 	ld	a,#>_Script_OverlayMoveTo_b
+   01E1 12                  639 	ld	(de),a
+                            640 ;	genPlus
+                            641 ;	genPlusIncr
+   01E2 23                  642 	inc	hl
+   01E3 23                  643 	inc	hl
+                            644 ;	genAssign (pointer)
+   01E4 36 03               645 	ld	(hl),#0x03
+                            646 ;	genPlus
+                            647 ;	genPlusIncr
+   01E6 23                  648 	inc	hl
+                            649 ;	genAssign (pointer)
+   01E7 5D                  650 	ld	e,l
+   01E8 54                  651 	ld	d,h
+   01E9 3E 00               652 	ld	a,#<_Script_AwaitInput_b
+   01EB 12                  653 	ld	(de),a
+   01EC 13                  654 	inc	de
+   01ED 3E 00               655 	ld	a,#>_Script_AwaitInput_b
+   01EF 12                  656 	ld	(de),a
+                            657 ;	genPlus
+                            658 ;	genPlusIncr
+   01F0 23                  659 	inc	hl
+   01F1 23                  660 	inc	hl
+                            661 ;	genAssign (pointer)
+   01F2 36 01               662 	ld	(hl),#0x01
+                            663 ;	genPlus
+                            664 ;	genPlusIncr
+   01F4 23                  665 	inc	hl
+                            666 ;	genAssign (pointer)
+   01F5 5D                  667 	ld	e,l
+   01F6 54                  668 	ld	d,h
+   01F7 3E 00               669 	ld	a,#<_Script_MusicPlay_b
+   01F9 12                  670 	ld	(de),a
+   01FA 13                  671 	inc	de
+   01FB 3E 00               672 	ld	a,#>_Script_MusicPlay_b
+   01FD 12                  673 	ld	(de),a
+                            674 ;	genPlus
+                            675 ;	genPlusIncr
+   01FE 23                  676 	inc	hl
+   01FF 23                  677 	inc	hl
+                            678 ;	genAssign (pointer)
+   0200 36 02               679 	ld	(hl),#0x02
+                            680 ;	genPlus
+                            681 ;	genPlusIncr
+   0202 23                  682 	inc	hl
+                            683 ;	genAssign (pointer)
+   0203 5D                  684 	ld	e,l
+   0204 54                  685 	ld	d,h
+   0205 3E 00               686 	ld	a,#<_Script_MusicStop_b
+   0207 12                  687 	ld	(de),a
+   0208 13                  688 	inc	de
+   0209 3E 00               689 	ld	a,#>_Script_MusicStop_b
+   020B 12                  690 	ld	(de),a
+                            691 ;	genPlus
+                            692 ;	genPlusIncr
+   020C 23                  693 	inc	hl
+   020D 23                  694 	inc	hl
+                            695 ;	genAssign (pointer)
+   020E 36 00               696 	ld	(hl),#0x00
+                            697 ;	genPlus
+                            698 ;	genPlusIncr
+   0210 23                  699 	inc	hl
+                            700 ;	genAssign (pointer)
+   0211 5D                  701 	ld	e,l
+   0212 54                  702 	ld	d,h
+   0213 3E 00               703 	ld	a,#<_Script_ResetVariables_b
+   0215 12                  704 	ld	(de),a
+   0216 13                  705 	inc	de
+   0217 3E 00               706 	ld	a,#>_Script_ResetVariables_b
+   0219 12                  707 	ld	(de),a
+                            708 ;	genPlus
+                            709 ;	genPlusIncr
+   021A 23                  710 	inc	hl
+   021B 23                  711 	inc	hl
+                            712 ;	genAssign (pointer)
+   021C 36 00               713 	ld	(hl),#0x00
+                            714 ;	genPlus
+                            715 ;	genPlusIncr
+   021E 23                  716 	inc	hl
+                            717 ;	genAssign (pointer)
+   021F 5D                  718 	ld	e,l
+   0220 54                  719 	ld	d,h
+   0221 3E 00               720 	ld	a,#<_Script_NextFrame_b
+   0223 12                  721 	ld	(de),a
+   0224 13                  722 	inc	de
+   0225 3E 00               723 	ld	a,#>_Script_NextFrame_b
+   0227 12                  724 	ld	(de),a
+                            725 ;	genPlus
+                            726 ;	genPlusIncr
+   0228 23                  727 	inc	hl
+   0229 23                  728 	inc	hl
+                            729 ;	genAssign (pointer)
+   022A 36 00               730 	ld	(hl),#0x00
+                            731 ;	genPlus
+                            732 ;	genPlusIncr
+   022C 23                  733 	inc	hl
+                            734 ;	genAssign (pointer)
+   022D 5D                  735 	ld	e,l
+   022E 54                  736 	ld	d,h
+   022F 3E 00               737 	ld	a,#<_Script_IncFlag_b
+   0231 12                  738 	ld	(de),a
+   0232 13                  739 	inc	de
+   0233 3E 00               740 	ld	a,#>_Script_IncFlag_b
+   0235 12                  741 	ld	(de),a
+                            742 ;	genPlus
+                            743 ;	genPlusIncr
+   0236 23                  744 	inc	hl
+   0237 23                  745 	inc	hl
+                            746 ;	genAssign (pointer)
+   0238 36 02               747 	ld	(hl),#0x02
+                            748 ;	genPlus
+                            749 ;	genPlusIncr
+   023A 23                  750 	inc	hl
+                            751 ;	genAssign (pointer)
+   023B 5D                  752 	ld	e,l
+   023C 54                  753 	ld	d,h
+   023D 3E 00               754 	ld	a,#<_Script_DecFlag_b
+   023F 12                  755 	ld	(de),a
+   0240 13                  756 	inc	de
+   0241 3E 00               757 	ld	a,#>_Script_DecFlag_b
+   0243 12                  758 	ld	(de),a
+                            759 ;	genPlus
+                            760 ;	genPlusIncr
+   0244 23                  761 	inc	hl
+   0245 23                  762 	inc	hl
+                            763 ;	genAssign (pointer)
+   0246 36 02               764 	ld	(hl),#0x02
+                            765 ;	genPlus
+                            766 ;	genPlusIncr
+   0248 23                  767 	inc	hl
+                            768 ;	genAssign (pointer)
+   0249 5D                  769 	ld	e,l
+   024A 54                  770 	ld	d,h
+   024B 3E 00               771 	ld	a,#<_Script_SetFlagValue_b
+   024D 12                  772 	ld	(de),a
+   024E 13                  773 	inc	de
+   024F 3E 00               774 	ld	a,#>_Script_SetFlagValue_b
+   0251 12                  775 	ld	(de),a
+                            776 ;	genPlus
+                            777 ;	genPlusIncr
+   0252 23                  778 	inc	hl
+   0253 23                  779 	inc	hl
+                            780 ;	genAssign (pointer)
+   0254 36 03               781 	ld	(hl),#0x03
+                            782 ;	genPlus
+                            783 ;	genPlusIncr
+   0256 23                  784 	inc	hl
+                            785 ;	genAssign (pointer)
+   0257 5D                  786 	ld	e,l
+   0258 54                  787 	ld	d,h
+   0259 3E 00               788 	ld	a,#<_Script_IfValue_b
+   025B 12                  789 	ld	(de),a
+   025C 13                  790 	inc	de
+   025D 3E 00               791 	ld	a,#>_Script_IfValue_b
+   025F 12                  792 	ld	(de),a
+                            793 ;	genPlus
+                            794 ;	genPlusIncr
+   0260 23                  795 	inc	hl
+   0261 23                  796 	inc	hl
+                            797 ;	genAssign (pointer)
+   0262 36 06               798 	ld	(hl),#0x06
+                            799 ;	genPlus
+                            800 ;	genPlusIncr
+   0264 23                  801 	inc	hl
+                            802 ;	genAssign (pointer)
+   0265 5D                  803 	ld	e,l
+   0266 54                  804 	ld	d,h
+   0267 3E 00               805 	ld	a,#<_Script_IfInput_b
+   0269 12                  806 	ld	(de),a
+   026A 13                  807 	inc	de
+   026B 3E 00               808 	ld	a,#>_Script_IfInput_b
+   026D 12                  809 	ld	(de),a
+                            810 ;	genPlus
+                            811 ;	genPlusIncr
+   026E 23                  812 	inc	hl
+   026F 23                  813 	inc	hl
+                            814 ;	genAssign (pointer)
+   0270 36 03               815 	ld	(hl),#0x03
+                            816 ;	genPlus
+                            817 ;	genPlusIncr
+   0272 23                  818 	inc	hl
+                            819 ;	genAssign (pointer)
+   0273 5D                  820 	ld	e,l
+   0274 54                  821 	ld	d,h
+   0275 3E 00               822 	ld	a,#<_Script_Choice_b
+   0277 12                  823 	ld	(de),a
+   0278 13                  824 	inc	de
+   0279 3E 00               825 	ld	a,#>_Script_Choice_b
+   027B 12                  826 	ld	(de),a
+                            827 ;	genPlus
+                            828 ;	genPlusIncr
+   027C 23                  829 	inc	hl
+   027D 23                  830 	inc	hl
+                            831 ;	genAssign (pointer)
+   027E 36 04               832 	ld	(hl),#0x04
+                            833 ;	genPlus
+                            834 ;	genPlusIncr
+   0280 23                  835 	inc	hl
+                            836 ;	genAssign (pointer)
+   0281 5D                  837 	ld	e,l
+   0282 54                  838 	ld	d,h
+   0283 3E 00               839 	ld	a,#<_Script_ActorPush_b
+   0285 12                  840 	ld	(de),a
+   0286 13                  841 	inc	de
+   0287 3E 00               842 	ld	a,#>_Script_ActorPush_b
+   0289 12                  843 	ld	(de),a
+                            844 ;	genPlus
+                            845 ;	genPlusIncr
+   028A 23                  846 	inc	hl
+   028B 23                  847 	inc	hl
+                            848 ;	genAssign (pointer)
+   028C 36 01               849 	ld	(hl),#0x01
+                            850 ;	genPlus
+                            851 ;	genPlusIncr
+   028E 23                  852 	inc	hl
+                            853 ;	genAssign (pointer)
+   028F 5D                  854 	ld	e,l
+   0290 54                  855 	ld	d,h
+   0291 3E 00               856 	ld	a,#<_Script_IfActorPos_b
+   0293 12                  857 	ld	(de),a
+   0294 13                  858 	inc	de
+   0295 3E 00               859 	ld	a,#>_Script_IfActorPos_b
+   0297 12                  860 	ld	(de),a
+                            861 ;	genPlus
+                            862 ;	genPlusIncr
+   0298 23                  863 	inc	hl
+   0299 23                  864 	inc	hl
+                            865 ;	genAssign (pointer)
+   029A 36 04               866 	ld	(hl),#0x04
+                            867 ;	genPlus
+                            868 ;	genPlusIncr
+   029C 23                  869 	inc	hl
+                            870 ;	genAssign (pointer)
+   029D 5D                  871 	ld	e,l
+   029E 54                  872 	ld	d,h
+   029F 3E 00               873 	ld	a,#<_Script_LoadData_b
+   02A1 12                  874 	ld	(de),a
+   02A2 13                  875 	inc	de
+   02A3 3E 00               876 	ld	a,#>_Script_LoadData_b
+   02A5 12                  877 	ld	(de),a
+                            878 ;	genPlus
+                            879 ;	genPlusIncr
+   02A6 23                  880 	inc	hl
+   02A7 23                  881 	inc	hl
+                            882 ;	genAssign (pointer)
+   02A8 36 00               883 	ld	(hl),#0x00
+                            884 ;	genPlus
+                            885 ;	genPlusIncr
+   02AA 23                  886 	inc	hl
+                            887 ;	genAssign (pointer)
+   02AB 5D                  888 	ld	e,l
+   02AC 54                  889 	ld	d,h
+   02AD 3E 00               890 	ld	a,#<_Script_SaveData_b
+   02AF 12                  891 	ld	(de),a
+   02B0 13                  892 	inc	de
+   02B1 3E 00               893 	ld	a,#>_Script_SaveData_b
+   02B3 12                  894 	ld	(de),a
+                            895 ;	genPlus
+                            896 ;	genPlusIncr
+   02B4 23                  897 	inc	hl
+   02B5 23                  898 	inc	hl
+                            899 ;	genAssign (pointer)
+   02B6 36 00               900 	ld	(hl),#0x00
+                            901 ;	genPlus
+                            902 ;	genPlusIncr
+   02B8 23                  903 	inc	hl
+                            904 ;	genAssign (pointer)
+   02B9 5D                  905 	ld	e,l
+   02BA 54                  906 	ld	d,h
+   02BB 3E 00               907 	ld	a,#<_Script_ClearData_b
+   02BD 12                  908 	ld	(de),a
+   02BE 13                  909 	inc	de
+   02BF 3E 00               910 	ld	a,#>_Script_ClearData_b
+   02C1 12                  911 	ld	(de),a
+                            912 ;	genPlus
+                            913 ;	genPlusIncr
+   02C2 23                  914 	inc	hl
+   02C3 23                  915 	inc	hl
+                            916 ;	genAssign (pointer)
+   02C4 36 00               917 	ld	(hl),#0x00
+                            918 ;	genPlus
+                            919 ;	genPlusIncr
+   02C6 23                  920 	inc	hl
+                            921 ;	genAssign (pointer)
+   02C7 5D                  922 	ld	e,l
+   02C8 54                  923 	ld	d,h
+   02C9 3E 00               924 	ld	a,#<_Script_IfSavedData_b
+   02CB 12                  925 	ld	(de),a
+   02CC 13                  926 	inc	de
+   02CD 3E 00               927 	ld	a,#>_Script_IfSavedData_b
+   02CF 12                  928 	ld	(de),a
+                            929 ;	genPlus
+                            930 ;	genPlusIncr
+   02D0 23                  931 	inc	hl
+   02D1 23                  932 	inc	hl
+                            933 ;	genAssign (pointer)
+   02D2 36 02               934 	ld	(hl),#0x02
+                            935 ;	genPlus
+                            936 ;	genPlusIncr
+   02D4 23                  937 	inc	hl
+                            938 ;	genAssign (pointer)
+   02D5 5D                  939 	ld	e,l
+   02D6 54                  940 	ld	d,h
+   02D7 3E 00               941 	ld	a,#<_Script_IfActorDirection_b
+   02D9 12                  942 	ld	(de),a
+   02DA 13                  943 	inc	de
+   02DB 3E 00               944 	ld	a,#>_Script_IfActorDirection_b
+   02DD 12                  945 	ld	(de),a
+                            946 ;	genPlus
+                            947 ;	genPlusIncr
+   02DE 23                  948 	inc	hl
+   02DF 23                  949 	inc	hl
+                            950 ;	genAssign (pointer)
+   02E0 36 03               951 	ld	(hl),#0x03
+                            952 ;	genPlus
+                            953 ;	genPlusIncr
+   02E2 23                  954 	inc	hl
+                            955 ;	genAssign (pointer)
+   02E3 5D                  956 	ld	e,l
+   02E4 54                  957 	ld	d,h
+   02E5 3E 00               958 	ld	a,#<_Script_SetFlagRandomValue_b
+   02E7 12                  959 	ld	(de),a
+   02E8 13                  960 	inc	de
+   02E9 3E 00               961 	ld	a,#>_Script_SetFlagRandomValue_b
+   02EB 12                  962 	ld	(de),a
+                            963 ;	genPlus
+                            964 ;	genPlusIncr
+   02EC 23                  965 	inc	hl
+   02ED 23                  966 	inc	hl
+                            967 ;	genAssign (pointer)
+   02EE 36 04               968 	ld	(hl),#0x04
+                            969 ;	genPlus
+                            970 ;	genPlusIncr
+   02F0 23                  971 	inc	hl
+                            972 ;	genAssign (pointer)
+   02F1 5D                  973 	ld	e,l
+   02F2 54                  974 	ld	d,h
+   02F3 3E 00               975 	ld	a,#<_Script_ActorGetPos_b
+   02F5 12                  976 	ld	(de),a
+   02F6 13                  977 	inc	de
+   02F7 3E 00               978 	ld	a,#>_Script_ActorGetPos_b
+   02F9 12                  979 	ld	(de),a
+                            980 ;	genPlus
+                            981 ;	genPlusIncr
+   02FA 23                  982 	inc	hl
+   02FB 23                  983 	inc	hl
+                            984 ;	genAssign (pointer)
+   02FC 36 00               985 	ld	(hl),#0x00
+                            986 ;	genPlus
+                            987 ;	genPlusIncr
+   02FE 23                  988 	inc	hl
+                            989 ;	genAssign (pointer)
+   02FF 5D                  990 	ld	e,l
+   0300 54                  991 	ld	d,h
+   0301 3E 00               992 	ld	a,#<_Script_ActorSetPosToVal_b
+   0303 12                  993 	ld	(de),a
+   0304 13                  994 	inc	de
+   0305 3E 00               995 	ld	a,#>_Script_ActorSetPosToVal_b
+   0307 12                  996 	ld	(de),a
+                            997 ;	genPlus
+                            998 ;	genPlusIncr
+   0308 23                  999 	inc	hl
+   0309 23                 1000 	inc	hl
+                           1001 ;	genAssign (pointer)
+   030A 36 00              1002 	ld	(hl),#0x00
+                           1003 ;	genPlus
+                           1004 ;	genPlusIncr
+   030C 23                 1005 	inc	hl
+                           1006 ;	genAssign (pointer)
+   030D 5D                 1007 	ld	e,l
+   030E 54                 1008 	ld	d,h
+   030F 3E 00              1009 	ld	a,#<_Script_ActorMoveToVal_b
+   0311 12                 1010 	ld	(de),a
+   0312 13                 1011 	inc	de
+   0313 3E 00              1012 	ld	a,#>_Script_ActorMoveToVal_b
+   0315 12                 1013 	ld	(de),a
+                           1014 ;	genPlus
+                           1015 ;	genPlusIncr
+   0316 23                 1016 	inc	hl
+   0317 23                 1017 	inc	hl
+                           1018 ;	genAssign (pointer)
+   0318 36 00              1019 	ld	(hl),#0x00
+                           1020 ;	genPlus
+                           1021 ;	genPlusIncr
+   031A 23                 1022 	inc	hl
+                           1023 ;	genAssign (pointer)
+   031B 5D                 1024 	ld	e,l
+   031C 54                 1025 	ld	d,h
+   031D 3E 00              1026 	ld	a,#<_Script_ActorMoveRel_b
+   031F 12                 1027 	ld	(de),a
+   0320 13                 1028 	inc	de
+   0321 3E 00              1029 	ld	a,#>_Script_ActorMoveRel_b
+   0323 12                 1030 	ld	(de),a
+                           1031 ;	genPlus
+                           1032 ;	genPlusIncr
+   0324 23                 1033 	inc	hl
+   0325 23                 1034 	inc	hl
+                           1035 ;	genAssign (pointer)
+   0326 36 04              1036 	ld	(hl),#0x04
+                           1037 ;	genPlus
+                           1038 ;	genPlusIncr
+   0328 23                 1039 	inc	hl
+                           1040 ;	genAssign (pointer)
+   0329 5D                 1041 	ld	e,l
+   032A 54                 1042 	ld	d,h
+   032B 3E 00              1043 	ld	a,#<_Script_ActorSetPosRel_b
+   032D 12                 1044 	ld	(de),a
+   032E 13                 1045 	inc	de
+   032F 3E 00              1046 	ld	a,#>_Script_ActorSetPosRel_b
+   0331 12                 1047 	ld	(de),a
+                           1048 ;	genPlus
+                           1049 ;	genPlusIncr
+   0332 23                 1050 	inc	hl
+   0333 23                 1051 	inc	hl
+                           1052 ;	genAssign (pointer)
+   0334 36 04              1053 	ld	(hl),#0x04
+                           1054 ;	genPlus
+                           1055 ;	genPlusIncr
+   0336 23                 1056 	inc	hl
+                           1057 ;	genAssign (pointer)
+   0337 5D                 1058 	ld	e,l
+   0338 54                 1059 	ld	d,h
+   0339 3E 00              1060 	ld	a,#<_Script_MathAdd_b
+   033B 12                 1061 	ld	(de),a
+   033C 13                 1062 	inc	de
+   033D 3E 00              1063 	ld	a,#>_Script_MathAdd_b
+   033F 12                 1064 	ld	(de),a
+                           1065 ;	genPlus
+                           1066 ;	genPlusIncr
+   0340 23                 1067 	inc	hl
+   0341 23                 1068 	inc	hl
+                           1069 ;	genAssign (pointer)
+   0342 36 03              1070 	ld	(hl),#0x03
+                           1071 ;	genPlus
+                           1072 ;	genPlusIncr
+   0344 23                 1073 	inc	hl
+                           1074 ;	genAssign (pointer)
+   0345 5D                 1075 	ld	e,l
+   0346 54                 1076 	ld	d,h
+   0347 3E 00              1077 	ld	a,#<_Script_MathSub_b
+   0349 12                 1078 	ld	(de),a
+   034A 13                 1079 	inc	de
+   034B 3E 00              1080 	ld	a,#>_Script_MathSub_b
+   034D 12                 1081 	ld	(de),a
+                           1082 ;	genPlus
+                           1083 ;	genPlusIncr
+   034E 23                 1084 	inc	hl
+   034F 23                 1085 	inc	hl
+                           1086 ;	genAssign (pointer)
+   0350 36 03              1087 	ld	(hl),#0x03
+                           1088 ;	genPlus
+                           1089 ;	genPlusIncr
+   0352 23                 1090 	inc	hl
+                           1091 ;	genAssign (pointer)
+   0353 5D                 1092 	ld	e,l
+   0354 54                 1093 	ld	d,h
+   0355 3E 00              1094 	ld	a,#<_Script_MathMul_b
+   0357 12                 1095 	ld	(de),a
+   0358 13                 1096 	inc	de
+   0359 3E 00              1097 	ld	a,#>_Script_MathMul_b
+   035B 12                 1098 	ld	(de),a
+                           1099 ;	genPlus
+                           1100 ;	genPlusIncr
+   035C 23                 1101 	inc	hl
+   035D 23                 1102 	inc	hl
+                           1103 ;	genAssign (pointer)
+   035E 36 03              1104 	ld	(hl),#0x03
+                           1105 ;	genPlus
+                           1106 ;	genPlusIncr
+   0360 23                 1107 	inc	hl
+                           1108 ;	genAssign (pointer)
+   0361 5D                 1109 	ld	e,l
+   0362 54                 1110 	ld	d,h
+   0363 3E 00              1111 	ld	a,#<_Script_MathDiv_b
+   0365 12                 1112 	ld	(de),a
+   0366 13                 1113 	inc	de
+   0367 3E 00              1114 	ld	a,#>_Script_MathDiv_b
+   0369 12                 1115 	ld	(de),a
+                           1116 ;	genPlus
+                           1117 ;	genPlusIncr
+   036A 23                 1118 	inc	hl
+   036B 23                 1119 	inc	hl
+                           1120 ;	genAssign (pointer)
+   036C 36 03              1121 	ld	(hl),#0x03
+                           1122 ;	genPlus
+                           1123 ;	genPlusIncr
+   036E 23                 1124 	inc	hl
+                           1125 ;	genAssign (pointer)
+   036F 5D                 1126 	ld	e,l
+   0370 54                 1127 	ld	d,h
+   0371 3E 00              1128 	ld	a,#<_Script_MathMod_b
+   0373 12                 1129 	ld	(de),a
+   0374 13                 1130 	inc	de
+   0375 3E 00              1131 	ld	a,#>_Script_MathMod_b
+   0377 12                 1132 	ld	(de),a
+                           1133 ;	genPlus
+                           1134 ;	genPlusIncr
+   0378 23                 1135 	inc	hl
+   0379 23                 1136 	inc	hl
+                           1137 ;	genAssign (pointer)
+   037A 36 03              1138 	ld	(hl),#0x03
+                           1139 ;	genPlus
+                           1140 ;	genPlusIncr
+   037C 23                 1141 	inc	hl
+                           1142 ;	genAssign (pointer)
+   037D 5D                 1143 	ld	e,l
+   037E 54                 1144 	ld	d,h
+   037F 3E 00              1145 	ld	a,#<_Script_MathAddVal_b
+   0381 12                 1146 	ld	(de),a
+   0382 13                 1147 	inc	de
+   0383 3E 00              1148 	ld	a,#>_Script_MathAddVal_b
+   0385 12                 1149 	ld	(de),a
+                           1150 ;	genPlus
+                           1151 ;	genPlusIncr
+   0386 23                 1152 	inc	hl
+   0387 23                 1153 	inc	hl
+                           1154 ;	genAssign (pointer)
+   0388 36 00              1155 	ld	(hl),#0x00
+                           1156 ;	genPlus
+                           1157 ;	genPlusIncr
+   038A 23                 1158 	inc	hl
+                           1159 ;	genAssign (pointer)
+   038B 5D                 1160 	ld	e,l
+   038C 54                 1161 	ld	d,h
+   038D 3E 00              1162 	ld	a,#<_Script_MathSubVal_b
+   038F 12                 1163 	ld	(de),a
+   0390 13                 1164 	inc	de
+   0391 3E 00              1165 	ld	a,#>_Script_MathSubVal_b
+   0393 12                 1166 	ld	(de),a
+                           1167 ;	genPlus
+                           1168 ;	genPlusIncr
+   0394 23                 1169 	inc	hl
+   0395 23                 1170 	inc	hl
+                           1171 ;	genAssign (pointer)
+   0396 36 00              1172 	ld	(hl),#0x00
+                           1173 ;	genPlus
+                           1174 ;	genPlusIncr
+   0398 23                 1175 	inc	hl
+                           1176 ;	genAssign (pointer)
+   0399 5D                 1177 	ld	e,l
+   039A 54                 1178 	ld	d,h
+   039B 3E 00              1179 	ld	a,#<_Script_MathMulVal_b
+   039D 12                 1180 	ld	(de),a
+   039E 13                 1181 	inc	de
+   039F 3E 00              1182 	ld	a,#>_Script_MathMulVal_b
+   03A1 12                 1183 	ld	(de),a
+                           1184 ;	genPlus
+                           1185 ;	genPlusIncr
+   03A2 23                 1186 	inc	hl
+   03A3 23                 1187 	inc	hl
+                           1188 ;	genAssign (pointer)
+   03A4 36 00              1189 	ld	(hl),#0x00
+                           1190 ;	genPlus
+                           1191 ;	genPlusIncr
+   03A6 23                 1192 	inc	hl
+                           1193 ;	genAssign (pointer)
+   03A7 5D                 1194 	ld	e,l
+   03A8 54                 1195 	ld	d,h
+   03A9 3E 00              1196 	ld	a,#<_Script_MathDivVal_b
+   03AB 12                 1197 	ld	(de),a
+   03AC 13                 1198 	inc	de
+   03AD 3E 00              1199 	ld	a,#>_Script_MathDivVal_b
+   03AF 12                 1200 	ld	(de),a
+                           1201 ;	genPlus
+                           1202 ;	genPlusIncr
+   03B0 23                 1203 	inc	hl
+   03B1 23                 1204 	inc	hl
+                           1205 ;	genAssign (pointer)
+   03B2 36 00              1206 	ld	(hl),#0x00
+                           1207 ;	genPlus
+                           1208 ;	genPlusIncr
+   03B4 23                 1209 	inc	hl
+                           1210 ;	genAssign (pointer)
+   03B5 5D                 1211 	ld	e,l
+   03B6 54                 1212 	ld	d,h
+   03B7 3E 00              1213 	ld	a,#<_Script_MathModVal_b
+   03B9 12                 1214 	ld	(de),a
+   03BA 13                 1215 	inc	de
+   03BB 3E 00              1216 	ld	a,#>_Script_MathModVal_b
+   03BD 12                 1217 	ld	(de),a
+                           1218 ;	genPlus
+                           1219 ;	genPlusIncr
+   03BE 23                 1220 	inc	hl
+   03BF 23                 1221 	inc	hl
+                           1222 ;	genAssign (pointer)
+   03C0 36 00              1223 	ld	(hl),#0x00
+                           1224 ;	genPlus
+                           1225 ;	genPlusIncr
+   03C2 23                 1226 	inc	hl
+                           1227 ;	genAssign (pointer)
+   03C3 5D                 1228 	ld	e,l
+   03C4 54                 1229 	ld	d,h
+   03C5 3E 00              1230 	ld	a,#<_Script_CopyVal_b
+   03C7 12                 1231 	ld	(de),a
+   03C8 13                 1232 	inc	de
+   03C9 3E 00              1233 	ld	a,#>_Script_CopyVal_b
+   03CB 12                 1234 	ld	(de),a
+                           1235 ;	genPlus
+                           1236 ;	genPlusIncr
+   03CC 23                 1237 	inc	hl
+   03CD 23                 1238 	inc	hl
+                           1239 ;	genAssign (pointer)
+   03CE 36 00              1240 	ld	(hl),#0x00
+                           1241 ;	genPlus
+                           1242 ;	genPlusIncr
+   03D0 23                 1243 	inc	hl
+                           1244 ;	genAssign (pointer)
+   03D1 5D                 1245 	ld	e,l
+   03D2 54                 1246 	ld	d,h
+   03D3 3E 00              1247 	ld	a,#<_Script_IfValueCompare_b
+   03D5 12                 1248 	ld	(de),a
+   03D6 13                 1249 	inc	de
+   03D7 3E 00              1250 	ld	a,#>_Script_IfValueCompare_b
+   03D9 12                 1251 	ld	(de),a
+                           1252 ;	genPlus
+                           1253 ;	genPlusIncr
+   03DA 23                 1254 	inc	hl
+   03DB 23                 1255 	inc	hl
+                           1256 ;	genAssign (pointer)
+   03DC 36 03              1257 	ld	(hl),#0x03
+                           1258 ;	genPlus
+                           1259 ;	genPlusIncr
+   03DE 23                 1260 	inc	hl
+                           1261 ;	genAssign (pointer)
+   03DF 5D                 1262 	ld	e,l
+   03E0 54                 1263 	ld	d,h
+   03E1 3E 00              1264 	ld	a,#<_Script_LoadVectors_b
+   03E3 12                 1265 	ld	(de),a
+   03E4 13                 1266 	inc	de
+   03E5 3E 00              1267 	ld	a,#>_Script_LoadVectors_b
+   03E7 12                 1268 	ld	(de),a
+                           1269 ;	genPlus
+                           1270 ;	genPlusIncr
+   03E8 23                 1271 	inc	hl
+   03E9 23                 1272 	inc	hl
+                           1273 ;	genAssign (pointer)
+   03EA 36 04              1274 	ld	(hl),#0x04
+                           1275 ;	genPlus
+                           1276 ;	genPlusIncr
+   03EC 23                 1277 	inc	hl
+                           1278 ;	genAssign (pointer)
+   03ED 5D                 1279 	ld	e,l
+   03EE 54                 1280 	ld	d,h
+   03EF 3E 00              1281 	ld	a,#<_Script_ActorSetMoveSpeed_b
+   03F1 12                 1282 	ld	(de),a
+   03F2 13                 1283 	inc	de
+   03F3 3E 00              1284 	ld	a,#>_Script_ActorSetMoveSpeed_b
+   03F5 12                 1285 	ld	(de),a
+                           1286 ;	genPlus
+                           1287 ;	genPlusIncr
+   03F6 23                 1288 	inc	hl
+   03F7 23                 1289 	inc	hl
+                           1290 ;	genAssign (pointer)
+   03F8 36 01              1291 	ld	(hl),#0x01
+                           1292 ;	genPlus
+                           1293 ;	genPlusIncr
+   03FA 23                 1294 	inc	hl
+                           1295 ;	genAssign (pointer)
+   03FB 5D                 1296 	ld	e,l
+   03FC 54                 1297 	ld	d,h
+   03FD 3E 00              1298 	ld	a,#<_Script_ActorSetAnimSpeed_b
+   03FF 12                 1299 	ld	(de),a
+   0400 13                 1300 	inc	de
+   0401 3E 00              1301 	ld	a,#>_Script_ActorSetAnimSpeed_b
+   0403 12                 1302 	ld	(de),a
+                           1303 ;	genPlus
+                           1304 ;	genPlusIncr
+   0404 23                 1305 	inc	hl
+   0405 23                 1306 	inc	hl
+                           1307 ;	genAssign (pointer)
+   0406 36 01              1308 	ld	(hl),#0x01
+                           1309 ;	genPlus
+                           1310 ;	genPlusIncr
+   0408 23                 1311 	inc	hl
+                           1312 ;	genAssign (pointer)
+   0409 5D                 1313 	ld	e,l
+   040A 54                 1314 	ld	d,h
+   040B 3E 00              1315 	ld	a,#<_Script_TextSetAnimSpeed_b
+   040D 12                 1316 	ld	(de),a
+   040E 13                 1317 	inc	de
+   040F 3E 00              1318 	ld	a,#>_Script_TextSetAnimSpeed_b
+   0411 12                 1319 	ld	(de),a
+                           1320 ;	genPlus
+                           1321 ;	genPlusIncr
+   0412 23                 1322 	inc	hl
+   0413 23                 1323 	inc	hl
+                           1324 ;	genAssign (pointer)
+   0414 36 03              1325 	ld	(hl),#0x03
+                           1326 ;	genPlus
+                           1327 ;	genPlusIncr
+   0416 23                 1328 	inc	hl
+                           1329 ;	genAssign (pointer)
+   0417 5D                 1330 	ld	e,l
+   0418 54                 1331 	ld	d,h
+   0419 3E 00              1332 	ld	a,#<_Script_ScenePushState_b
+   041B 12                 1333 	ld	(de),a
+   041C 13                 1334 	inc	de
+   041D 3E 00              1335 	ld	a,#>_Script_ScenePushState_b
+   041F 12                 1336 	ld	(de),a
+                           1337 ;	genPlus
+                           1338 ;	genPlusIncr
+   0420 23                 1339 	inc	hl
+   0421 23                 1340 	inc	hl
+                           1341 ;	genAssign (pointer)
+   0422 36 00              1342 	ld	(hl),#0x00
+                           1343 ;	genPlus
+                           1344 ;	genPlusIncr
+   0424 23                 1345 	inc	hl
+                           1346 ;	genAssign (pointer)
+   0425 5D                 1347 	ld	e,l
+   0426 54                 1348 	ld	d,h
+   0427 3E 00              1349 	ld	a,#<_Script_ScenePopState_b
+   0429 12                 1350 	ld	(de),a
+   042A 13                 1351 	inc	de
+   042B 3E 00              1352 	ld	a,#>_Script_ScenePopState_b
+   042D 12                 1353 	ld	(de),a
+                           1354 ;	genPlus
+                           1355 ;	genPlusIncr
+   042E 23                 1356 	inc	hl
+   042F 23                 1357 	inc	hl
+                           1358 ;	genAssign (pointer)
+   0430 36 01              1359 	ld	(hl),#0x01
+                           1360 ;	genPlus
+                           1361 ;	genPlusIncr
+   0432 23                 1362 	inc	hl
+                           1363 ;	genAssign (pointer)
+   0433 5D                 1364 	ld	e,l
+   0434 54                 1365 	ld	d,h
+   0435 3E 00              1366 	ld	a,#<_Script_ActorInvoke_b
+   0437 12                 1367 	ld	(de),a
+   0438 13                 1368 	inc	de
+   0439 3E 00              1369 	ld	a,#>_Script_ActorInvoke_b
+   043B 12                 1370 	ld	(de),a
+                           1371 ;	genPlus
+                           1372 ;	genPlusIncr
+   043C 23                 1373 	inc	hl
+   043D 23                 1374 	inc	hl
+                           1375 ;	genAssign (pointer)
+   043E 36 00              1376 	ld	(hl),#0x00
+                           1377 ;	genPlus
+                           1378 ;	genPlusIncr
+   0440 23                 1379 	inc	hl
+                           1380 ;	genAssign (pointer)
+   0441 5D                 1381 	ld	e,l
+   0442 54                 1382 	ld	d,h
+   0443 3E 00              1383 	ld	a,#<_Script_StackPush_b
+   0445 12                 1384 	ld	(de),a
+   0446 13                 1385 	inc	de
+   0447 3E 00              1386 	ld	a,#>_Script_StackPush_b
+   0449 12                 1387 	ld	(de),a
+                           1388 ;	genPlus
+                           1389 ;	genPlusIncr
+   044A 23                 1390 	inc	hl
+   044B 23                 1391 	inc	hl
+                           1392 ;	genAssign (pointer)
+   044C 36 00              1393 	ld	(hl),#0x00
+                           1394 ;	genPlus
+                           1395 ;	genPlusIncr
+   044E 23                 1396 	inc	hl
+                           1397 ;	genAssign (pointer)
+   044F 5D                 1398 	ld	e,l
+   0450 54                 1399 	ld	d,h
+   0451 3E 00              1400 	ld	a,#<_Script_StackPop_b
+   0453 12                 1401 	ld	(de),a
+   0454 13                 1402 	inc	de
+   0455 3E 00              1403 	ld	a,#>_Script_StackPop_b
+   0457 12                 1404 	ld	(de),a
+                           1405 ;	genPlus
+                           1406 ;	genPlusIncr
+   0458 23                 1407 	inc	hl
+   0459 23                 1408 	inc	hl
+                           1409 ;	genAssign (pointer)
+   045A 36 00              1410 	ld	(hl),#0x00
+                           1411 ;	genPlus
+                           1412 ;	genPlusIncr
+   045C 23                 1413 	inc	hl
+                           1414 ;	genAssign (pointer)
+   045D 5D                 1415 	ld	e,l
+   045E 54                 1416 	ld	d,h
+   045F 3E 00              1417 	ld	a,#<_Script_SceneResetStack_b
+   0461 12                 1418 	ld	(de),a
+   0462 13                 1419 	inc	de
+   0463 3E 00              1420 	ld	a,#>_Script_SceneResetStack_b
+   0465 12                 1421 	ld	(de),a
+                           1422 ;	genPlus
+                           1423 ;	genPlusIncr
+   0466 23                 1424 	inc	hl
+   0467 23                 1425 	inc	hl
+                           1426 ;	genAssign (pointer)
+   0468 36 00              1427 	ld	(hl),#0x00
+                           1428 ;	genPlus
+                           1429 ;	genPlusIncr
+   046A 23                 1430 	inc	hl
+                           1431 ;	genAssign (pointer)
+   046B 5D                 1432 	ld	e,l
+   046C 54                 1433 	ld	d,h
+   046D 3E 00              1434 	ld	a,#<_Script_ScenePopAllState_b
+   046F 12                 1435 	ld	(de),a
+   0470 13                 1436 	inc	de
+   0471 3E 00              1437 	ld	a,#>_Script_ScenePopAllState_b
+   0473 12                 1438 	ld	(de),a
+                           1439 ;	genPlus
+                           1440 ;	genPlusIncr
+   0474 23                 1441 	inc	hl
+   0475 23                 1442 	inc	hl
+                           1443 ;	genAssign (pointer)
+   0476 36 01              1444 	ld	(hl),#0x01
+                           1445 ;	genPlus
+                           1446 ;	genPlusIncr
+   0478 23                 1447 	inc	hl
+                           1448 ;	genAssign (pointer)
+   0479 5D                 1449 	ld	e,l
+   047A 54                 1450 	ld	d,h
+   047B 3E 00              1451 	ld	a,#<_Script_SetInputScript_b
+   047D 12                 1452 	ld	(de),a
+   047E 13                 1453 	inc	de
+   047F 3E 00              1454 	ld	a,#>_Script_SetInputScript_b
+   0481 12                 1455 	ld	(de),a
+                           1456 ;	genPlus
+                           1457 ;	genPlusIncr
+   0482 23                 1458 	inc	hl
+   0483 23                 1459 	inc	hl
+                           1460 ;	genAssign (pointer)
+   0484 36 04              1461 	ld	(hl),#0x04
+                           1462 ;	genPlus
+                           1463 ;	genPlusIncr
+   0486 23                 1464 	inc	hl
+                           1465 ;	genAssign (pointer)
+   0487 5D                 1466 	ld	e,l
+   0488 54                 1467 	ld	d,h
+   0489 3E 00              1468 	ld	a,#<_Script_RemoveInputScript_b
+   048B 12                 1469 	ld	(de),a
+   048C 13                 1470 	inc	de
+   048D 3E 00              1471 	ld	a,#>_Script_RemoveInputScript_b
+   048F 12                 1472 	ld	(de),a
+                           1473 ;	genPlus
+                           1474 ;	genPlusIncr
+   0490 23                 1475 	inc	hl
+   0491 23                 1476 	inc	hl
+                           1477 ;	genAssign (pointer)
+   0492 36 01              1478 	ld	(hl),#0x01
+                           1479 ;	genPlus
+                           1480 ;	genPlusIncr
+   0494 23                 1481 	inc	hl
+                           1482 ;	genAssign (pointer)
+   0495 5D                 1483 	ld	e,l
+   0496 54                 1484 	ld	d,h
+   0497 3E 00              1485 	ld	a,#<_Script_ActorSetFrame_b
+   0499 12                 1486 	ld	(de),a
+   049A 13                 1487 	inc	de
+   049B 3E 00              1488 	ld	a,#>_Script_ActorSetFrame_b
+   049D 12                 1489 	ld	(de),a
+                           1490 ;	genPlus
+                           1491 ;	genPlusIncr
+   049E 23                 1492 	inc	hl
+   049F 23                 1493 	inc	hl
+                           1494 ;	genAssign (pointer)
+   04A0 36 01              1495 	ld	(hl),#0x01
+                           1496 ;	genPlus
+                           1497 ;	genPlusIncr
+   04A2 23                 1498 	inc	hl
+                           1499 ;	genAssign (pointer)
+   04A3 5D                 1500 	ld	e,l
+   04A4 54                 1501 	ld	d,h
+   04A5 3E 00              1502 	ld	a,#<_Script_ActorSetFlip_b
+   04A7 12                 1503 	ld	(de),a
+   04A8 13                 1504 	inc	de
+   04A9 3E 00              1505 	ld	a,#>_Script_ActorSetFlip_b
+   04AB 12                 1506 	ld	(de),a
+                           1507 ;	genPlus
+                           1508 ;	genPlusIncr
+   04AC 23                 1509 	inc	hl
+   04AD 23                 1510 	inc	hl
+                           1511 ;	genAssign (pointer)
+   04AE 36 01              1512 	ld	(hl),#0x01
+                           1513 ;	genPlus
+                           1514 ;	genPlusIncr
+   04B0 23                 1515 	inc	hl
+                           1516 ;	genAssign (pointer)
+   04B1 5D                 1517 	ld	e,l
+   04B2 54                 1518 	ld	d,h
+   04B3 3E 00              1519 	ld	a,#<_Script_TextMulti_b
+   04B5 12                 1520 	ld	(de),a
+   04B6 13                 1521 	inc	de
+   04B7 3E 00              1522 	ld	a,#>_Script_TextMulti_b
+   04B9 12                 1523 	ld	(de),a
+                           1524 ;	genPlus
+                           1525 ;	genPlusIncr
+   04BA 23                 1526 	inc	hl
+   04BB 23                 1527 	inc	hl
+                           1528 ;	genAssign (pointer)
+   04BC 36 01              1529 	ld	(hl),#0x01
+                           1530 ;	genPlus
+                           1531 ;	genPlusIncr
+   04BE 23                 1532 	inc	hl
+                           1533 ;	genAssign (pointer)
+   04BF 5D                 1534 	ld	e,l
+   04C0 54                 1535 	ld	d,h
+   04C1 3E 00              1536 	ld	a,#<_Script_ActorSetFrameToVal_b
+   04C3 12                 1537 	ld	(de),a
+   04C4 13                 1538 	inc	de
+   04C5 3E 00              1539 	ld	a,#>_Script_ActorSetFrameToVal_b
+   04C7 12                 1540 	ld	(de),a
+                           1541 ;	genPlus
+                           1542 ;	genPlusIncr
+   04C8 23                 1543 	inc	hl
+   04C9 23                 1544 	inc	hl
+                           1545 ;	genAssign (pointer)
+   04CA 36 02              1546 	ld	(hl),#0x02
+                           1547 ;	genPlus
+                           1548 ;	genPlusIncr
+   04CC 23                 1549 	inc	hl
+                           1550 ;	genAssign (pointer)
+   04CD 5D                 1551 	ld	e,l
+   04CE 54                 1552 	ld	d,h
+   04CF 3E 00              1553 	ld	a,#<_Script_VariableAddFlags_b
+   04D1 12                 1554 	ld	(de),a
+   04D2 13                 1555 	inc	de
+   04D3 3E 00              1556 	ld	a,#>_Script_VariableAddFlags_b
+   04D5 12                 1557 	ld	(de),a
+                           1558 ;	genPlus
+                           1559 ;	genPlusIncr
+   04D6 23                 1560 	inc	hl
+   04D7 23                 1561 	inc	hl
+                           1562 ;	genAssign (pointer)
+   04D8 36 03              1563 	ld	(hl),#0x03
+                           1564 ;	genPlus
+                           1565 ;	genPlusIncr
+   04DA 23                 1566 	inc	hl
+                           1567 ;	genAssign (pointer)
+   04DB 5D                 1568 	ld	e,l
+   04DC 54                 1569 	ld	d,h
+   04DD 3E 00              1570 	ld	a,#<_Script_VariableClearFlags_b
+   04DF 12                 1571 	ld	(de),a
+   04E0 13                 1572 	inc	de
+   04E1 3E 00              1573 	ld	a,#>_Script_VariableClearFlags_b
+   04E3 12                 1574 	ld	(de),a
+                           1575 ;	genPlus
+                           1576 ;	genPlusIncr
+   04E4 23                 1577 	inc	hl
+   04E5 23                 1578 	inc	hl
+                           1579 ;	genAssign (pointer)
+   04E6 36 03              1580 	ld	(hl),#0x03
+                           1581 ;	genPlus
+                           1582 ;	genPlusIncr
+   04E8 23                 1583 	inc	hl
+                           1584 ;	genAssign (pointer)
+   04E9 5D                 1585 	ld	e,l
+   04EA 54                 1586 	ld	d,h
+   04EB 3E 00              1587 	ld	a,#<_Script_SoundStartTone_b
+   04ED 12                 1588 	ld	(de),a
+   04EE 13                 1589 	inc	de
+   04EF 3E 00              1590 	ld	a,#>_Script_SoundStartTone_b
+   04F1 12                 1591 	ld	(de),a
+                           1592 ;	genPlus
+                           1593 ;	genPlusIncr
+   04F2 23                 1594 	inc	hl
+   04F3 23                 1595 	inc	hl
+                           1596 ;	genAssign (pointer)
+   04F4 36 02              1597 	ld	(hl),#0x02
+                           1598 ;	genPlus
+                           1599 ;	genPlusIncr
+   04F6 23                 1600 	inc	hl
+                           1601 ;	genAssign (pointer)
+   04F7 5D                 1602 	ld	e,l
+   04F8 54                 1603 	ld	d,h
+   04F9 3E 00              1604 	ld	a,#<_Script_SoundStopTone_b
+   04FB 12                 1605 	ld	(de),a
+   04FC 13                 1606 	inc	de
+   04FD 3E 00              1607 	ld	a,#>_Script_SoundStopTone_b
+   04FF 12                 1608 	ld	(de),a
+                           1609 ;	genPlus
+                           1610 ;	genPlusIncr
+   0500 23                 1611 	inc	hl
+   0501 23                 1612 	inc	hl
+                           1613 ;	genAssign (pointer)
+   0502 36 00              1614 	ld	(hl),#0x00
+                           1615 ;	genPlus
+                           1616 ;	genPlusIncr
+   0504 23                 1617 	inc	hl
+                           1618 ;	genAssign (pointer)
+   0505 5D                 1619 	ld	e,l
+   0506 54                 1620 	ld	d,h
+   0507 3E 00              1621 	ld	a,#<_Script_SoundPlayBeep_b
+   0509 12                 1622 	ld	(de),a
+   050A 13                 1623 	inc	de
+   050B 3E 00              1624 	ld	a,#>_Script_SoundPlayBeep_b
+   050D 12                 1625 	ld	(de),a
+                           1626 ;	genPlus
+                           1627 ;	genPlusIncr
+   050E 23                 1628 	inc	hl
+   050F 23                 1629 	inc	hl
+                           1630 ;	genAssign (pointer)
+   0510 36 01              1631 	ld	(hl),#0x01
+                           1632 ;	genPlus
+                           1633 ;	genPlusIncr
+   0512 23                 1634 	inc	hl
+                           1635 ;	genAssign (pointer)
+   0513 5D                 1636 	ld	e,l
+   0514 54                 1637 	ld	d,h
+   0515 3E 00              1638 	ld	a,#<_Script_SoundPlayCrash_b
+   0517 12                 1639 	ld	(de),a
+   0518 13                 1640 	inc	de
+   0519 3E 00              1641 	ld	a,#>_Script_SoundPlayCrash_b
+   051B 12                 1642 	ld	(de),a
+                           1643 ;	genPlus
+                           1644 ;	genPlusIncr
+   051C 23                 1645 	inc	hl
+   051D 23                 1646 	inc	hl
+                           1647 ;	genAssign (pointer)
+   051E 36 00              1648 	ld	(hl),#0x00
+                           1649 ;	genPlus
+                           1650 ;	genPlusIncr
+   0520 23                 1651 	inc	hl
+                           1652 ;	genAssign (pointer)
+   0521 5D                 1653 	ld	e,l
+   0522 54                 1654 	ld	d,h
+   0523 3E 00              1655 	ld	a,#<_Script_SetTimerScript_b
+   0525 12                 1656 	ld	(de),a
+   0526 13                 1657 	inc	de
+   0527 3E 00              1658 	ld	a,#>_Script_SetTimerScript_b
+   0529 12                 1659 	ld	(de),a
+                           1660 ;	genPlus
+                           1661 ;	genPlusIncr
+   052A 23                 1662 	inc	hl
+   052B 23                 1663 	inc	hl
+                           1664 ;	genAssign (pointer)
+   052C 36 04              1665 	ld	(hl),#0x04
+                           1666 ;	genPlus
+                           1667 ;	genPlusIncr
+   052E 23                 1668 	inc	hl
+                           1669 ;	genAssign (pointer)
+   052F 5D                 1670 	ld	e,l
+   0530 54                 1671 	ld	d,h
+   0531 3E 00              1672 	ld	a,#<_Script_ResetTimer_b
+   0533 12                 1673 	ld	(de),a
+   0534 13                 1674 	inc	de
+   0535 3E 00              1675 	ld	a,#>_Script_ResetTimer_b
+   0537 12                 1676 	ld	(de),a
+                           1677 ;	genPlus
+                           1678 ;	genPlusIncr
+   0538 23                 1679 	inc	hl
+   0539 23                 1680 	inc	hl
+                           1681 ;	genAssign (pointer)
+   053A 36 00              1682 	ld	(hl),#0x00
+                           1683 ;	genPlus
+                           1684 ;	genPlusIncr
+   053C 23                 1685 	inc	hl
+                           1686 ;	genAssign (pointer)
+   053D 5D                 1687 	ld	e,l
+   053E 54                 1688 	ld	d,h
+   053F 3E 00              1689 	ld	a,#<_Script_RemoveTimerScript_b
+   0541 12                 1690 	ld	(de),a
+   0542 13                 1691 	inc	de
+   0543 3E 00              1692 	ld	a,#>_Script_RemoveTimerScript_b
+   0545 12                 1693 	ld	(de),a
+                           1694 ;	genPlus
+                           1695 ;	genPlusIncr
+   0546 23                 1696 	inc	hl
+   0547 23                 1697 	inc	hl
+                           1698 ;	genAssign (pointer)
+   0548 36 00              1699 	ld	(hl),#0x00
+                           1700 ;	genPlus
+                           1701 ;	genPlusIncr
+   054A 23                 1702 	inc	hl
+                           1703 ;	genAssign (pointer)
+   054B 5D                 1704 	ld	e,l
+   054C 54                 1705 	ld	d,h
+   054D 3E 00              1706 	ld	a,#<_Script_TextWithAvatar_b
+   054F 12                 1707 	ld	(de),a
+   0550 13                 1708 	inc	de
+   0551 3E 00              1709 	ld	a,#>_Script_TextWithAvatar_b
+   0553 12                 1710 	ld	(de),a
+                           1711 ;	genPlus
+                           1712 ;	genPlusIncr
+   0554 23                 1713 	inc	hl
+   0555 23                 1714 	inc	hl
+                           1715 ;	genAssign (pointer)
+   0556 36 03              1716 	ld	(hl),#0x03
+                           1717 ;	genPlus
+                           1718 ;	genPlusIncr
+   0558 23                 1719 	inc	hl
+                           1720 ;	genAssign (pointer)
+   0559 5D                 1721 	ld	e,l
+   055A 54                 1722 	ld	d,h
+   055B 3E 00              1723 	ld	a,#<_Script_TextMenu_b
+   055D 12                 1724 	ld	(de),a
+   055E 13                 1725 	inc	de
+   055F 3E 00              1726 	ld	a,#>_Script_TextMenu_b
+   0561 12                 1727 	ld	(de),a
+                           1728 ;	genPlus
+                           1729 ;	genPlusIncr
+   0562 23                 1730 	inc	hl
+   0563 23                 1731 	inc	hl
+                           1732 ;	genAssign (pointer)
+   0564 36 06              1733 	ld	(hl),#0x06
+                           1734 ;--------------------------------------------------------
+                           1735 ; Home
+                           1736 ;--------------------------------------------------------
+                           1737 	.area _HOME
+                           1738 	.area _CODE
+                           1739 ;--------------------------------------------------------
+                           1740 ; code
+                           1741 ;--------------------------------------------------------
+                           1742 	.area _CODE
+                           1743 ;	src/ScriptRunner.c 122
+                           1744 ;	genLabel
+                           1745 ;	genFunction
+                           1746 ;	---------------------------------
+                           1747 ; Function ScriptStart
+                           1748 ; ---------------------------------
+   0000                    1749 ___ScriptStart_start:
+   0000                    1750 _ScriptStart:
+   0000 E8 FC              1751 	lda	sp,-4(sp)
+                           1752 ;	src/ScriptRunner.c 125
+                           1753 ;	genAssign
+                           1754 ;	AOP_STK for 
+   0002 F8 06              1755 	lda	hl,6(sp)
+   0004 4E                 1756 	ld	c,(hl)
+   0005 23                 1757 	inc	hl
+   0006 46                 1758 	ld	b,(hl)
+                           1759 ;	genPointerGet
+                           1760 ;	AOP_HL for _script_ptr_bank
+   0007 0A                 1761 	ld	a,(bc)
+   0008 21 02 00           1762 	ld	hl,#_script_ptr_bank
+                           1763 ;	src/ScriptRunner.c 126
+                           1764 ;	genCast
+                           1765 ;	AOP_HL for _script_ptr_bank
+                           1766 ;	AOP_STK for _ScriptStart_sloc0_1_0
+   000B 77                 1767 	ld      (hl),a
+   000C 7F                 1768 	ld      a,a
+   000D F8 02              1769 	lda	hl,2(sp)
+   000F 22                 1770 	ld	(hl+),a
+   0010 36 00              1771 	ld	(hl),#0x00
+                           1772 ;	genLeftShift
+                           1773 ;	AOP_STK for _ScriptStart_sloc0_1_0
+                           1774 ;	AOP_STK for _ScriptStart_sloc1_1_0
+   0012 2B                 1775 	dec	hl
+   0013 7E                 1776 	ld	a,(hl)
+   0014 2B                 1777 	dec	hl
+   0015 2B                 1778 	dec	hl
+   0016 77                 1779 	ld	(hl),a
+   0017 F8 03              1780 	lda	hl,3(sp)
+   0019 7E                 1781 	ld	a,(hl)
+   001A 2B                 1782 	dec	hl
+   001B 2B                 1783 	dec	hl
+   001C 32                 1784 	ld      (hl-),a
+   001D CB 26              1785 	sla	(hl)
+   001F 23                 1786 	inc	hl
+   0020 CB 16              1787 	rl	(hl)
+                           1788 ;	genPlus
+                           1789 ;	AOP_STK for _ScriptStart_sloc1_1_0
+                           1790 ;	AOP_STK for _ScriptStart_sloc0_1_0
+                           1791 ;	Can't optimise plus by inc, falling back to the normal way
+   0022 11 00 00           1792 	ld	de,#_bank_data_ptrs
+   0025 2B                 1793 	dec	hl
+   0026 2A                 1794 	ld	a,(hl+)
+   0027 66                 1795 	ld	h,(hl)
+   0028 6F                 1796 	ld	l,a
+   0029 19                 1797 	add	hl,de
+   002A 7D                 1798 	ld	a,l
+   002B 54                 1799 	ld	d,h
+   002C F8 02              1800 	lda	hl,2(sp)
+                           1801 ;	genPointerGet
+                           1802 ;	AOP_STK for _ScriptStart_sloc0_1_0
+                           1803 ;	AOP_STK for _ScriptStart_sloc1_1_0
+   002E 22                 1804 	ld	(hl+),a
+   002F 72                 1805 	ld	(hl),d
+   0030 5F                 1806 	ld	e,a
+   0031 1A                 1807 	ld	a,(de)
+   0032 F8 00              1808 	lda	hl,0(sp)
+   0034 77                 1809 	ld	(hl),a
+   0035 13                 1810 	inc	de
+   0036 1A                 1811 	ld	a,(de)
+   0037 23                 1812 	inc	hl
+                           1813 ;	genCast
+                           1814 ;	AOP_STK for _ScriptStart_sloc1_1_0
+                           1815 ;	AOP_STK for _ScriptStart_sloc0_1_0
+   0038 32                 1816 	ld      (hl-),a
+   0039 2A                 1817 	ld	a,(hl+)
+   003A 23                 1818 	inc	hl
+   003B 32                 1819 	ld      (hl-),a
+   003C 2A                 1820 	ld	a,(hl+)
+   003D 23                 1821 	inc	hl
+   003E 77                 1822 	ld	(hl),a
+                           1823 ;	genPlus
+                           1824 ;	genPlusIncr
+   003F 03                 1825 	inc	bc
+                           1826 ;	genPointerGet
+   0040 59                 1827 	ld	e,c
+   0041 50                 1828 	ld	d,b
+   0042 1A                 1829 	ld	a,(de)
+   0043 4F                 1830 	ld	c,a
+   0044 13                 1831 	inc	de
+   0045 1A                 1832 	ld	a,(de)
+   0046 47                 1833 	ld	b,a
+                           1834 ;	genPlus
+                           1835 ;	AOP_STK for _ScriptStart_sloc0_1_0
+                           1836 ;	AOP_HL for _script_ptr
+                           1837 ;	Can't optimise plus by inc, falling back to the normal way
+   0047 2B                 1838 	dec	hl
+   0048 2A                 1839 	ld	a,(hl+)
+   0049 66                 1840 	ld	h,(hl)
+   004A 6F                 1841 	ld	l,a
+   004B 09                 1842 	add	hl,bc
+   004C 7D                 1843 	ld	a,l
+   004D 54                 1844 	ld	d,h
+   004E 21 03 00           1845 	ld	hl,#_script_ptr
+   0051 22                 1846 	ld	(hl+),a
+   0052 72                 1847 	ld	(hl),d
+                           1848 ;	src/ScriptRunner.c 128
+                           1849 ;	genAssign
+                           1850 ;	AOP_HL for _ptr_div_reg
+   0053 21 00 00           1851 	ld	hl,#_ptr_div_reg
+   0056 4E                 1852 	ld	c,(hl)
+   0057 23                 1853 	inc	hl
+   0058 46                 1854 	ld	b,(hl)
+                           1855 ;	genPointerGet
+   0059 0A                 1856 	ld	a,(bc)
+   005A 4F                 1857 	ld	c,a
+                           1858 ;	genAssign
+                           1859 ;	(registers are the same)
+                           1860 ;	src/ScriptRunner.c 129
+                           1861 ;	genCast
+                           1862 ; Removed redundent load
+   005B 06 00              1863 	ld	b,#0x00
+                           1864 ;	genIpush
+                           1865 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   005D C5                 1866 	push	bc
+                           1867 ;	genCall
+   005E CD 00 00           1868 	call	_initrand
+   0061 E8 02              1869 	lda	sp,2(sp)
+                           1870 ;	src/ScriptRunner.c 131
+                           1871 ;	genAssign
+                           1872 ;	AOP_HL for _script_ptr
+                           1873 ;	AOP_HL for _script_start_ptr
+   0063 21 03 00           1874 	ld	hl,#_script_ptr
+   0066 2A                 1875 	ld	a,(hl+)
+   0067 5E                 1876 	ld	e,(hl)
+   0068 21 09 00           1877 	ld	hl,#_script_start_ptr
+   006B 22                 1878 	ld	(hl+),a
+   006C 73                 1879 	ld	(hl),e
+                           1880 ;	genLabel
+   006D                    1881 00101$:
+                           1882 ;	genEndFunction
+   006D E8 04              1883 	lda	sp,4(sp)
+   006F C9                 1884 	ret
+   0070                    1885 ___ScriptStart_end:
+                           1886 ;	src/ScriptRunner.c 134
+                           1887 ;	genLabel
+                           1888 ;	genFunction
+                           1889 ;	---------------------------------
+                           1890 ; Function ScriptRunnerUpdate
+                           1891 ; ---------------------------------
+   0070                    1892 ___ScriptRunnerUpdate_start:
+   0070                    1893 _ScriptRunnerUpdate:
+   0070 E8 F9              1894 	lda	sp,-7(sp)
+                           1895 ;	src/ScriptRunner.c 139
+                           1896 ;	genIfx
+                           1897 ;	AOP_HL for _script_action_complete
+   0072 AF                 1898 	xor	a,a
+   0073 21 00 00           1899 	ld	hl,#_script_action_complete
+   0076 B6                 1900 	or	a,(hl)
+   0077 C2 81 00           1901 	jp	nz,00102$
+                           1902 ;	src/ScriptRunner.c 141
+                           1903 ;	genCall
+                           1904 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   007A CD 96 01           1905 	call	_ScriptLastFnComplete
+                           1906 ;	AOP_HL for _script_action_complete
+   007D 21 00 00           1907 	ld	hl,#_script_action_complete
+   0080 73                 1908 	ld	(hl),e
+                           1909 ;	genLabel
+   0081                    1910 00102$:
+                           1911 ;	src/ScriptRunner.c 144
+                           1912 ;	genIfx
+                           1913 ;	AOP_HL for _script_ptr_bank
+   0081 AF                 1914 	xor	a,a
+   0082 21 02 00           1915 	ld	hl,#_script_ptr_bank
+   0085 B6                 1916 	or	a,(hl)
+   0086 CA 91 00           1917 	jp	z,00103$
+                           1918 ;	genIfx
+                           1919 ;	AOP_HL for _script_action_complete
+   0089 AF                 1920 	xor	a,a
+   008A 21 00 00           1921 	ld	hl,#_script_action_complete
+   008D B6                 1922 	or	a,(hl)
+   008E C2 94 00           1923 	jp	nz,00104$
+                           1924 ;	genLabel
+   0091                    1925 00103$:
+                           1926 ;	src/ScriptRunner.c 146
+                           1927 ;	genRet
+   0091 C3 93 01           1928 	jp	00116$
+                           1929 ;	genLabel
+   0094                    1930 00104$:
+                           1931 ;	src/ScriptRunner.c 149
+                           1932 ;	genCast
+                           1933 ;	AOP_HL for _script_ptr
+   0094 21 03 00           1934 	ld	hl,#_script_ptr
+   0097 4E                 1935 	ld	c,(hl)
+   0098 23                 1936 	inc	hl
+   0099 46                 1937 	ld	b,(hl)
+                           1938 ;	genIpush
+                           1939 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   009A C5                 1940 	push	bc
+                           1941 ;	genIpush
+                           1942 ;	AOP_HL for _script_ptr_bank
+   009B 21 02 00           1943 	ld	hl,#_script_ptr_bank
+   009E 7E                 1944 	ld	a,(hl)
+   009F F5                 1945 	push	af
+   00A0 33                 1946 	inc	sp
+                           1947 ;	genCall
+   00A1 CD 00 00           1948 	call	_ReadBankedUBYTE
+   00A4 4B                 1949 	ld	c,e
+   00A5 E8 03              1950 	lda	sp,3(sp)
+                           1951 ;	genAssign
+                           1952 ;	(registers are the same)
+                           1953 ;	src/ScriptRunner.c 153
+                           1954 ;	genIfx
+   00A7 AF                 1955 	xor	a,a
+   00A8 B1                 1956 	or	a,c
+   00A9 C2 E1 00           1957 	jp	nz,00109$
+                           1958 ;	src/ScriptRunner.c 155
+                           1959 ;	genIfx
+                           1960 ;	AOP_HL for _script_stack_ptr
+   00AC AF                 1961 	xor	a,a
+   00AD 21 14 00           1962 	ld	hl,#_script_stack_ptr
+   00B0 B6                 1963 	or	a,(hl)
+   00B1 CA D1 00           1964 	jp	z,00107$
+                           1965 ;	src/ScriptRunner.c 158
+                           1966 ;	genIpush
+                           1967 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   00B4 C5                 1968 	push	bc
+                           1969 ;	AOP_HL for _scriptrunner_bank
+   00B5 21 00 00           1970 	ld	hl,#_scriptrunner_bank
+   00B8 7E                 1971 	ld	a,(hl)
+   00B9 F5                 1972 	push	af
+   00BA 33                 1973 	inc	sp
+                           1974 ;	genCall
+   00BB CD 00 00           1975 	call	_PushBank
+   00BE E8 01              1976 	lda	sp,1(sp)
+   00C0 E1                 1977 	pop	hl
+   00C1 4D                 1978 	ld	c,l
+                           1979 ;	src/ScriptRunner.c 159
+                           1980 ;	genCall
+                           1981 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   00C2 C5                 1982 	push	bc
+   00C3 CD 00 00           1983 	call	_Script_StackPop_b
+   00C6 E1                 1984 	pop	hl
+   00C7 4D                 1985 	ld	c,l
+                           1986 ;	src/ScriptRunner.c 160
+                           1987 ;	genCall
+                           1988 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   00C8 C5                 1989 	push	bc
+   00C9 CD 00 00           1990 	call	_PopBank
+   00CC E1                 1991 	pop	hl
+   00CD 4D                 1992 	ld	c,l
+                           1993 ;	src/ScriptRunner.c 161
+                           1994 ;	genRet
+   00CE C3 93 01           1995 	jp	00116$
+                           1996 ;	genLabel
+   00D1                    1997 00107$:
+                           1998 ;	src/ScriptRunner.c 164
+                           1999 ;	genAssign
+                           2000 ;	AOP_HL for _script_ptr_bank
+   00D1 21 02 00           2001 	ld	hl,#_script_ptr_bank
+   00D4 36 00              2002 	ld	(hl),#0x00
+                           2003 ;	src/ScriptRunner.c 165
+                           2004 ;	genAssign
+                           2005 ;	AOP_HL for _script_ptr
+   00D6 21 03 00           2006 	ld	hl,#_script_ptr
+   00D9 36 00              2007 	ld	(hl),#0x00
+   00DB 23                 2008 	inc	hl
+   00DC 36 00              2009 	ld	(hl),#0x00
+                           2010 ;	src/ScriptRunner.c 166
+                           2011 ;	genRet
+   00DE C3 93 01           2012 	jp	00116$
+                           2013 ;	genLabel
+   00E1                    2014 00109$:
+                           2015 ;	src/ScriptRunner.c 169
+                           2016 ;	genMult
+   00E1 59                 2017 	ld	e,c
+   00E2 16 00              2018 	ld	d,#0x00
+   00E4 6B                 2019 	ld	l,e
+   00E5 62                 2020 	ld	h,d
+   00E6 29                 2021 	add	hl,hl
+   00E7 19                 2022 	add	hl,de
+   00E8 4D                 2023 	ld	c,l
+   00E9 44                 2024 	ld	b,h
+                           2025 ;	genPlus
+                           2026 ;	AOP_STK for _ScriptRunnerUpdate_sloc1_1_0
+                           2027 ;	Can't optimise plus by inc, falling back to the normal way
+   00EA 21 35 00           2028 	ld	hl,#_script_cmds
+   00ED 09                 2029 	add	hl,bc
+   00EE 7D                 2030 	ld	a,l
+   00EF 54                 2031 	ld	d,h
+   00F0 F8 02              2032 	lda	hl,2(sp)
+   00F2 22                 2033 	ld	(hl+),a
+   00F3 72                 2034 	ld	(hl),d
+                           2035 ;	genPlus
+                           2036 ;	AOP_STK for _ScriptRunnerUpdate_sloc1_1_0
+                           2037 ;	AOP_STK for _ScriptRunnerUpdate_sloc0_1_0
+                           2038 ;	genPlusIncr
+                           2039 ;	Can't optimise plus by inc, falling back to the normal way
+   00F4 2B                 2040 	dec	hl
+   00F5 5E                 2041 	ld	e,(hl)
+   00F6 23                 2042 	inc	hl
+   00F7 56                 2043 	ld	d,(hl)
+   00F8 21 02 00           2044 	ld	hl,#0x0002
+   00FB 19                 2045 	add	hl,de
+   00FC 7D                 2046 	ld	a,l
+   00FD 54                 2047 	ld	d,h
+   00FE F8 04              2048 	lda	hl,4(sp)
+                           2049 ;	genPointerGet
+                           2050 ;	AOP_STK for _ScriptRunnerUpdate_sloc0_1_0
+                           2051 ;	AOP_HL for _script_cmd_args_len
+   0100 22                 2052 	ld	(hl+),a
+   0101 72                 2053 	ld	(hl),d
+   0102 5F                 2054 	ld	e,a
+   0103 1A                 2055 	ld	a,(de)
+   0104 21 11 00           2056 	ld	hl,#_script_cmd_args_len
+   0107 77                 2057 	ld	(hl),a
+                           2058 ;	src/ScriptRunner.c 174
+                           2059 ;	genAssign
+                           2060 ;	AOP_STK for _ScriptRunnerUpdate_i_1_1
+   0108 F8 06              2061 	lda	hl,6(sp)
+   010A 36 00              2062 	ld	(hl),#0x00
+                           2063 ;	genLabel
+   010C                    2064 00112$:
+                           2065 ;	genCmpEq
+                           2066 ;	AOP_STK for _ScriptRunnerUpdate_i_1_1
+                           2067 ;	AOP_HL for _script_cmd_args_len
+                           2068 ; genCmpEq: left 1, right 1, result 0
+   010C 21 11 00           2069 	ld	hl,#_script_cmd_args_len
+   010F 7E                 2070 	ld	a,(hl)
+   0110 F8 06              2071 	lda	hl,6(sp)
+   0112 BE                 2072 	cp	(hl)
+   0113 20 03              2073 	jr	nz,00125$
+   0115 C3 5B 01           2074 	jp	00115$
+   0118                    2075 00125$:
+                           2076 ;	src/ScriptRunner.c 176
+                           2077 ;	genPlus
+                           2078 ;	AOP_STK for _ScriptRunnerUpdate_i_1_1
+                           2079 ;	AOP_STK for _ScriptRunnerUpdate_sloc0_1_0
+                           2080 ;	Can't optimise plus by inc, falling back to the normal way
+   0118 11 0B 00           2081 	ld	de,#_script_cmd_args
+   011B F8 06              2082 	lda	hl,6(sp)
+   011D 6E                 2083 	ld	l,(hl)
+   011E 26 00              2084 	ld	h,#0x00
+   0120 19                 2085 	add	hl,de
+   0121 7D                 2086 	ld	a,l
+   0122 54                 2087 	ld	d,h
+   0123 F8 04              2088 	lda	hl,4(sp)
+   0125 22                 2089 	ld	(hl+),a
+   0126 72                 2090 	ld	(hl),d
+                           2091 ;	genCast
+                           2092 ;	AOP_STK for _ScriptRunnerUpdate_i_1_1
+                           2093 ;	AOP_STK for _ScriptRunnerUpdate_sloc2_1_0
+   0127 23                 2094 	inc	hl
+   0128 7E                 2095 	ld	a,(hl)
+   0129 F8 00              2096 	lda	hl,0(sp)
+   012B 22                 2097 	ld	(hl+),a
+   012C 36 00              2098 	ld	(hl),#0x00
+                           2099 ;	genPlus
+                           2100 ;	AOP_HL for _script_ptr
+                           2101 ;	AOP_STK for _ScriptRunnerUpdate_sloc2_1_0
+                           2102 ;	Can't optimise plus by inc, falling back to the normal way
+   012E 21 03 00           2103 	ld	hl,#_script_ptr
+   0131 5E                 2104 	ld	e,(hl)
+   0132 23                 2105 	inc	hl
+   0133 56                 2106 	ld	d,(hl)
+   0134 F8 00              2107 	lda	hl,0(sp)
+   0136 2A                 2108 	ld	a,(hl+)
+   0137 66                 2109 	ld	h,(hl)
+   0138 6F                 2110 	ld	l,a
+   0139 19                 2111 	add	hl,de
+   013A 45                 2112 	ld	b,l
+   013B 4C                 2113 	ld	c,h
+                           2114 ;	genPlus
+                           2115 ;	genPlusIncr
+   013C 04                 2116 	inc	b
+   013D 20 01              2117 	jr	nz,00126$
+   013F 0C                 2118 	inc	c
+   0140                    2119 00126$:
+                           2120 ;	genCast
+                           2121 ;	genIpush
+                           2122 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0140 68                 2123 	ld	l,b
+   0141 61                 2124 	ld	h,c
+   0142 E5                 2125 	push	hl
+                           2126 ;	genIpush
+                           2127 ;	AOP_HL for _script_ptr_bank
+   0143 21 02 00           2128 	ld	hl,#_script_ptr_bank
+   0146 7E                 2129 	ld	a,(hl)
+   0147 F5                 2130 	push	af
+   0148 33                 2131 	inc	sp
+                           2132 ;	genCall
+   0149 CD 00 00           2133 	call	_ReadBankedUBYTE
+   014C 4B                 2134 	ld	c,e
+   014D E8 03              2135 	lda	sp,3(sp)
+                           2136 ;	genAssign (pointer)
+                           2137 ;	AOP_STK for _ScriptRunnerUpdate_sloc0_1_0
+   014F F8 04              2138 	lda	hl,4(sp)
+   0151 5E                 2139 	ld	e,(hl)
+   0152 23                 2140 	inc	hl
+   0153 56                 2141 	ld	d,(hl)
+   0154 79                 2142 	ld	a,c
+   0155 12                 2143 	ld	(de),a
+                           2144 ;	src/ScriptRunner.c 174
+                           2145 ;	genPlus
+                           2146 ;	AOP_STK for _ScriptRunnerUpdate_i_1_1
+                           2147 ;	genPlusIncr
+   0156 23                 2148 	inc	hl
+   0157 34                 2149 	inc	(hl)
+                           2150 ;	genGoto
+   0158 C3 0C 01           2151 	jp	00112$
+                           2152 ;	genLabel
+   015B                    2153 00115$:
+                           2154 ;	src/ScriptRunner.c 180
+                           2155 ;	genIpush
+                           2156 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                           2157 ;	AOP_HL for _scriptrunner_bank
+   015B 21 00 00           2158 	ld	hl,#_scriptrunner_bank
+   015E 7E                 2159 	ld	a,(hl)
+   015F F5                 2160 	push	af
+   0160 33                 2161 	inc	sp
+                           2162 ;	genCall
+   0161 CD 00 00           2163 	call	_PushBank
+   0164 E8 01              2164 	lda	sp,1(sp)
+                           2165 ;	src/ScriptRunner.c 182
+                           2166 ;	genPointerGet
+                           2167 ;	AOP_STK for _ScriptRunnerUpdate_sloc1_1_0
+   0166 F8 02              2168 	lda	hl,2(sp)
+   0168 5E                 2169 	ld	e,(hl)
+   0169 23                 2170 	inc	hl
+   016A 56                 2171 	ld	d,(hl)
+   016B 1A                 2172 	ld	a,(de)
+   016C 4F                 2173 	ld	c,a
+   016D 13                 2174 	inc	de
+   016E 1A                 2175 	ld	a,(de)
+   016F 47                 2176 	ld	b,a
+                           2177 ;	genPcall
+                           2178 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0170 21 77 01           2179 	ld	hl,#00127$
+   0173 E5                 2180 	push	hl
+   0174 69                 2181 	ld	l,c
+   0175 60                 2182 	ld	h,b
+   0176 E9                 2183 	jp	(hl)
+   0177                    2184 00127$:
+                           2185 ;	src/ScriptRunner.c 184
+                           2186 ;	genCall
+                           2187 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0177 CD 00 00           2188 	call	_PopBank
+                           2189 ;	src/ScriptRunner.c 186
+                           2190 ;	genPointerGet
+                           2191 ;	AOP_STK for _ScriptRunnerUpdate_sloc1_1_0
+                           2192 ;	AOP_HL for _last_fn
+   017A F8 02              2193 	lda	hl,2(sp)
+   017C 5E                 2194 	ld	e,(hl)
+   017D 23                 2195 	inc	hl
+   017E 56                 2196 	ld	d,(hl)
+   017F 1A                 2197 	ld	a,(de)
+   0180 21 12 00           2198 	ld	hl,#_last_fn
+   0183 77                 2199 	ld	(hl),a
+   0184 13                 2200 	inc	de
+   0185 1A                 2201 	ld	a,(de)
+   0186 23                 2202 	inc	hl
+   0187 77                 2203 	ld	(hl),a
+                           2204 ;	src/ScriptRunner.c 188
+                           2205 ;	genIfx
+                           2206 ;	AOP_HL for _script_continue
+   0188 AF                 2207 	xor	a,a
+   0189 21 00 00           2208 	ld	hl,#_script_continue
+   018C B6                 2209 	or	a,(hl)
+   018D CA 93 01           2210 	jp	z,00116$
+                           2211 ;	src/ScriptRunner.c 191
+                           2212 ;	genCall
+                           2213 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0190 CD 70 00           2214 	call	_ScriptRunnerUpdate
+                           2215 ;	genLabel
+   0193                    2216 00116$:
+                           2217 ;	genEndFunction
+   0193 E8 07              2218 	lda	sp,7(sp)
+   0195 C9                 2219 	ret
+   0196                    2220 ___ScriptRunnerUpdate_end:
+                           2221 ;	src/ScriptRunner.c 195
+                           2222 ;	genLabel
+                           2223 ;	genFunction
+                           2224 ;	---------------------------------
+                           2225 ; Function ScriptLastFnComplete
+                           2226 ; ---------------------------------
+   0196                    2227 ___ScriptLastFnComplete_start:
+   0196                    2228 _ScriptLastFnComplete:
+                           2229 	
+                           2230 ;	src/ScriptRunner.c 197
+                           2231 ;	genCall
+                           2232 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0196 CD 00 00           2233 	call	_IsFading
+   0199 4B                 2234 	ld	c,e
+                           2235 ;	genAssign
+                           2236 ;	(registers are the same)
+                           2237 ;	src/ScriptRunner.c 199
+                           2238 ;	genCmpEq
+                           2239 ;	AOP_HL for _last_fn
+                           2240 ; genCmpEq: left 2, right 2, result 0
+   019A 3E 00              2241 	ld	a,#<_Script_FadeIn_b
+   019C 21 12 00           2242 	ld	hl,#_last_fn
+   019F BE                 2243 	cp	(hl)
+   01A0 20 08              2244 	jr	nz,00174$
+   01A2 3E 00              2245 	ld	a,#>_Script_FadeIn_b
+   01A4 23                 2246 	inc	hl
+   01A5 BE                 2247 	cp	(hl)
+   01A6 20 02              2248 	jr	nz,00174$
+   01A8 18 03              2249 	jr	00175$
+   01AA                    2250 00174$:
+   01AA C3 B7 01           2251 	jp	00102$
+   01AD                    2252 00175$:
+                           2253 ;	genIfx
+   01AD AF                 2254 	xor	a,a
+   01AE B1                 2255 	or	a,c
+   01AF C2 B7 01           2256 	jp	nz,00102$
+                           2257 ;	src/ScriptRunner.c 201
+                           2258 ;	genRet
+   01B2 1E 01              2259 	ld	e,#0x01
+   01B4 C3 75 03           2260 	jp	00144$
+                           2261 ;	genLabel
+   01B7                    2262 00102$:
+                           2263 ;	src/ScriptRunner.c 204
+                           2264 ;	genCmpEq
+                           2265 ;	AOP_HL for _last_fn
+                           2266 ; genCmpEq: left 2, right 2, result 0
+   01B7 3E 00              2267 	ld	a,#<_Script_FadeOut_b
+   01B9 21 12 00           2268 	ld	hl,#_last_fn
+   01BC BE                 2269 	cp	(hl)
+   01BD 20 08              2270 	jr	nz,00176$
+   01BF 3E 00              2271 	ld	a,#>_Script_FadeOut_b
+   01C1 23                 2272 	inc	hl
+   01C2 BE                 2273 	cp	(hl)
+   01C3 20 02              2274 	jr	nz,00176$
+   01C5 18 03              2275 	jr	00177$
+   01C7                    2276 00176$:
+   01C7 C3 D4 01           2277 	jp	00105$
+   01CA                    2278 00177$:
+                           2279 ;	genIfx
+   01CA AF                 2280 	xor	a,a
+   01CB B1                 2281 	or	a,c
+   01CC C2 D4 01           2282 	jp	nz,00105$
+                           2283 ;	src/ScriptRunner.c 206
+                           2284 ;	genRet
+   01CF 1E 01              2285 	ld	e,#0x01
+   01D1 C3 75 03           2286 	jp	00144$
+                           2287 ;	genLabel
+   01D4                    2288 00105$:
+                           2289 ;	src/ScriptRunner.c 209
+                           2290 ;	genCmpEq
+                           2291 ;	AOP_HL for _last_fn
+                           2292 ; genCmpEq: left 2, right 2, result 0
+   01D4 3E 00              2293 	ld	a,#<_Script_LoadScene_b
+   01D6 21 12 00           2294 	ld	hl,#_last_fn
+   01D9 BE                 2295 	cp	(hl)
+   01DA 20 08              2296 	jr	nz,00178$
+   01DC 3E 00              2297 	ld	a,#>_Script_LoadScene_b
+   01DE 23                 2298 	inc	hl
+   01DF BE                 2299 	cp	(hl)
+   01E0 20 02              2300 	jr	nz,00178$
+   01E2 18 03              2301 	jr	00179$
+   01E4                    2302 00178$:
+   01E4 C3 F1 01           2303 	jp	00108$
+   01E7                    2304 00179$:
+                           2305 ;	genIfx
+   01E7 AF                 2306 	xor	a,a
+   01E8 B1                 2307 	or	a,c
+   01E9 C2 F1 01           2308 	jp	nz,00108$
+                           2309 ;	src/ScriptRunner.c 211
+                           2310 ;	genRet
+   01EC 1E 01              2311 	ld	e,#0x01
+   01EE C3 75 03           2312 	jp	00144$
+                           2313 ;	genLabel
+   01F1                    2314 00108$:
+                           2315 ;	src/ScriptRunner.c 214
+                           2316 ;	genCmpEq
+                           2317 ;	AOP_HL for _last_fn
+                           2318 ; genCmpEq: left 2, right 2, result 0
+   01F1 3E 00              2319 	ld	a,#<_Script_ScenePopState_b
+   01F3 21 12 00           2320 	ld	hl,#_last_fn
+   01F6 BE                 2321 	cp	(hl)
+   01F7 20 08              2322 	jr	nz,00180$
+   01F9 3E 00              2323 	ld	a,#>_Script_ScenePopState_b
+   01FB 23                 2324 	inc	hl
+   01FC BE                 2325 	cp	(hl)
+   01FD 20 02              2326 	jr	nz,00180$
+   01FF 18 03              2327 	jr	00181$
+   0201                    2328 00180$:
+   0201 C3 09 02           2329 	jp	00111$
+   0204                    2330 00181$:
+                           2331 ;	src/ScriptRunner.c 216
+                           2332 ;	genRet
+   0204 1E 01              2333 	ld	e,#0x01
+   0206 C3 75 03           2334 	jp	00144$
+                           2335 ;	genLabel
+   0209                    2336 00111$:
+                           2337 ;	src/ScriptRunner.c 219
+                           2338 ;	genCmpEq
+                           2339 ;	AOP_HL for _last_fn
+                           2340 ; genCmpEq: left 2, right 2, result 0
+   0209 3E 00              2341 	ld	a,#<_Script_ScenePopAllState_b
+   020B 21 12 00           2342 	ld	hl,#_last_fn
+   020E BE                 2343 	cp	(hl)
+   020F 20 08              2344 	jr	nz,00182$
+   0211 3E 00              2345 	ld	a,#>_Script_ScenePopAllState_b
+   0213 23                 2346 	inc	hl
+   0214 BE                 2347 	cp	(hl)
+   0215 20 02              2348 	jr	nz,00182$
+   0217 18 03              2349 	jr	00183$
+   0219                    2350 00182$:
+   0219 C3 21 02           2351 	jp	00113$
+   021C                    2352 00183$:
+                           2353 ;	src/ScriptRunner.c 221
+                           2354 ;	genRet
+   021C 1E 01              2355 	ld	e,#0x01
+   021E C3 75 03           2356 	jp	00144$
+                           2357 ;	genLabel
+   0221                    2358 00113$:
+                           2359 ;	src/ScriptRunner.c 224
+                           2360 ;	genCmpEq
+                           2361 ;	AOP_HL for _last_fn
+                           2362 ; genCmpEq: left 2, right 2, result 0
+   0221 3E 00              2363 	ld	a,#<_Script_LoadData_b
+   0223 21 12 00           2364 	ld	hl,#_last_fn
+   0226 BE                 2365 	cp	(hl)
+   0227 20 08              2366 	jr	nz,00184$
+   0229 3E 00              2367 	ld	a,#>_Script_LoadData_b
+   022B 23                 2368 	inc	hl
+   022C BE                 2369 	cp	(hl)
+   022D 20 02              2370 	jr	nz,00184$
+   022F 18 03              2371 	jr	00185$
+   0231                    2372 00184$:
+   0231 C3 3E 02           2373 	jp	00115$
+   0234                    2374 00185$:
+                           2375 ;	genIfx
+   0234 AF                 2376 	xor	a,a
+   0235 B1                 2377 	or	a,c
+   0236 C2 3E 02           2378 	jp	nz,00115$
+                           2379 ;	src/ScriptRunner.c 226
+                           2380 ;	genRet
+   0239 1E 01              2381 	ld	e,#0x01
+   023B C3 75 03           2382 	jp	00144$
+                           2383 ;	genLabel
+   023E                    2384 00115$:
+                           2385 ;	src/ScriptRunner.c 229
+                           2386 ;	genCmpEq
+                           2387 ;	AOP_HL for _last_fn
+                           2388 ; genCmpEq: left 2, right 2, result 0
+   023E 3E 00              2389 	ld	a,#<_Script_ActorSetEmote_b
+   0240 21 12 00           2390 	ld	hl,#_last_fn
+   0243 BE                 2391 	cp	(hl)
+   0244 20 08              2392 	jr	nz,00186$
+   0246 3E 00              2393 	ld	a,#>_Script_ActorSetEmote_b
+   0248 23                 2394 	inc	hl
+   0249 BE                 2395 	cp	(hl)
+   024A 20 02              2396 	jr	nz,00186$
+   024C 18 03              2397 	jr	00187$
+   024E                    2398 00186$:
+   024E C3 5F 02           2399 	jp	00118$
+   0251                    2400 00187$:
+                           2401 ;	genCall
+                           2402 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0251 CD 00 00           2403 	call	_SceneIsEmoting
+   0254 4B                 2404 	ld	c,e
+                           2405 ;	genIfx
+   0255 AF                 2406 	xor	a,a
+   0256 B1                 2407 	or	a,c
+   0257 C2 5F 02           2408 	jp	nz,00118$
+                           2409 ;	src/ScriptRunner.c 231
+                           2410 ;	genRet
+   025A 1E 01              2411 	ld	e,#0x01
+   025C C3 75 03           2412 	jp	00144$
+                           2413 ;	genLabel
+   025F                    2414 00118$:
+                           2415 ;	src/ScriptRunner.c 234
+                           2416 ;	genCmpEq
+                           2417 ;	AOP_HL for _last_fn
+                           2418 ; genCmpEq: left 2, right 2, result 0
+   025F 3E 00              2419 	ld	a,#<_Script_Text_b
+   0261 21 12 00           2420 	ld	hl,#_last_fn
+   0264 BE                 2421 	cp	(hl)
+   0265 20 08              2422 	jr	nz,00188$
+   0267 3E 00              2423 	ld	a,#>_Script_Text_b
+   0269 23                 2424 	inc	hl
+   026A BE                 2425 	cp	(hl)
+   026B 20 02              2426 	jr	nz,00188$
+   026D 18 03              2427 	jr	00189$
+   026F                    2428 00188$:
+   026F C3 80 02           2429 	jp	00121$
+   0272                    2430 00189$:
+                           2431 ;	genCall
+                           2432 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0272 CD 00 00           2433 	call	_UIIsClosed
+   0275 4B                 2434 	ld	c,e
+                           2435 ;	genIfx
+   0276 AF                 2436 	xor	a,a
+   0277 B1                 2437 	or	a,c
+   0278 CA 80 02           2438 	jp	z,00121$
+                           2439 ;	src/ScriptRunner.c 236
+                           2440 ;	genRet
+   027B 1E 01              2441 	ld	e,#0x01
+   027D C3 75 03           2442 	jp	00144$
+                           2443 ;	genLabel
+   0280                    2444 00121$:
+                           2445 ;	src/ScriptRunner.c 239
+                           2446 ;	genCmpEq
+                           2447 ;	AOP_HL for _last_fn
+                           2448 ; genCmpEq: left 2, right 2, result 0
+   0280 3E 00              2449 	ld	a,#<_Script_Choice_b
+   0282 21 12 00           2450 	ld	hl,#_last_fn
+   0285 BE                 2451 	cp	(hl)
+   0286 20 08              2452 	jr	nz,00190$
+   0288 3E 00              2453 	ld	a,#>_Script_Choice_b
+   028A 23                 2454 	inc	hl
+   028B BE                 2455 	cp	(hl)
+   028C 20 02              2456 	jr	nz,00190$
+   028E 18 03              2457 	jr	00191$
+   0290                    2458 00190$:
+   0290 C3 A1 02           2459 	jp	00124$
+   0293                    2460 00191$:
+                           2461 ;	genCall
+                           2462 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0293 CD 00 00           2463 	call	_UIIsClosed
+   0296 4B                 2464 	ld	c,e
+                           2465 ;	genIfx
+   0297 AF                 2466 	xor	a,a
+   0298 B1                 2467 	or	a,c
+   0299 CA A1 02           2468 	jp	z,00124$
+                           2469 ;	src/ScriptRunner.c 241
+                           2470 ;	genRet
+   029C 1E 01              2471 	ld	e,#0x01
+   029E C3 75 03           2472 	jp	00144$
+                           2473 ;	genLabel
+   02A1                    2474 00124$:
+                           2475 ;	src/ScriptRunner.c 244
+                           2476 ;	genCmpEq
+                           2477 ;	AOP_HL for _last_fn
+                           2478 ; genCmpEq: left 2, right 2, result 0
+   02A1 3E 00              2479 	ld	a,#<_Script_TextMenu_b
+   02A3 21 12 00           2480 	ld	hl,#_last_fn
+   02A6 BE                 2481 	cp	(hl)
+   02A7 20 08              2482 	jr	nz,00192$
+   02A9 3E 00              2483 	ld	a,#>_Script_TextMenu_b
+   02AB 23                 2484 	inc	hl
+   02AC BE                 2485 	cp	(hl)
+   02AD 20 02              2486 	jr	nz,00192$
+   02AF 18 03              2487 	jr	00193$
+   02B1                    2488 00192$:
+   02B1 C3 C2 02           2489 	jp	00127$
+   02B4                    2490 00193$:
+                           2491 ;	genCall
+                           2492 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   02B4 CD 00 00           2493 	call	_UIIsClosed
+   02B7 4B                 2494 	ld	c,e
+                           2495 ;	genIfx
+   02B8 AF                 2496 	xor	a,a
+   02B9 B1                 2497 	or	a,c
+   02BA CA C2 02           2498 	jp	z,00127$
+                           2499 ;	src/ScriptRunner.c 246
+                           2500 ;	genRet
+   02BD 1E 01              2501 	ld	e,#0x01
+   02BF C3 75 03           2502 	jp	00144$
+                           2503 ;	genLabel
+   02C2                    2504 00127$:
+                           2505 ;	src/ScriptRunner.c 249
+                           2506 ;	genCmpEq
+                           2507 ;	AOP_HL for _last_fn
+                           2508 ; genCmpEq: left 2, right 2, result 0
+   02C2 3E 00              2509 	ld	a,#<_Script_OverlayMoveTo_b
+   02C4 21 12 00           2510 	ld	hl,#_last_fn
+   02C7 BE                 2511 	cp	(hl)
+   02C8 20 08              2512 	jr	nz,00194$
+   02CA 3E 00              2513 	ld	a,#>_Script_OverlayMoveTo_b
+   02CC 23                 2514 	inc	hl
+   02CD BE                 2515 	cp	(hl)
+   02CE 20 02              2516 	jr	nz,00194$
+   02D0 18 03              2517 	jr	00195$
+   02D2                    2518 00194$:
+   02D2 C3 E3 02           2519 	jp	00130$
+   02D5                    2520 00195$:
+                           2521 ;	genCall
+                           2522 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   02D5 CD 00 00           2523 	call	_UIAtDest
+   02D8 4B                 2524 	ld	c,e
+                           2525 ;	genIfx
+   02D9 AF                 2526 	xor	a,a
+   02DA B1                 2527 	or	a,c
+   02DB CA E3 02           2528 	jp	z,00130$
+                           2529 ;	src/ScriptRunner.c 251
+                           2530 ;	genRet
+   02DE 1E 01              2531 	ld	e,#0x01
+   02E0 C3 75 03           2532 	jp	00144$
+                           2533 ;	genLabel
+   02E3                    2534 00130$:
+                           2535 ;	src/ScriptRunner.c 254
+                           2536 ;	genCmpEq
+                           2537 ;	AOP_HL for _last_fn
+                           2538 ; genCmpEq: left 2, right 2, result 0
+   02E3 3E 00              2539 	ld	a,#<_Script_AwaitInput_b
+   02E5 21 12 00           2540 	ld	hl,#_last_fn
+   02E8 BE                 2541 	cp	(hl)
+   02E9 20 08              2542 	jr	nz,00196$
+   02EB 3E 00              2543 	ld	a,#>_Script_AwaitInput_b
+   02ED 23                 2544 	inc	hl
+   02EE BE                 2545 	cp	(hl)
+   02EF 20 02              2546 	jr	nz,00196$
+   02F1 18 03              2547 	jr	00197$
+   02F3                    2548 00196$:
+   02F3 C3 04 03           2549 	jp	00133$
+   02F6                    2550 00197$:
+                           2551 ;	genCall
+                           2552 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   02F6 CD 00 00           2553 	call	_SceneAwaitInputPressed
+   02F9 4B                 2554 	ld	c,e
+                           2555 ;	genIfx
+   02FA AF                 2556 	xor	a,a
+   02FB B1                 2557 	or	a,c
+   02FC CA 04 03           2558 	jp	z,00133$
+                           2559 ;	src/ScriptRunner.c 256
+                           2560 ;	genRet
+   02FF 1E 01              2561 	ld	e,#0x01
+   0301 C3 75 03           2562 	jp	00144$
+                           2563 ;	genLabel
+   0304                    2564 00133$:
+                           2565 ;	src/ScriptRunner.c 259
+                           2566 ;	genCmpEq
+                           2567 ;	AOP_HL for _last_fn
+                           2568 ; genCmpEq: left 2, right 2, result 0
+   0304 3E 00              2569 	ld	a,#<_Script_CameraMoveTo_b
+   0306 21 12 00           2570 	ld	hl,#_last_fn
+   0309 BE                 2571 	cp	(hl)
+   030A 20 08              2572 	jr	nz,00198$
+   030C 3E 00              2573 	ld	a,#>_Script_CameraMoveTo_b
+   030E 23                 2574 	inc	hl
+   030F BE                 2575 	cp	(hl)
+   0310 20 02              2576 	jr	nz,00198$
+   0312 18 03              2577 	jr	00199$
+   0314                    2578 00198$:
+   0314 C3 2C 03           2579 	jp	00136$
+   0317                    2580 00199$:
+                           2581 ;	genCall
+                           2582 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0317 CD 00 00           2583 	call	_SceneCameraAtDest
+   031A 4B                 2584 	ld	c,e
+                           2585 ;	genIfx
+   031B AF                 2586 	xor	a,a
+   031C B1                 2587 	or	a,c
+   031D CA 2C 03           2588 	jp	z,00136$
+                           2589 ;	src/ScriptRunner.c 261
+                           2590 ;	genAnd
+                           2591 ;	AOP_HL for _camera_settings
+   0320 21 00 00           2592 	ld	hl,#_camera_settings
+   0323 7E                 2593 	ld	a,(hl)
+   0324 E6 DF              2594 	and	a,#0xDF
+   0326 77                 2595 	ld	(hl),a
+                           2596 ;	src/ScriptRunner.c 262
+                           2597 ;	genRet
+   0327 1E 01              2598 	ld	e,#0x01
+   0329 C3 75 03           2599 	jp	00144$
+                           2600 ;	genLabel
+   032C                    2601 00136$:
+                           2602 ;	src/ScriptRunner.c 265
+                           2603 ;	genCmpEq
+                           2604 ;	AOP_HL for _last_fn
+                           2605 ; genCmpEq: left 2, right 2, result 0
+   032C 3E 00              2606 	ld	a,#<_Script_CameraLock_b
+   032E 21 12 00           2607 	ld	hl,#_last_fn
+   0331 BE                 2608 	cp	(hl)
+   0332 20 08              2609 	jr	nz,00200$
+   0334 3E 00              2610 	ld	a,#>_Script_CameraLock_b
+   0336 23                 2611 	inc	hl
+   0337 BE                 2612 	cp	(hl)
+   0338 20 02              2613 	jr	nz,00200$
+   033A 18 03              2614 	jr	00201$
+   033C                    2615 00200$:
+   033C C3 52 03           2616 	jp	00139$
+   033F                    2617 00201$:
+                           2618 ;	genCall
+                           2619 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   033F CD 00 00           2620 	call	_SceneCameraAtDest
+   0342 4B                 2621 	ld	c,e
+                           2622 ;	genIfx
+   0343 AF                 2623 	xor	a,a
+   0344 B1                 2624 	or	a,c
+   0345 CA 52 03           2625 	jp	z,00139$
+                           2626 ;	src/ScriptRunner.c 267
+                           2627 ;	genAssign
+                           2628 ;	AOP_HL for _camera_settings
+   0348 21 00 00           2629 	ld	hl,#_camera_settings
+   034B 36 10              2630 	ld	(hl),#0x10
+                           2631 ;	src/ScriptRunner.c 268
+                           2632 ;	genRet
+   034D 1E 01              2633 	ld	e,#0x01
+   034F C3 75 03           2634 	jp	00144$
+                           2635 ;	genLabel
+   0352                    2636 00139$:
+                           2637 ;	src/ScriptRunner.c 271
+                           2638 ;	genCmpEq
+                           2639 ;	AOP_HL for _last_fn
+                           2640 ; genCmpEq: left 2, right 2, result 0
+   0352 3E 00              2641 	ld	a,#<_Script_TextWithAvatar_b
+   0354 21 12 00           2642 	ld	hl,#_last_fn
+   0357 BE                 2643 	cp	(hl)
+   0358 20 08              2644 	jr	nz,00202$
+   035A 3E 00              2645 	ld	a,#>_Script_TextWithAvatar_b
+   035C 23                 2646 	inc	hl
+   035D BE                 2647 	cp	(hl)
+   035E 20 02              2648 	jr	nz,00202$
+   0360 18 03              2649 	jr	00203$
+   0362                    2650 00202$:
+   0362 C3 73 03           2651 	jp	00142$
+   0365                    2652 00203$:
+                           2653 ;	genCall
+                           2654 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0365 CD 00 00           2655 	call	_UIIsClosed
+   0368 4B                 2656 	ld	c,e
+                           2657 ;	genIfx
+   0369 AF                 2658 	xor	a,a
+   036A B1                 2659 	or	a,c
+   036B CA 73 03           2660 	jp	z,00142$
+                           2661 ;	src/ScriptRunner.c 273
+                           2662 ;	genRet
+   036E 1E 01              2663 	ld	e,#0x01
+   0370 C3 75 03           2664 	jp	00144$
+                           2665 ;	genLabel
+   0373                    2666 00142$:
+                           2667 ;	src/ScriptRunner.c 276
+                           2668 ;	genRet
+   0373 1E 00              2669 	ld	e,#0x00
+                           2670 ;	genLabel
+   0375                    2671 00144$:
+                           2672 ;	genEndFunction
+                           2673 	
+   0375 C9                 2674 	ret
+   0376                    2675 ___ScriptLastFnComplete_end:
+                           2676 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+    _IsFading                          **** GX
+    _PopBank                           **** GX
+    _PushBank                          **** GX
+    _ReadBankedUBYTE                   **** GX
+    _SceneAwaitInputPressed            **** GX
+    _SceneCameraAtDest                 **** GX
+    _SceneIsEmoting                    **** GX
+  0 _ScriptLastFnComplete              0196 GR
+  0 _ScriptRunnerUpdate                0070 GR
+  0 _ScriptStart                       0000 GR
+    _Script_ActorActivate_b            **** GX
+    _Script_ActorGetPos_b              **** GX
+    _Script_ActorHide_b                **** GX
+    _Script_ActorInvoke_b              **** GX
+    _Script_ActorMoveRel_b             **** GX
+    _Script_ActorMoveToVal_b           **** GX
+    _Script_ActorMoveTo_b              **** GX
+    _Script_ActorPush_b                **** GX
+    _Script_ActorSetAnimSpeed_b        **** GX
+    _Script_ActorSetDir_b              **** GX
+    _Script_ActorSetEmote_b            **** GX
+    _Script_ActorSetFlip_b             **** GX
+    _Script_ActorSetFrameToVal_b       **** GX
+    _Script_ActorSetFrame_b            **** GX
+    _Script_ActorSetMoveSpeed_b        **** GX
+    _Script_ActorSetPosRel_b           **** GX
+    _Script_ActorSetPosToVal_b         **** GX
+    _Script_ActorSetPos_b              **** GX
+    _Script_ActorShow_b                **** GX
+    _Script_AwaitInput_b               **** GX
+    _Script_CameraLock_b               **** GX
+    _Script_CameraMoveTo_b             **** GX
+    _Script_CameraShake_b              **** GX
+    _Script_Choice_b                   **** GX
+    _Script_ClearData_b                **** GX
+    _Script_ClearFlag_b                **** GX
+    _Script_CopyVal_b                  **** GX
+    _Script_DecFlag_b                  **** GX
+    _Script_End_b                      **** GX
+    _Script_FadeIn_b                   **** GX
+    _Script_FadeOut_b                  **** GX
+    _Script_Goto_b                     **** GX
+    _Script_HideOverlay_b              **** GX
+    _Script_HideSprites_b              **** GX
+    _Script_IfActorDirection_b         **** GX
+    _Script_IfActorPos_b               **** GX
+    _Script_IfFlag_b                   **** GX
+    _Script_IfInput_b                  **** GX
+    _Script_IfSavedData_b              **** GX
+    _Script_IfValueCompare_b           **** GX
+    _Script_IfValue_b                  **** GX
+    _Script_IncFlag_b                  **** GX
+    _Script_LoadData_b                 **** GX
+    _Script_LoadScene_b                **** GX
+    _Script_LoadVectors_b              **** GX
+    _Script_MathAddVal_b               **** GX
+    _Script_MathAdd_b                  **** GX
+    _Script_MathDivVal_b               **** GX
+    _Script_MathDiv_b                  **** GX
+    _Script_MathModVal_b               **** GX
+    _Script_MathMod_b                  **** GX
+    _Script_MathMulVal_b               **** GX
+    _Script_MathMul_b                  **** GX
+    _Script_MathSubVal_b               **** GX
+    _Script_MathSub_b                  **** GX
+    _Script_MusicPlay_b                **** GX
+    _Script_MusicStop_b                **** GX
+    _Script_NextFrame_b                **** GX
+    _Script_Noop_b                     **** GX
+    _Script_OverlayMoveTo_b            **** GX
+    _Script_PlayerSetSprite_b          **** GX
+    _Script_RemoveInputScript_b        **** GX
+    _Script_RemoveTimerScript_b        **** GX
+    _Script_ResetTimer_b               **** GX
+    _Script_ResetVariables_b           **** GX
+    _Script_SaveData_b                 **** GX
+    _Script_ScenePopAllState_b         **** GX
+    _Script_ScenePopState_b            **** GX
+    _Script_ScenePushState_b           **** GX
+    _Script_SceneResetStack_b          **** GX
+    _Script_SetFlagRandomValue_b       **** GX
+    _Script_SetFlagValue_b             **** GX
+    _Script_SetFlag_b                  **** GX
+    _Script_SetInputScript_b           **** GX
+    _Script_SetTimerScript_b           **** GX
+    _Script_ShowOverlay_b              **** GX
+    _Script_ShowSprites_b              **** GX
+    _Script_SoundPlayBeep_b            **** GX
+    _Script_SoundPlayCrash_b           **** GX
+    _Script_SoundStartTone_b           **** GX
+    _Script_SoundStopTone_b            **** GX
+    _Script_StackPop_b                 **** GX
+    _Script_StackPush_b                **** GX
+    _Script_TextMenu_b                 **** GX
+    _Script_TextMulti_b                **** GX
+    _Script_TextSetAnimSpeed_b         **** GX
+    _Script_TextWithAvatar_b           **** GX
+    _Script_Text_b                     **** GX
+    _Script_VariableAddFlags_b         **** GX
+    _Script_VariableClearFlags_b       **** GX
+    _Script_Wait_b                     **** GX
+    _UIAtDest                          **** GX
+    _UIIsClosed                        **** GX
+  0 ___ScriptLastFnComplete_end        0376 R
+  0 ___ScriptLastFnComplete_start      0196 R
+  0 ___ScriptRunnerUpdate_end          0196 R
+  0 ___ScriptRunnerUpdate_start        0070 R
+  0 ___ScriptStart_end                 0070 R
+  0 ___ScriptStart_start               0000 R
+    __initrleblock                     **** GX
+    _bank_data_ptrs                    **** GX
+    _camera_settings                   **** GX
+    _initrand                          **** GX
+  1 _last_fn                           0012 GR
+  1 _ptr_div_reg                       0000 GR
+    _script_action_complete            **** GX
+  1 _script_cmd_args                   000B GR
+  1 _script_cmd_args_len               0011 GR
+  1 _script_cmds                       0035 GR
+    _script_continue                   **** GX
+  1 _script_ptr                        0003 GR
+  1 _script_ptr_bank                   0002 GR
+  1 _script_ptr_x                      0005 GR
+  1 _script_ptr_y                      0007 GR
+  1 _script_stack                      0015 GR
+  1 _script_stack_ptr                  0014 GR
+  1 _script_start_ptr                  0009 GR
+  1 _script_start_stack                0025 GR
+    _scriptrunner_bank                 **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size  376   flags 0
+   1 _DATA                              size  14C   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size  566   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

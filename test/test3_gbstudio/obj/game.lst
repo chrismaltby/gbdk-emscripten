@@ -1,0 +1,619 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Thu Nov 21 08:53:19 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc631200
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _main
+                             12 	.globl _scene_stack
+                             13 	.globl _scene_stack_ptr
+                             14 	.globl _script_actor
+                             15 	.globl _script_action_complete
+                             16 	.globl _script_continue
+                             17 	.globl _stage_next_type
+                             18 	.globl _stage_type
+                             19 	.globl _actor_move_dest
+                             20 	.globl _actor_move_settings
+                             21 	.globl _rand_seed
+                             22 	.globl _time
+                             23 	.globl _prev_joy
+                             24 	.globl _joy
+                             25 	.globl _game_loop
+                             26 ;--------------------------------------------------------
+                             27 ; special function registers
+                             28 ;--------------------------------------------------------
+                             29 ;--------------------------------------------------------
+                             30 ; special function bits 
+                             31 ;--------------------------------------------------------
+                             32 ;--------------------------------------------------------
+                             33 ; internal ram data
+                             34 ;--------------------------------------------------------
+                             35 	.area _DATA
+   0000                      36 _joy::
+   0000                      37 	.ds 1
+   0001                      38 _prev_joy::
+   0001                      39 	.ds 1
+   0002                      40 _time::
+   0002                      41 	.ds 1
+   0003                      42 _rand_seed::
+   0003                      43 	.ds 2
+   0005                      44 _actor_move_settings::
+   0005                      45 	.ds 1
+   0006                      46 _actor_move_dest::
+   0006                      47 	.ds 2
+   0008                      48 _stage_type::
+   0008                      49 	.ds 1
+   0009                      50 _stage_next_type::
+   0009                      51 	.ds 1
+   000A                      52 _script_continue::
+   000A                      53 	.ds 1
+   000B                      54 _script_action_complete::
+   000B                      55 	.ds 1
+   000C                      56 _script_actor::
+   000C                      57 	.ds 1
+   000D                      58 _scene_stack_ptr::
+   000D                      59 	.ds 1
+   000E                      60 _scene_stack::
+   000E                      61 	.ds 48
+                             62 ;--------------------------------------------------------
+                             63 ; overlayable items in internal ram 
+                             64 ;--------------------------------------------------------
+                             65 	.area _OVERLAY
+                             66 ;--------------------------------------------------------
+                             67 ; indirectly addressable internal ram data
+                             68 ;--------------------------------------------------------
+                             69 	.area _ISEG
+                             70 ;--------------------------------------------------------
+                             71 ; bit data
+                             72 ;--------------------------------------------------------
+                             73 	.area _BSEG
+                             74 ;--------------------------------------------------------
+                             75 ; external ram data
+                             76 ;--------------------------------------------------------
+                             77 	.area _XSEG
+                             78 ;--------------------------------------------------------
+                             79 ; global & static initialisations
+                             80 ;--------------------------------------------------------
+                             81 	.area _GSINIT
+                             82 	.area _GSFINAL
+                             83 	.area _GSINIT
+                             84 ;	src/game.c 19
+                             85 ;	genAssign
+                             86 ;	AOP_HL for _stage_next_type
+   0000 21 09 00             87 	ld	hl,#_stage_next_type
+   0003 36 01                88 	ld	(hl),#0x01
+                             89 ;	src/game.c 22
+                             90 ;	genAssign
+                             91 ;	AOP_HL for _script_action_complete
+   0005 21 0B 00             92 	ld	hl,#_script_action_complete
+   0008 36 01                93 	ld	(hl),#0x01
+                             94 ;	src/game.c 25
+                             95 ;	genAssign
+                             96 ;	AOP_HL for _scene_stack_ptr
+   000A 21 0D 00             97 	ld	hl,#_scene_stack_ptr
+   000D 36 00                98 	ld	(hl),#0x00
+                             99 ;	src/game.c 113
+                            100 ;	genAssign (pointer)
+   000F 11 0E 00            101 	ld	de,#_scene_stack
+   0012 3E 00               102 	ld	a,#0x00
+   0014 12                  103 	ld	(de),a
+   0015 13                  104 	inc	de
+   0016 3E 00               105 	ld	a,#0x00
+   0018 12                  106 	ld	(de),a
+                            107 ;--------------------------------------------------------
+                            108 ; Home
+                            109 ;--------------------------------------------------------
+                            110 	.area _HOME
+                            111 	.area _CODE
+                            112 ;--------------------------------------------------------
+                            113 ; code
+                            114 ;--------------------------------------------------------
+                            115 	.area _CODE
+                            116 ;	src/game.c 30
+                            117 ;	genLabel
+                            118 ;	genFunction
+                            119 ;	---------------------------------
+                            120 ; Function main
+                            121 ; ---------------------------------
+   0000                     122 ___main_start:
+   0000                     123 _main:
+   0000 E8 FD               124 	lda	sp,-3(sp)
+                            125 ;	src/game.c 33
+                            126 ;	genAssign
+   0002 01 40 FF            127 	ld	bc,#0xFF40
+                            128 ;	genAssign (pointer)
+   0005 3E 67               129 	ld	a,#0x67
+   0007 02                  130 	ld	(bc),a
+                            131 ;	src/game.c 34
+                            132 ;	genIpush
+                            133 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0008 3E 03               134 	ld	a,#0x03
+   000A F5                  135 	push	af
+   000B 33                  136 	inc	sp
+                            137 ;	genCall
+   000C CD 00 00            138 	call	_set_interrupts
+   000F E8 01               139 	lda	sp,1(sp)
+                            140 ;	src/game.c 35
+                            141 ;	genAssign
+   0011 01 41 FF            142 	ld	bc,#0xFF41
+                            143 ;	genAssign (pointer)
+   0014 3E 45               144 	ld	a,#0x45
+   0016 02                  145 	ld	(bc),a
+                            146 ;	src/game.c 38
+                            147 ;	genAssign
+   0017 01 47 FF            148 	ld	bc,#0xFF47
+                            149 ;	genAssign (pointer)
+   001A 3E E4               150 	ld	a,#0xE4
+   001C 02                  151 	ld	(bc),a
+                            152 ;	src/game.c 39
+                            153 ;	genAssign
+   001D 01 48 FF            154 	ld	bc,#0xFF48
+                            155 ;	genAssign (pointer)
+   0020 3E D2               156 	ld	a,#0xD2
+   0022 02                  157 	ld	(bc),a
+                            158 ;	src/game.c 42
+                            159 ;	genAssign
+   0023 01 4A FF            160 	ld	bc,#0xFF4A
+                            161 ;	genAssign (pointer)
+   0026 3E 88               162 	ld	a,#0x88
+   0028 02                  163 	ld	(bc),a
+                            164 ;	src/game.c 43
+                            165 ;	genAssign
+   0029 01 4A FF            166 	ld	bc,#0xFF4A
+                            167 ;	genAssign (pointer)
+   002C 3E 90               168 	ld	a,#0x90
+   002E 02                  169 	ld	(bc),a
+                            170 ;	src/game.c 45
+                            171 ;	genAssign (pointer)
+   002F 11 00 00            172 	ld	de,#_actors
+   0032 3E 00               173 	ld	a,#0x00
+   0034 12                  174 	ld	(de),a
+                            175 ;	src/game.c 46
+                            176 ;	genPlus
+                            177 ;	genPlusIncr
+   0035 21 05 00            178 	ld	hl,#_actors + 5
+                            179 ;	genAssign (pointer)
+   0038 36 01               180 	ld	(hl),#0x01
+                            181 ;	src/game.c 47
+                            182 ;	genPlus
+                            183 ;	genPlusIncr
+   003A 21 0C 00            184 	ld	hl,#_actors + 12
+                            185 ;	genAssign (pointer)
+   003D 36 01               186 	ld	(hl),#0x01
+                            187 ;	src/game.c 48
+                            188 ;	genPlus
+                            189 ;	genPlusIncr
+   003F 21 01 00            190 	ld	hl,#_actors + 1
+                            191 ;	genAssign (pointer)
+   0042 36 08               192 	ld	(hl),#0x08
+                            193 ;	genAssign (pointer)
+   0044 11 00 00            194 	ld	de,#_map_next_pos
+   0047 3E 08               195 	ld	a,#0x08
+   0049 12                  196 	ld	(de),a
+                            197 ;	src/game.c 49
+                            198 ;	genPlus
+                            199 ;	genPlusIncr
+   004A 01 01 00            200 	ld	bc,#_map_next_pos + 1
+                            201 ;	genPlus
+                            202 ;	genPlusIncr
+   004D 23                  203 	inc	hl
+                            204 ;	genAssign (pointer)
+   004E 36 08               205 	ld	(hl),#0x08
+                            206 ;	genAssign (pointer)
+   0050 3E 08               207 	ld	a,#0x08
+   0052 02                  208 	ld	(bc),a
+                            209 ;	src/game.c 50
+                            210 ;	genPlus
+                            211 ;	genPlusIncr
+   0053 23                  212 	inc	hl
+                            213 ;	genAssign (pointer)
+   0054 36 01               214 	ld	(hl),#0x01
+                            215 ;	genAssign (pointer)
+   0056 11 00 00            216 	ld	de,#_map_next_dir
+   0059 3E 01               217 	ld	a,#0x01
+   005B 12                  218 	ld	(de),a
+                            219 ;	src/game.c 51
+                            220 ;	genPlus
+                            221 ;	genPlusIncr
+   005C 01 01 00            222 	ld	bc,#_map_next_dir + 1
+                            223 ;	genPlus
+                            224 ;	genPlusIncr
+   005F 23                  225 	inc	hl
+                            226 ;	genAssign (pointer)
+   0060 36 00               227 	ld	(hl),#0x00
+                            228 ;	genAssign (pointer)
+   0062 3E 00               229 	ld	a,#0x00
+   0064 02                  230 	ld	(bc),a
+                            231 ;	src/game.c 52
+                            232 ;	genAssign
+                            233 ;	AOP_HL for _map_next_sprite
+   0065 21 00 00            234 	ld	hl,#_map_next_sprite
+   0068 36 09               235 	ld	(hl),#0x09
+                            236 ;	src/game.c 53
+                            237 ;	genPlus
+                            238 ;	genPlusIncr
+   006A 21 15 00            239 	ld	hl,#_actors + 21
+                            240 ;	genAssign (pointer)
+   006D 36 02               241 	ld	(hl),#0x02
+                            242 ;	src/game.c 54
+                            243 ;	genPlus
+                            244 ;	genPlusIncr
+   006F 21 09 00            245 	ld	hl,#_actors + 9
+                            246 ;	genAssign (pointer)
+   0072 36 01               247 	ld	(hl),#0x01
+                            248 ;	src/game.c 55
+                            249 ;	genPlus
+                            250 ;	genPlusIncr
+   0074 21 0D 00            251 	ld	hl,#_actors + 13
+                            252 ;	genAssign (pointer)
+   0077 36 01               253 	ld	(hl),#0x01
+                            254 ;	src/game.c 56
+                            255 ;	genPlus
+                            256 ;	genPlusIncr
+   0079 23                  257 	inc	hl
+                            258 ;	genAssign (pointer)
+   007A 36 03               259 	ld	(hl),#0x03
+                            260 ;	src/game.c 58
+                            261 ;	genAssign
+                            262 ;	AOP_HL for _scene_index
+   007C 21 00 00            263 	ld	hl,#_scene_index
+   007F 36 04               264 	ld	(hl),#0x04
+   0081 23                  265 	inc	hl
+   0082 36 00               266 	ld	(hl),#0x00
+                            267 ;	src/game.c 59
+                            268 ;	genAssign
+                            269 ;	AOP_HL for _scene_next_index
+   0084 21 00 00            270 	ld	hl,#_scene_next_index
+   0087 36 04               271 	ld	(hl),#0x04
+   0089 23                  272 	inc	hl
+   008A 36 00               273 	ld	(hl),#0x00
+                            274 ;	src/game.c 61
+                            275 ;	genCall
+                            276 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   008C CD 00 00            277 	call	_UIInit
+                            278 ;	src/game.c 62
+                            279 ;	genCall
+                            280 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   008F CD 00 00            281 	call	_FadeInit
+                            282 ;	src/game.c 64
+                            283 ;	genAssign
+   0092 01 40 FF            284 	ld	bc,#0xFF40
+                            285 ;	genAssign
+                            286 ;	AOP_STK for _main_sloc0_1_0
+   0095 F8 01               287 	lda	hl,1(sp)
+   0097 36 40               288 	ld	(hl),#0x40
+   0099 23                  289 	inc	hl
+   009A 36 FF               290 	ld	(hl),#0xFF
+                            291 ;	genPointerGet
+                            292 ;	AOP_STK for _main_sloc0_1_0
+                            293 ;	AOP_STK for _main_sloc1_1_0
+   009C 2B                  294 	dec	hl
+   009D 5E                  295 	ld	e,(hl)
+   009E 23                  296 	inc	hl
+   009F 56                  297 	ld	d,(hl)
+   00A0 1A                  298 	ld	a,(de)
+   00A1 2B                  299 	dec	hl
+   00A2 2B                  300 	dec	hl
+                            301 ;	genOr
+                            302 ;	AOP_STK for _main_sloc1_1_0
+   00A3 77                  303 	ld      (hl),a
+   00A4 7F                  304 	ld      a,a
+   00A5 F6 80               305 	or	a,#0x80
+                            306 ;	genAssign (pointer)
+   00A7 02                  307 	ld	(bc),a
+                            308 ;	src/game.c 65
+                            309 ;	genAssign
+   00A8 01 40 FF            310 	ld	bc,#0xFF40
+                            311 ;	genAssign
+                            312 ;	AOP_STK for _main_sloc0_1_0
+   00AB 23                  313 	inc	hl
+   00AC 36 40               314 	ld	(hl),#0x40
+   00AE 23                  315 	inc	hl
+   00AF 36 FF               316 	ld	(hl),#0xFF
+                            317 ;	genPointerGet
+                            318 ;	AOP_STK for _main_sloc0_1_0
+                            319 ;	AOP_STK for _main_sloc1_1_0
+   00B1 2B                  320 	dec	hl
+   00B2 5E                  321 	ld	e,(hl)
+   00B3 23                  322 	inc	hl
+   00B4 56                  323 	ld	d,(hl)
+   00B5 1A                  324 	ld	a,(de)
+   00B6 2B                  325 	dec	hl
+   00B7 2B                  326 	dec	hl
+                            327 ;	genOr
+                            328 ;	AOP_STK for _main_sloc1_1_0
+   00B8 77                  329 	ld      (hl),a
+   00B9 7F                  330 	ld      a,a
+   00BA F6 02               331 	or	a,#0x02
+                            332 ;	genAssign (pointer)
+   00BC 02                  333 	ld	(bc),a
+                            334 ;	src/game.c 67
+                            335 ;	genLabel
+   00BD                     336 00102$:
+                            337 ;	src/game.c 69
+                            338 ;	genCall
+                            339 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00BD CD C6 00            340 	call	_game_loop
+                            341 ;	genGoto
+   00C0 C3 BD 00            342 	jp	00102$
+                            343 ;	genLabel
+   00C3                     344 00104$:
+                            345 ;	genEndFunction
+   00C3 E8 03               346 	lda	sp,3(sp)
+   00C5 C9                  347 	ret
+   00C6                     348 ___main_end:
+                            349 ;	src/game.c 73
+                            350 ;	genLabel
+                            351 ;	genFunction
+                            352 ;	---------------------------------
+                            353 ; Function game_loop
+                            354 ; ---------------------------------
+   00C6                     355 ___game_loop_start:
+   00C6                     356 _game_loop:
+   00C6 E8 FE               357 	lda	sp,-2(sp)
+                            358 ;	src/game.c 75
+                            359 ;	genCall
+                            360 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00C8 CD 00 00            361 	call	_wait_vbl_done
+                            362 ;	src/game.c 76
+                            363 ;	genAssign
+   00CB 01 45 FF            364 	ld	bc,#0xFF45
+                            365 ;	genAssign (pointer)
+   00CE 3E 00               366 	ld	a,#0x00
+   00D0 02                  367 	ld	(bc),a
+                            368 ;	src/game.c 78
+                            369 ;	genCall
+                            370 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00D1 CD 00 00            371 	call	_joypad
+                            372 ;	AOP_HL for _joy
+   00D4 21 00 00            373 	ld	hl,#_joy
+   00D7 73                  374 	ld	(hl),e
+                            375 ;	src/game.c 81
+                            376 ;	genCall
+                            377 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00D8 CD 00 00            378 	call	_FadeUpdate
+                            379 ;	src/game.c 84
+                            380 ;	genCmpEq
+                            381 ;	AOP_HL for _stage_type
+                            382 ;	AOP_HL for _stage_next_type
+                            383 ; genCmpEq: left 1, right 1, result 0
+   00DB 21 09 00            384 	ld	hl,#_stage_next_type
+   00DE 7E                  385 	ld	a,(hl)
+   00DF 21 08 00            386 	ld	hl,#_stage_type
+   00E2 BE                  387 	cp	(hl)
+   00E3 20 03               388 	jr	nz,00114$
+   00E5 C3 4A 01            389 	jp	00104$
+   00E8                     390 00114$:
+                            391 ;	genCall
+                            392 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00E8 CD 00 00            393 	call	_IsFading
+   00EB 4B                  394 	ld	c,e
+                            395 ;	genIfx
+   00EC AF                  396 	xor	a,a
+   00ED B1                  397 	or	a,c
+   00EE C2 4A 01            398 	jp	nz,00104$
+                            399 ;	src/game.c 86
+                            400 ;	genAssign
+                            401 ;	AOP_HL for _stage_next_type
+                            402 ;	AOP_HL for _stage_type
+   00F1 21 09 00            403 	ld	hl,#_stage_next_type
+   00F4 7E                  404 	ld	a,(hl)
+   00F5 21 08 00            405 	ld	hl,#_stage_type
+   00F8 77                  406 	ld	(hl),a
+                            407 ;	src/game.c 87
+                            408 ;	genAssign
+                            409 ;	AOP_HL for _scene_next_index
+                            410 ;	AOP_HL for _scene_index
+   00F9 21 00 00            411 	ld	hl,#_scene_next_index
+   00FC 2A                  412 	ld	a,(hl+)
+   00FD 5E                  413 	ld	e,(hl)
+   00FE 21 00 00            414 	ld	hl,#_scene_index
+   0101 22                  415 	ld	(hl+),a
+   0102 73                  416 	ld	(hl),e
+                            417 ;	src/game.c 89
+                            418 ;	genPlus
+                            419 ;	genPlusIncr
+   0103 01 01 00            420 	ld	bc,#_actors + 1
+                            421 ;	genPointerGet
+   0106 0A                  422 	ld	a,(bc)
+                            423 ;	genAssign (pointer)
+   0107 11 00 00            424 	ld	de,#_map_next_pos
+   010A 12                  425 	ld	(de),a
+                            426 ;	src/game.c 90
+                            427 ;	genPlus
+                            428 ;	genPlusIncr
+   010B 01 01 00            429 	ld	bc,#_map_next_pos + 1
+                            430 ;	genPlus
+                            431 ;	AOP_STK for _game_loop_sloc0_1_0
+                            432 ;	genPlusIncr
+                            433 ;	Can't optimise plus by inc, falling back to the normal way
+   010E 11 00 00            434 	ld	de,#_actors
+   0111 21 02 00            435 	ld	hl,#0x0002
+   0114 19                  436 	add	hl,de
+   0115 7D                  437 	ld	a,l
+   0116 54                  438 	ld	d,h
+   0117 F8 00               439 	lda	hl,0(sp)
+                            440 ;	genPointerGet
+                            441 ;	AOP_STK for _game_loop_sloc0_1_0
+   0119 22                  442 	ld	(hl+),a
+   011A 72                  443 	ld	(hl),d
+   011B 5F                  444 	ld	e,a
+   011C 1A                  445 	ld	a,(de)
+                            446 ;	genAssign (pointer)
+   011D 02                  447 	ld	(bc),a
+                            448 ;	src/game.c 91
+                            449 ;	genPlus
+                            450 ;	genPlusIncr
+   011E 01 03 00            451 	ld	bc,#_actors + 3
+                            452 ;	genPointerGet
+   0121 0A                  453 	ld	a,(bc)
+                            454 ;	genAssign (pointer)
+   0122 11 00 00            455 	ld	de,#_map_next_dir
+   0125 12                  456 	ld	(de),a
+                            457 ;	src/game.c 92
+                            458 ;	genPlus
+                            459 ;	genPlusIncr
+   0126 01 01 00            460 	ld	bc,#_map_next_dir + 1
+                            461 ;	genPlus
+                            462 ;	AOP_STK for _game_loop_sloc0_1_0
+                            463 ;	genPlusIncr
+                            464 ;	Can't optimise plus by inc, falling back to the normal way
+   0129 11 00 00            465 	ld	de,#_actors
+   012C 21 04 00            466 	ld	hl,#0x0004
+   012F 19                  467 	add	hl,de
+   0130 7D                  468 	ld	a,l
+   0131 54                  469 	ld	d,h
+   0132 F8 00               470 	lda	hl,0(sp)
+                            471 ;	genPointerGet
+                            472 ;	AOP_STK for _game_loop_sloc0_1_0
+   0134 22                  473 	ld	(hl+),a
+   0135 72                  474 	ld	(hl),d
+   0136 5F                  475 	ld	e,a
+   0137 1A                  476 	ld	a,(de)
+                            477 ;	genAssign (pointer)
+   0138 02                  478 	ld	(bc),a
+                            479 ;	src/game.c 94
+                            480 ;	genCmpEq
+                            481 ;	AOP_HL for _stage_type
+                            482 ; genCmpEq: left 1, right 1, result 0
+   0139 21 08 00            483 	ld	hl,#_stage_type
+   013C 7E                  484 	ld	a,(hl)
+   013D FE 01               485 	cp	a,#0x01
+   013F C2 4A 01            486 	jp	nz,00104$
+   0142 18 03               487 	jr	00116$
+   0144                     488 00115$:
+   0144 C3 4A 01            489 	jp	00104$
+   0147                     490 00116$:
+                            491 ;	src/game.c 96
+                            492 ;	genCall
+                            493 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0147 CD 00 00            494 	call	_SceneInit
+                            495 ;	genLabel
+   014A                     496 00104$:
+                            497 ;	src/game.c 100
+                            498 ;	genCmpEq
+                            499 ;	AOP_HL for _stage_type
+                            500 ; genCmpEq: left 1, right 1, result 0
+   014A 21 08 00            501 	ld	hl,#_stage_type
+   014D 7E                  502 	ld	a,(hl)
+   014E FE 01               503 	cp	a,#0x01
+   0150 C2 5B 01            504 	jp	nz,00107$
+   0153 18 03               505 	jr	00118$
+   0155                     506 00117$:
+   0155 C3 5B 01            507 	jp	00107$
+   0158                     508 00118$:
+                            509 ;	src/game.c 102
+                            510 ;	genCall
+                            511 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0158 CD 00 00            512 	call	_SceneUpdate
+                            513 ;	genLabel
+   015B                     514 00107$:
+                            515 ;	src/game.c 105
+                            516 ;	genAssign
+                            517 ;	AOP_HL for _joy
+                            518 ;	AOP_HL for _prev_joy
+   015B 21 00 00            519 	ld	hl,#_joy
+   015E 7E                  520 	ld	a,(hl)
+   015F 21 01 00            521 	ld	hl,#_prev_joy
+   0162 77                  522 	ld	(hl),a
+                            523 ;	src/game.c 106
+                            524 ;	genPlus
+                            525 ;	AOP_HL for _time
+                            526 ;	genPlusIncr
+   0163 21 02 00            527 	ld	hl,#_time
+   0166 34                  528 	inc	(hl)
+                            529 ;	src/game.c 108
+                            530 ;	genCast
+                            531 ;	AOP_HL for _time
+   0167 4E                  532 	ld	c,(hl)
+   0168 06 00               533 	ld	b,#0x00
+                            534 ;	genPlus
+                            535 ;	AOP_HL for _rand_seed
+                            536 ;	Can't optimise plus by inc, falling back to the normal way
+   016A 21 03 00            537 	ld	hl,#_rand_seed
+   016D 7E                  538 	ld	a,(hl)
+   016E 81                  539 	add	a,c
+   016F 22                  540 	ld	(hl+),a
+   0170 7E                  541 	ld	a,(hl)
+   0171 88                  542 	adc	a,b
+                            543 ;	src/game.c 109
+                            544 ;	genIpush
+                            545 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            546 ;	AOP_HL for _rand_seed
+   0172 32                  547 	ld      (hl-),a
+   0173 2A                  548 	ld	a,(hl+)
+   0174 66                  549 	ld	h,(hl)
+   0175 6F                  550 	ld	l,a
+   0176 E5                  551 	push	hl
+                            552 ;	genCall
+   0177 CD 00 00            553 	call	_initrand
+   017A E8 02               554 	lda	sp,2(sp)
+                            555 ;	src/game.c 111
+                            556 ;	genCall
+                            557 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   017C CD 00 00            558 	call	_gbt_update
+                            559 ;	genLabel
+   017F                     560 00108$:
+                            561 ;	genEndFunction
+   017F E8 02               562 	lda	sp,2(sp)
+   0181 C9                  563 	ret
+   0182                     564 ___game_loop_end:
+                            565 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+    _FadeInit                          **** GX
+    _FadeUpdate                        **** GX
+    _IsFading                          **** GX
+    _SceneInit                         **** GX
+    _SceneUpdate                       **** GX
+    _UIInit                            **** GX
+  0 ___game_loop_end                   0182 R
+  0 ___game_loop_start                 00C6 R
+  0 ___main_end                        00C6 R
+  0 ___main_start                      0000 R
+  1 _actor_move_dest                   0006 GR
+  1 _actor_move_settings               0005 GR
+    _actors                            **** GX
+  0 _game_loop                         00C6 GR
+    _gbt_update                        **** GX
+    _initrand                          **** GX
+  1 _joy                               0000 GR
+    _joypad                            **** GX
+  0 _main                              0000 GR
+    _map_next_dir                      **** GX
+    _map_next_pos                      **** GX
+    _map_next_sprite                   **** GX
+  1 _prev_joy                          0001 GR
+  1 _rand_seed                         0003 GR
+    _scene_index                       **** GX
+    _scene_next_index                  **** GX
+  1 _scene_stack                       000E GR
+  1 _scene_stack_ptr                   000D GR
+  1 _script_action_complete            000B GR
+  1 _script_actor                      000C GR
+  1 _script_continue                   000A GR
+    _set_interrupts                    **** GX
+  1 _stage_next_type                   0009 GR
+  1 _stage_type                        0008 GR
+  1 _time                              0002 GR
+    _wait_vbl_done                     **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size  182   flags 0
+   1 _DATA                              size   3E   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size   19   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

@@ -1,0 +1,183 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Mon Nov 25 14:16:02 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc553210
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _StackPush
+                             12 	.globl _StackPop
+                             13 ;--------------------------------------------------------
+                             14 ; special function registers
+                             15 ;--------------------------------------------------------
+                             16 ;--------------------------------------------------------
+                             17 ; special function bits 
+                             18 ;--------------------------------------------------------
+                             19 ;--------------------------------------------------------
+                             20 ; internal ram data
+                             21 ;--------------------------------------------------------
+                             22 	.area _DATA
+                             23 ;--------------------------------------------------------
+                             24 ; overlayable items in internal ram 
+                             25 ;--------------------------------------------------------
+                             26 	.area _OVERLAY
+                             27 ;--------------------------------------------------------
+                             28 ; indirectly addressable internal ram data
+                             29 ;--------------------------------------------------------
+                             30 	.area _ISEG
+                             31 ;--------------------------------------------------------
+                             32 ; bit data
+                             33 ;--------------------------------------------------------
+                             34 	.area _BSEG
+                             35 ;--------------------------------------------------------
+                             36 ; external ram data
+                             37 ;--------------------------------------------------------
+                             38 	.area _XSEG
+                             39 ;--------------------------------------------------------
+                             40 ; global & static initialisations
+                             41 ;--------------------------------------------------------
+                             42 	.area _GSINIT
+                             43 	.area _GSFINAL
+                             44 	.area _GSINIT
+                             45 ;--------------------------------------------------------
+                             46 ; Home
+                             47 ;--------------------------------------------------------
+                             48 	.area _HOME
+                             49 	.area _CODE
+                             50 ;--------------------------------------------------------
+                             51 ; code
+                             52 ;--------------------------------------------------------
+                             53 	.area _CODE
+                             54 ;	src/Stack.c 3
+                             55 ;	genLabel
+                             56 ;	genFunction
+                             57 ;	---------------------------------
+                             58 ; Function StackPush
+                             59 ; ---------------------------------
+   0000                      60 ___StackPush_start:
+   0000                      61 _StackPush:
+   0000 E8 FE                62 	lda	sp,-2(sp)
+                             63 ;	src/Stack.c 5
+                             64 ;	genAssign
+                             65 ;	AOP_STK for 
+   0002 F8 04                66 	lda	hl,4(sp)
+   0004 4E                   67 	ld	c,(hl)
+   0005 23                   68 	inc	hl
+   0006 46                   69 	ld	b,(hl)
+                             70 ;	genPointerGet
+                             71 ;	AOP_STK for _StackPush_sloc0_1_0
+   0007 0A                   72 	ld	a,(bc)
+   0008 F8 01                73 	lda	hl,1(sp)
+                             74 ;	genPlus
+                             75 ;	AOP_STK for _StackPush_sloc0_1_0
+                             76 ;	AOP_STK for _StackPush_sloc1_1_0
+                             77 ;	genPlusIncr
+                             78 ;	Can't optimise plus by inc, falling back to the normal way
+   000A 77                   79 	ld      (hl),a
+   000B 7F                   80 	ld      a,a
+   000C C6 01                81 	add	a,#0x01
+   000E 2B                   82 	dec	hl
+                             83 ;	genAssign (pointer)
+                             84 ;	AOP_STK for _StackPush_sloc1_1_0
+   000F 77                   85 	ld      (hl),a
+   0010 7F                   86 	ld      a,a
+   0011 02                   87 	ld	(bc),a
+                             88 ;	genPlus
+                             89 ;	AOP_STK for _StackPush_sloc1_1_0
+                             90 ;	Can't optimise plus by inc, falling back to the normal way
+   0012 6E                   91 	ld	l,(hl)
+   0013 26 00                92 	ld	h,#0x00
+   0015 09                   93 	add	hl,bc
+   0016 4D                   94 	ld	c,l
+   0017 44                   95 	ld	b,h
+                             96 ;	genAssign (pointer)
+                             97 ;	AOP_STK for 
+   0018 F8 06                98 	lda	hl,6(sp)
+   001A 7E                   99 	ld	a,(hl)
+   001B 02                  100 	ld	(bc),a
+                            101 ;	genLabel
+   001C                     102 00101$:
+                            103 ;	genEndFunction
+   001C E8 02               104 	lda	sp,2(sp)
+   001E C9                  105 	ret
+   001F                     106 ___StackPush_end:
+                            107 ;	src/Stack.c 8
+                            108 ;	genLabel
+                            109 ;	genFunction
+                            110 ;	---------------------------------
+                            111 ; Function StackPop
+                            112 ; ---------------------------------
+   001F                     113 ___StackPop_start:
+   001F                     114 _StackPop:
+   001F E8 FE               115 	lda	sp,-2(sp)
+                            116 ;	src/Stack.c 10
+                            117 ;	genAssign
+                            118 ;	AOP_STK for 
+   0021 F8 04               119 	lda	hl,4(sp)
+   0023 4E                  120 	ld	c,(hl)
+   0024 23                  121 	inc	hl
+   0025 46                  122 	ld	b,(hl)
+                            123 ;	genPointerGet
+                            124 ;	AOP_STK for _StackPop_sloc0_1_0
+   0026 0A                  125 	ld	a,(bc)
+   0027 F8 01               126 	lda	hl,1(sp)
+                            127 ;	genMinus
+                            128 ;	AOP_STK for _StackPop_sloc0_1_0
+                            129 ;	AOP_STK for _StackPop_sloc1_1_0
+   0029 77                  130 	ld      (hl),a
+   002A 7F                  131 	ld      a,a
+   002B C6 FF               132 	add	a,#0xFF
+   002D 2B                  133 	dec	hl
+                            134 ;	genAssign (pointer)
+                            135 ;	AOP_STK for _StackPop_sloc1_1_0
+   002E 77                  136 	ld      (hl),a
+   002F 7F                  137 	ld      a,a
+   0030 02                  138 	ld	(bc),a
+                            139 ;	genPlus
+                            140 ;	AOP_STK for _StackPop_sloc0_1_0
+                            141 ;	Can't optimise plus by inc, falling back to the normal way
+   0031 23                  142 	inc	hl
+   0032 6E                  143 	ld	l,(hl)
+   0033 26 00               144 	ld	h,#0x00
+   0035 09                  145 	add	hl,bc
+   0036 4D                  146 	ld	c,l
+   0037 44                  147 	ld	b,h
+                            148 ;	genPointerGet
+   0038 0A                  149 	ld	a,(bc)
+   0039 4F                  150 	ld	c,a
+                            151 ;	genRet
+   003A 59                  152 	ld	e,c
+                            153 ;	genLabel
+   003B                     154 00101$:
+                            155 ;	genEndFunction
+   003B E8 02               156 	lda	sp,2(sp)
+   003D C9                  157 	ret
+   003E                     158 ___StackPop_end:
+                            159 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+  0 _StackPop                          001F GR
+  0 _StackPush                         0000 GR
+  0 ___StackPop_end                    003E R
+  0 ___StackPop_start                  001F R
+  0 ___StackPush_end                   001F R
+  0 ___StackPush_start                 0000 R
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size   3E   flags 0
+   1 _DATA                              size    0   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size    0   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

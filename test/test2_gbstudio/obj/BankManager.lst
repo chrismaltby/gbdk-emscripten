@@ -1,0 +1,234 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Mon Nov 25 14:16:02 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc553330
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _bank_stack
+                             12 	.globl _PushBank
+                             13 	.globl _PopBank
+                             14 ;--------------------------------------------------------
+                             15 ; special function registers
+                             16 ;--------------------------------------------------------
+                             17 ;--------------------------------------------------------
+                             18 ; special function bits 
+                             19 ;--------------------------------------------------------
+                             20 ;--------------------------------------------------------
+                             21 ; internal ram data
+                             22 ;--------------------------------------------------------
+                             23 	.area _DATA
+   0000                      24 _bank_stack::
+   0000                      25 	.ds 11
+                             26 ;--------------------------------------------------------
+                             27 ; overlayable items in internal ram 
+                             28 ;--------------------------------------------------------
+                             29 	.area _OVERLAY
+                             30 ;--------------------------------------------------------
+                             31 ; indirectly addressable internal ram data
+                             32 ;--------------------------------------------------------
+                             33 	.area _ISEG
+                             34 ;--------------------------------------------------------
+                             35 ; bit data
+                             36 ;--------------------------------------------------------
+                             37 	.area _BSEG
+                             38 ;--------------------------------------------------------
+                             39 ; external ram data
+                             40 ;--------------------------------------------------------
+                             41 	.area _XSEG
+                             42 ;--------------------------------------------------------
+                             43 ; global & static initialisations
+                             44 ;--------------------------------------------------------
+                             45 	.area _GSINIT
+                             46 	.area _GSFINAL
+                             47 	.area _GSINIT
+                             48 ;	src/BankManager.c 3
+                             49 ;	src/BankManager.c 16
+                             50 ;	genArrayInit
+                             51 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0000 21 00 00             52 	ld	hl,#_bank_stack
+   0003 CD 00 00             53 	call	__initrleblock
+   0006 01                   54 	.db	1
+   0007 00                   55 	.db	0x00
+   0008 00                   56 	.db	0
+                             57 ;--------------------------------------------------------
+                             58 ; Home
+                             59 ;--------------------------------------------------------
+                             60 	.area _HOME
+                             61 	.area _CODE
+                             62 ;--------------------------------------------------------
+                             63 ; code
+                             64 ;--------------------------------------------------------
+                             65 	.area _CODE
+                             66 ;	src/BankManager.c 5
+                             67 ;	genLabel
+                             68 ;	genFunction
+                             69 ;	---------------------------------
+                             70 ; Function PushBank
+                             71 ; ---------------------------------
+   0000                      72 ___PushBank_start:
+   0000                      73 _PushBank:
+   0000 E8 FC                74 	lda	sp,-4(sp)
+                             75 ;	src/BankManager.c 7
+                             76 ;	genIpush
+                             77 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                             78 ;	AOP_STK for 
+   0002 F8 06                79 	lda	hl,6(sp)
+   0004 7E                   80 	ld	a,(hl)
+   0005 F5                   81 	push	af
+   0006 33                   82 	inc	sp
+                             83 ;	genIpush
+   0007 21 00 00             84 	ld	hl,#_bank_stack
+   000A E5                   85 	push	hl
+                             86 ;	genCall
+   000B CD 00 00             87 	call	_StackPush
+   000E E8 03                88 	lda	sp,3(sp)
+                             89 ;	src/BankManager.c 8
+                             90 ;	genAssign
+   0010 01 00 30             91 	ld	bc,#0x3000
+                             92 ;	genCast
+                             93 ;	AOP_STK for 
+                             94 ;	AOP_STK for _PushBank_sloc0_1_0
+   0013 F8 06                95 	lda	hl,6(sp)
+   0015 7E                   96 	ld	a,(hl)
+   0016 F8 02                97 	lda	hl,2(sp)
+   0018 22                   98 	ld	(hl+),a
+   0019 36 00                99 	ld	(hl),#0x00
+                            100 ;	genRightShift
+                            101 ;	AOP_STK for _PushBank_sloc0_1_0
+                            102 ;	AOP_STK for _PushBank_sloc1_1_0
+   001B 7E                  103 	ld	a,(hl)
+   001C F8 00               104 	lda	hl,0(sp)
+   001E 22                  105 	ld	(hl+),a
+   001F 36 00               106 	ld	(hl),#0x00
+                            107 ;	genCast
+                            108 ;	AOP_STK for _PushBank_sloc1_1_0
+   0021 2B                  109 	dec	hl
+   0022 7E                  110 	ld	a,(hl)
+                            111 ;	genAssign (pointer)
+   0023 02                  112 	ld	(bc),a
+                            113 ;	genAssign
+   0024 01 00 20            114 	ld	bc,#0x2000
+                            115 ;	genAssign (pointer)
+                            116 ;	AOP_STK for 
+   0027 F8 06               117 	lda	hl,6(sp)
+   0029 7E                  118 	ld	a,(hl)
+   002A 02                  119 	ld	(bc),a
+                            120 ;	genLabel
+   002B                     121 00101$:
+                            122 ;	genEndFunction
+   002B E8 04               123 	lda	sp,4(sp)
+   002D C9                  124 	ret
+   002E                     125 ___PushBank_end:
+                            126 ;	src/BankManager.c 11
+                            127 ;	genLabel
+                            128 ;	genFunction
+                            129 ;	---------------------------------
+                            130 ; Function PopBank
+                            131 ; ---------------------------------
+   002E                     132 ___PopBank_start:
+   002E                     133 _PopBank:
+   002E E8 FB               134 	lda	sp,-5(sp)
+                            135 ;	src/BankManager.c 13
+                            136 ;	genIpush
+                            137 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0030 21 00 00            138 	ld	hl,#_bank_stack
+   0033 E5                  139 	push	hl
+                            140 ;	genCall
+   0034 CD 00 00            141 	call	_StackPop
+   0037 E8 02               142 	lda	sp,2(sp)
+                            143 ;	src/BankManager.c 14
+                            144 ;	genAssign
+   0039 01 00 30            145 	ld	bc,#0x3000
+                            146 ;	genPointerGet
+                            147 ;	AOP_STK for _PopBank_sloc0_1_0
+   003C 11 00 00            148 	ld	de,#_bank_stack
+   003F 1A                  149 	ld	a,(de)
+   0040 F8 04               150 	lda	hl,4(sp)
+   0042 77                  151 	ld	(hl),a
+                            152 ;	genPlus
+                            153 ;	AOP_STK for _PopBank_sloc0_1_0
+                            154 ;	AOP_STK for _PopBank_sloc1_1_0
+                            155 ;	Can't optimise plus by inc, falling back to the normal way
+   0043 11 00 00            156 	ld	de,#_bank_stack
+   0046 6E                  157 	ld	l,(hl)
+   0047 26 00               158 	ld	h,#0x00
+   0049 19                  159 	add	hl,de
+   004A 7D                  160 	ld	a,l
+   004B 54                  161 	ld	d,h
+   004C F8 02               162 	lda	hl,2(sp)
+                            163 ;	genPointerGet
+                            164 ;	AOP_STK for _PopBank_sloc1_1_0
+                            165 ;	AOP_STK for _PopBank_sloc0_1_0
+   004E 22                  166 	ld	(hl+),a
+   004F 72                  167 	ld	(hl),d
+   0050 5F                  168 	ld	e,a
+   0051 1A                  169 	ld	a,(de)
+   0052 23                  170 	inc	hl
+                            171 ;	genCast
+                            172 ;	AOP_STK for _PopBank_sloc0_1_0
+                            173 ;	AOP_STK for _PopBank_sloc1_1_0
+   0053 77                  174 	ld      (hl),a
+   0054 7F                  175 	ld      a,a
+   0055 2B                  176 	dec	hl
+   0056 2B                  177 	dec	hl
+   0057 22                  178 	ld	(hl+),a
+   0058 36 00               179 	ld	(hl),#0x00
+                            180 ;	genRightShift
+                            181 ;	AOP_STK for _PopBank_sloc1_1_0
+                            182 ;	AOP_STK for _PopBank_sloc2_1_0
+   005A 7E                  183 	ld	a,(hl)
+   005B F8 00               184 	lda	hl,0(sp)
+   005D 22                  185 	ld	(hl+),a
+   005E 36 00               186 	ld	(hl),#0x00
+                            187 ;	genCast
+                            188 ;	AOP_STK for _PopBank_sloc2_1_0
+   0060 2B                  189 	dec	hl
+   0061 7E                  190 	ld	a,(hl)
+                            191 ;	genAssign (pointer)
+   0062 02                  192 	ld	(bc),a
+                            193 ;	genAssign
+   0063 01 00 20            194 	ld	bc,#0x2000
+                            195 ;	genAssign (pointer)
+                            196 ;	AOP_STK for _PopBank_sloc0_1_0
+   0066 F8 04               197 	lda	hl,4(sp)
+   0068 7E                  198 	ld	a,(hl)
+   0069 02                  199 	ld	(bc),a
+                            200 ;	genLabel
+   006A                     201 00101$:
+                            202 ;	genEndFunction
+   006A E8 05               203 	lda	sp,5(sp)
+   006C C9                  204 	ret
+   006D                     205 ___PopBank_end:
+                            206 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+  0 _PopBank                           002E GR
+  0 _PushBank                          0000 GR
+    _StackPop                          **** GX
+    _StackPush                         **** GX
+  0 ___PopBank_end                     006D R
+  0 ___PopBank_start                   002E R
+  0 ___PushBank_end                    002E R
+  0 ___PushBank_start                  0000 R
+    __initrleblock                     **** GX
+  1 _bank_stack                        0000 GR
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size   6D   flags 0
+   1 _DATA                              size    B   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size    9   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

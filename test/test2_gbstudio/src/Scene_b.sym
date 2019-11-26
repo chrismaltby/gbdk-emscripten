@@ -1,0 +1,203 @@
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+    _ClampUBYTE                        **** GX
+    _FadeIn                            **** GX
+    _IsFading                          **** GX
+    _ReadBankedBankPtr                 **** GX
+    _ReadBankedUBYTE                   **** GX
+    _ReadBankedUWORD                   **** GX
+  9 _SceneAwaitInputPressed_b          2AB2 GR
+  9 _SceneCameraAtDest_b               2A63 GR
+  9 _SceneHandleInput                  204E R
+  9 _SceneHandleTransition             1035 GR
+  9 _SceneHandleTriggers_b             1F40 GR
+  9 _SceneHandleWait                   1019 GR
+    _SceneInit                         **** GX
+  9 _SceneInit_b1                      0000 GR
+  9 _SceneInit_b2                      006E GR
+  9 _SceneInit_b3                      0A3B GR
+  9 _SceneInit_b4                      0A80 GR
+  9 _SceneInit_b5                      0A9C GR
+  9 _SceneInit_b6                      0C01 GR
+  9 _SceneInit_b7                      0D24 GR
+  9 _SceneInit_b8                      0DF5 GR
+  9 _SceneInit_b9                      0E43 GR
+  9 _SceneIsEmoting_b                  2A57 GR
+  9 _SceneNpcAt_b                      282F GR
+  9 _ScenePlayerAt_b                   27C7 GR
+  9 _SceneRender                       234E GR
+  9 _SceneRenderActor_b                254B GR
+  9 _SceneRenderActors_b               2383 GR
+  9 _SceneRenderCameraShake_b          2358 GR
+  9 _SceneRenderEmoteBubble_b          2709 GR
+  9 _SceneSetEmote_b                   29E0 GR
+  9 _SceneTriggerAt_b                  292D GR
+  9 _SceneUpdateActorMovement_b        1B9B GR
+  9 _SceneUpdateActors_b               1237 GR
+  9 _SceneUpdateCameraShake_b          1FF5 GR
+  9 _SceneUpdateCamera_b               1063 GR
+  9 _SceneUpdateEmoteBubble_b          2011 GR
+  9 _SceneUpdateTimer_b                1E94 GR
+  9 _SceneUpdate_b                     0FF4 GR
+    _ScriptRunnerUpdate                **** GX
+    _ScriptStart                       **** GX
+    _SetBankedBkgData                  **** GX
+    _SetBankedBkgTiles                 **** GX
+    _SetBankedSpriteData               **** GX
+    _SpritesReset                      **** GX
+    _UIInit                            **** GX
+    _UIIsClosed                        **** GX
+    _UIOnInteract                      **** GX
+    _UIUpdate                          **** GX
+  9 ___SceneAwaitInputPressed_b_end    2B14 R
+  9 ___SceneAwaitInputPressed_b_star   2AB2 R
+  9 ___SceneCameraAtDest_b_end         2AB2 R
+  9 ___SceneCameraAtDest_b_start       2A63 R
+  9 ___SceneHandleInput_end            234E R
+  9 ___SceneHandleInput_start          204E R
+  9 ___SceneHandleTransition_end       1063 R
+  9 ___SceneHandleTransition_start     1035 R
+  9 ___SceneHandleTriggers_b_end       1FF5 R
+  9 ___SceneHandleTriggers_b_start     1F40 R
+  9 ___SceneHandleWait_end             1035 R
+  9 ___SceneHandleWait_start           1019 R
+  9 ___SceneInit_b1_end                002C R
+  9 ___SceneInit_b1_start              0000 R
+  9 ___SceneInit_b2_end                0A3B R
+  9 ___SceneInit_b2_start              006E R
+  9 ___SceneInit_b3_end                0A80 R
+  9 ___SceneInit_b3_start              0A3B R
+  9 ___SceneInit_b4_end                0A9C R
+  9 ___SceneInit_b4_start              0A80 R
+  9 ___SceneInit_b5_end                0C01 R
+  9 ___SceneInit_b5_start              0A9C R
+  9 ___SceneInit_b6_end                0D24 R
+  9 ___SceneInit_b6_start              0C01 R
+  9 ___SceneInit_b7_end                0DF5 R
+  9 ___SceneInit_b7_start              0D24 R
+  9 ___SceneInit_b8_end                0E43 R
+  9 ___SceneInit_b8_start              0DF5 R
+  9 ___SceneInit_b9_end                0FF4 R
+  9 ___SceneInit_b9_start              0E43 R
+  9 ___SceneIsEmoting_b_end            2A63 R
+  9 ___SceneIsEmoting_b_start          2A57 R
+  9 ___SceneNpcAt_b_end                292D R
+  9 ___SceneNpcAt_b_start              282F R
+  9 ___ScenePlayerAt_b_end             282F R
+  9 ___ScenePlayerAt_b_start           27C7 R
+  9 ___SceneRenderActor_b_end          2709 R
+  9 ___SceneRenderActor_b_start        254B R
+  9 ___SceneRenderActors_b_end         254B R
+  9 ___SceneRenderActors_b_start       2383 R
+  9 ___SceneRenderCameraShake_b_end    2383 R
+  9 ___SceneRenderCameraShake_b_star   2358 R
+  9 ___SceneRenderEmoteBubble_b_end    27C7 R
+  9 ___SceneRenderEmoteBubble_b_star   2709 R
+  9 ___SceneRender_end                 2358 R
+  9 ___SceneRender_start               234E R
+  9 ___SceneSetEmote_b_end             2A57 R
+  9 ___SceneSetEmote_b_start           29E0 R
+  9 ___SceneTriggerAt_b_end            29E0 R
+  9 ___SceneTriggerAt_b_start          292D R
+  9 ___SceneUpdateActorMovement_b_en   1E94 R
+  9 ___SceneUpdateActorMovement_b_st   1B9B R
+  9 ___SceneUpdateActors_b_end         1B9B R
+  9 ___SceneUpdateActors_b_start       1237 R
+  9 ___SceneUpdateCameraShake_b_end    2011 R
+  9 ___SceneUpdateCameraShake_b_star   1FF5 R
+  9 ___SceneUpdateCamera_b_end         1237 R
+  9 ___SceneUpdateCamera_b_start       1063 R
+  9 ___SceneUpdateEmoteBubble_b_end    204E R
+  9 ___SceneUpdateEmoteBubble_b_star   2011 R
+  9 ___SceneUpdateTimer_b_end          1F40 R
+  9 ___SceneUpdateTimer_b_start        1E94 R
+  9 ___SceneUpdate_b_end               1019 R
+  9 ___SceneUpdate_b_start             0FF4 R
+    __initrleblock                     **** GX
+    __muluchar_rrx_s                   **** GX
+    __muluint_rrx_s                    **** GX
+    _actor_move_dest                   **** GX
+    _actor_move_settings               **** GX
+    _actors                            **** GX
+    _await_input                       **** GX
+    _background_bank_ptrs              **** GX
+    _bank_data_ptrs                    **** GX
+  1 _bank_ptr                          000B GR
+    _camera_dest                       **** GX
+  1 _camera_moved                      0096 GR
+    _camera_settings                   **** GX
+    _camera_speed                      **** GX
+  1 _check_triggers                    000E GR
+  1 _col_bank                          0007 GR
+  1 _collision_tiles_len               0006 GR
+  9 _dir_down                          0066 GR
+  9 _dir_left                          0068 GR
+  9 _dir_none                          006C GR
+  9 _dir_right                         006A GR
+  9 _dir_up                            0064 GR
+  1 _directions                        0097 GR
+    _display_off                       **** GX
+  1 _emote_actor                       0015 GR
+  9 _emote_offsets                     002C GR
+  1 _emote_timer                       0014 GR
+  1 _emote_type                        0013 GR
+  1 _events_ptr                        0008 GR
+    _fade_running                      **** GX
+  1 _image_index                       0001 GR
+    _input_script_ptrs                 **** GX
+    _joy                               **** GX
+  1 _last_joy                          00A3 GR
+    _map_next_dir                      **** GX
+    _map_next_pos                      **** GX
+    _map_next_sprite                   **** GX
+    _memcpy                            **** GX
+    _move_sprite                       **** GX
+    _prev_joy                          **** GX
+    _rand                              **** GX
+  1 _scene_bank                        0000 GR
+    _scene_bank_ptrs                   **** GX
+  1 _scene_col_tiles                   0016 GR
+    _scene_height                      **** GX
+    _scene_index                       **** GX
+  1 _scene_input_ready                 0010 GR
+  1 _scene_load_col_ptr                0004 GR
+  1 _scene_loaded                      000F GR
+    _scene_next_index                  **** GX
+  1 _scene_num_actors                  0011 GR
+  1 _scene_num_triggers                0012 GR
+    _scene_width                       **** GX
+    _script_action_complete            **** GX
+    _script_actor                      **** GX
+    _script_ptr                        **** GX
+    _set_sprite_prop                   **** GX
+    _set_sprite_tile                   **** GX
+    _shake_time                        **** GX
+    _sprite_bank_ptrs                  **** GX
+    _tileset_bank_ptrs                 **** GX
+  1 _tileset_index                     0003 GR
+    _time                              **** GX
+    _timer_script_duration             **** GX
+    _timer_script_ptr                  **** GX
+    _timer_script_time                 **** GX
+    _triggers                          **** GX
+  1 _update_dir                        00A1 GR
+    _wait_time                         **** GX
+    _win_pos_x                         **** GX
+    _win_pos_y                         **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size    0   flags 0
+   1 _DATA                              size   A4   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size   5C   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0
+   9 _CODE_3                            size 2B14   flags 0

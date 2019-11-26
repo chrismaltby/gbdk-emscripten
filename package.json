@@ -1,0 +1,29 @@
+{
+  "name": "gbdk-emscripten",
+  "version": "1.0.0",
+  "description": "GBDK Emscripten",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "node test/gbdk.test.js",
+    "build": "tsc",
+    "prepublish": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rail5/gbdk-mac.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rail5/gbdk-mac/issues"
+  },
+  "homepage": "https://github.com/rail5/gbdk-mac#readme",
+  "dependencies": {
+    "glob": "^7.1.6"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/node": "^12.12.12",
+    "typescript": "^3.7.2"
+  }
+}

@@ -1,0 +1,2932 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Thu Nov 21 08:53:19 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc631570
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _tmp_text_lines
+                             12 	.globl _text_lines
+                             13 	.globl _choice_flag
+                             14 	.globl _choice_index
+                             15 	.globl _choice_enabled
+                             16 	.globl _tmp_text_out_speed
+                             17 	.globl _tmp_text_in_speed
+                             18 	.globl _text_draw_speed
+                             19 	.globl _text_out_speed
+                             20 	.globl _text_in_speed
+                             21 	.globl _text_wait
+                             22 	.globl _text_count
+                             23 	.globl _text_drawn
+                             24 	.globl _text_y
+                             25 	.globl _text_x
+                             26 	.globl _win_speed
+                             27 	.globl _win_dest_pos_y
+                             28 	.globl _win_dest_pos_x
+                             29 	.globl _win_pos_y
+                             30 	.globl _win_pos_x
+                             31 	.globl _ui_bg_tiles
+                             32 	.globl _ui_cursor_tiles
+                             33 	.globl _UIInit
+                             34 	.globl _UIUpdate
+                             35 	.globl _UIDrawFrame
+                             36 	.globl _UIDrawDialogueFrame
+                             37 	.globl _UIDrawText
+                             38 	.globl _UIDrawTextBkg
+                             39 	.globl _UIShowText
+                             40 	.globl _UIShowChoice
+                             41 	.globl _UISetTextBuffer
+                             42 	.globl _UIDrawTextBuffer
+                             43 	.globl _UIDrawTextBufferChar
+                             44 	.globl _UISetPos
+                             45 	.globl _UIMoveTo
+                             46 	.globl _UIIsClosed
+                             47 	.globl _UIOnInteract
+                             48 	.globl _UIAtDest
+                             49 	.globl _UISetColor
+                             50 ;--------------------------------------------------------
+                             51 ; special function registers
+                             52 ;--------------------------------------------------------
+                             53 ;--------------------------------------------------------
+                             54 ; special function bits 
+                             55 ;--------------------------------------------------------
+                             56 ;--------------------------------------------------------
+                             57 ; internal ram data
+                             58 ;--------------------------------------------------------
+                             59 	.area _DATA
+   0000                      60 _win_pos_x::
+   0000                      61 	.ds 1
+   0001                      62 _win_pos_y::
+   0001                      63 	.ds 1
+   0002                      64 _win_dest_pos_x::
+   0002                      65 	.ds 1
+   0003                      66 _win_dest_pos_y::
+   0003                      67 	.ds 1
+   0004                      68 _win_speed::
+   0004                      69 	.ds 1
+   0005                      70 _text_x::
+   0005                      71 	.ds 1
+   0006                      72 _text_y::
+   0006                      73 	.ds 1
+   0007                      74 _text_drawn::
+   0007                      75 	.ds 1
+   0008                      76 _text_count::
+   0008                      77 	.ds 1
+   0009                      78 _text_wait::
+   0009                      79 	.ds 1
+   000A                      80 _text_in_speed::
+   000A                      81 	.ds 1
+   000B                      82 _text_out_speed::
+   000B                      83 	.ds 1
+   000C                      84 _text_draw_speed::
+   000C                      85 	.ds 1
+   000D                      86 _tmp_text_in_speed::
+   000D                      87 	.ds 1
+   000E                      88 _tmp_text_out_speed::
+   000E                      89 	.ds 1
+   000F                      90 _choice_enabled::
+   000F                      91 	.ds 1
+   0010                      92 _choice_index::
+   0010                      93 	.ds 1
+   0011                      94 _choice_flag::
+   0011                      95 	.ds 2
+   0013                      96 _text_lines::
+   0013                      97 	.ds 80
+   0063                      98 _tmp_text_lines::
+   0063                      99 	.ds 80
+                            100 ;--------------------------------------------------------
+                            101 ; overlayable items in internal ram 
+                            102 ;--------------------------------------------------------
+                            103 	.area _OVERLAY
+                            104 ;--------------------------------------------------------
+                            105 ; indirectly addressable internal ram data
+                            106 ;--------------------------------------------------------
+                            107 	.area _ISEG
+                            108 ;--------------------------------------------------------
+                            109 ; bit data
+                            110 ;--------------------------------------------------------
+                            111 	.area _BSEG
+                            112 ;--------------------------------------------------------
+                            113 ; external ram data
+                            114 ;--------------------------------------------------------
+                            115 	.area _XSEG
+                            116 ;--------------------------------------------------------
+                            117 ; global & static initialisations
+                            118 ;--------------------------------------------------------
+                            119 	.area _GSINIT
+                            120 	.area _GSFINAL
+                            121 	.area _GSINIT
+                            122 ;	src/UI.c 26
+                            123 ;	genAssign
+                            124 ;	AOP_HL for _text_in_speed
+   0000 21 0A 00            125 	ld	hl,#_text_in_speed
+   0003 36 01               126 	ld	(hl),#0x01
+                            127 ;	src/UI.c 27
+                            128 ;	genAssign
+                            129 ;	AOP_HL for _text_out_speed
+   0005 21 0B 00            130 	ld	hl,#_text_out_speed
+   0008 36 01               131 	ld	(hl),#0x01
+                            132 ;	src/UI.c 28
+                            133 ;	genAssign
+                            134 ;	AOP_HL for _text_draw_speed
+   000A 21 0C 00            135 	ld	hl,#_text_draw_speed
+   000D 36 01               136 	ld	(hl),#0x01
+                            137 ;	src/UI.c 29
+                            138 ;	genAssign
+                            139 ;	AOP_HL for _tmp_text_in_speed
+   000F 21 0D 00            140 	ld	hl,#_tmp_text_in_speed
+   0012 36 01               141 	ld	(hl),#0x01
+                            142 ;	src/UI.c 30
+                            143 ;	genAssign
+                            144 ;	AOP_HL for _tmp_text_out_speed
+   0014 21 0E 00            145 	ld	hl,#_tmp_text_out_speed
+   0017 36 01               146 	ld	(hl),#0x01
+                            147 ;	src/UI.c 32
+                            148 ;	genAssign
+                            149 ;	AOP_HL for _choice_enabled
+   0019 21 0F 00            150 	ld	hl,#_choice_enabled
+   001C 36 00               151 	ld	(hl),#0x00
+                            152 ;	src/UI.c 33
+                            153 ;	genAssign
+                            154 ;	AOP_HL for _choice_index
+   001E 21 10 00            155 	ld	hl,#_choice_index
+   0021 36 00               156 	ld	(hl),#0x00
+                            157 ;	src/UI.c 355
+                            158 ;	genAssign (pointer)
+   0023 11 13 00            159 	ld	de,#_text_lines
+   0026 3E 00               160 	ld	a,#0x00
+   0028 12                  161 	ld	(de),a
+                            162 ;	src/UI.c 355
+                            163 ;	genAssign (pointer)
+   0029 11 63 00            164 	ld	de,#_tmp_text_lines
+   002C 3E 00               165 	ld	a,#0x00
+   002E 12                  166 	ld	(de),a
+                            167 ;--------------------------------------------------------
+                            168 ; Home
+                            169 ;--------------------------------------------------------
+                            170 	.area _HOME
+                            171 	.area _CODE
+                            172 ;--------------------------------------------------------
+                            173 ; code
+                            174 ;--------------------------------------------------------
+                            175 	.area _CODE
+                            176 ;	src/UI.c 42
+                            177 ;	genLabel
+                            178 ;	genFunction
+                            179 ;	---------------------------------
+                            180 ; Function UIInit
+                            181 ; ---------------------------------
+   0000                     182 ___UIInit_start:
+   0000                     183 _UIInit:
+                            184 	
+                            185 ;	src/UI.c 44
+                            186 ;	genIpush
+                            187 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            188 ;	AOP_HL for _ui_bank
+   0000 21 00 00            189 	ld	hl,#_ui_bank
+   0003 7E                  190 	ld	a,(hl)
+   0004 F5                  191 	push	af
+   0005 33                  192 	inc	sp
+                            193 ;	genCall
+   0006 CD 00 00            194 	call	_PushBank
+   0009 E8 01               195 	lda	sp,1(sp)
+                            196 ;	src/UI.c 45
+                            197 ;	genCall
+                            198 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   000B CD 00 00            199 	call	_UIInit_b
+                            200 ;	src/UI.c 46
+                            201 ;	genCall
+                            202 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   000E CD 00 00            203 	call	_PopBank
+                            204 ;	genLabel
+   0011                     205 00101$:
+                            206 ;	genEndFunction
+                            207 	
+   0011 C9                  208 	ret
+   0012                     209 ___UIInit_end:
+   0012                     210 _ui_cursor_tiles:
+   0012 CB                  211 	.db #0xCB
+   0013                     212 _ui_bg_tiles:
+   0013 C4                  213 	.db #0xC4
+                            214 ;	src/UI.c 49
+                            215 ;	genLabel
+                            216 ;	genFunction
+                            217 ;	---------------------------------
+                            218 ; Function UIUpdate
+                            219 ; ---------------------------------
+   0014                     220 ___UIUpdate_start:
+   0014                     221 _UIUpdate:
+                            222 	
+                            223 ;	src/UI.c 51
+                            224 ;	genIpush
+                            225 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            226 ;	AOP_HL for _ui_bank
+   0014 21 00 00            227 	ld	hl,#_ui_bank
+   0017 7E                  228 	ld	a,(hl)
+   0018 F5                  229 	push	af
+   0019 33                  230 	inc	sp
+                            231 ;	genCall
+   001A CD 00 00            232 	call	_PushBank
+   001D E8 01               233 	lda	sp,1(sp)
+                            234 ;	src/UI.c 52
+                            235 ;	genCall
+                            236 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   001F CD 00 00            237 	call	_UIUpdate_b
+                            238 ;	src/UI.c 53
+                            239 ;	genCall
+                            240 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0022 CD 00 00            241 	call	_PopBank
+                            242 ;	genLabel
+   0025                     243 00101$:
+                            244 ;	genEndFunction
+                            245 	
+   0025 C9                  246 	ret
+   0026                     247 ___UIUpdate_end:
+                            248 ;	src/UI.c 56
+                            249 ;	genLabel
+                            250 ;	genFunction
+                            251 ;	---------------------------------
+                            252 ; Function UIDrawFrame
+                            253 ; ---------------------------------
+   0026                     254 ___UIDrawFrame_start:
+   0026                     255 _UIDrawFrame:
+                            256 	
+                            257 ;	src/UI.c 58
+                            258 ;	genIpush
+                            259 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            260 ;	AOP_HL for _ui_bank
+   0026 21 00 00            261 	ld	hl,#_ui_bank
+   0029 7E                  262 	ld	a,(hl)
+   002A F5                  263 	push	af
+   002B 33                  264 	inc	sp
+                            265 ;	genCall
+   002C CD 00 00            266 	call	_PushBank
+   002F E8 01               267 	lda	sp,1(sp)
+                            268 ;	src/UI.c 59
+                            269 ;	genIpush
+                            270 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            271 ;	AOP_STK for 
+   0031 F8 05               272 	lda	hl,5(sp)
+   0033 7E                  273 	ld	a,(hl)
+   0034 F5                  274 	push	af
+   0035 33                  275 	inc	sp
+                            276 ;	genIpush
+                            277 ;	AOP_STK for 
+   0036 2B                  278 	dec	hl
+   0037 7E                  279 	ld	a,(hl)
+   0038 F5                  280 	push	af
+   0039 33                  281 	inc	sp
+                            282 ;	genIpush
+                            283 ;	AOP_STK for 
+   003A 2B                  284 	dec	hl
+   003B 7E                  285 	ld	a,(hl)
+   003C F5                  286 	push	af
+   003D 33                  287 	inc	sp
+                            288 ;	genIpush
+                            289 ;	AOP_STK for 
+   003E 2B                  290 	dec	hl
+   003F 7E                  291 	ld	a,(hl)
+   0040 F5                  292 	push	af
+   0041 33                  293 	inc	sp
+                            294 ;	genCall
+   0042 CD 00 00            295 	call	_UIDrawFrame_b
+   0045 E8 04               296 	lda	sp,4(sp)
+                            297 ;	src/UI.c 60
+                            298 ;	genCall
+                            299 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0047 CD 00 00            300 	call	_PopBank
+                            301 ;	genLabel
+   004A                     302 00101$:
+                            303 ;	genEndFunction
+                            304 	
+   004A C9                  305 	ret
+   004B                     306 ___UIDrawFrame_end:
+                            307 ;	src/UI.c 63
+                            308 ;	genLabel
+                            309 ;	genFunction
+                            310 ;	---------------------------------
+                            311 ; Function UIDrawDialogueFrame
+                            312 ; ---------------------------------
+   004B                     313 ___UIDrawDialogueFrame_start:
+   004B                     314 _UIDrawDialogueFrame:
+                            315 	
+                            316 ;	src/UI.c 65
+                            317 ;	genIpush
+                            318 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            319 ;	AOP_HL for _ui_bank
+   004B 21 00 00            320 	ld	hl,#_ui_bank
+   004E 7E                  321 	ld	a,(hl)
+   004F F5                  322 	push	af
+   0050 33                  323 	inc	sp
+                            324 ;	genCall
+   0051 CD 00 00            325 	call	_PushBank
+   0054 E8 01               326 	lda	sp,1(sp)
+                            327 ;	src/UI.c 66
+                            328 ;	genIpush
+                            329 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            330 ;	AOP_STK for 
+   0056 F8 02               331 	lda	hl,2(sp)
+   0058 7E                  332 	ld	a,(hl)
+   0059 F5                  333 	push	af
+   005A 33                  334 	inc	sp
+                            335 ;	genCall
+   005B CD 00 00            336 	call	_UIDrawDialogueFrame_b
+   005E E8 01               337 	lda	sp,1(sp)
+                            338 ;	src/UI.c 67
+                            339 ;	genCall
+                            340 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0060 CD 00 00            341 	call	_PopBank
+                            342 ;	genLabel
+   0063                     343 00101$:
+                            344 ;	genEndFunction
+                            345 	
+   0063 C9                  346 	ret
+   0064                     347 ___UIDrawDialogueFrame_end:
+                            348 ;	src/UI.c 70
+                            349 ;	genLabel
+                            350 ;	genFunction
+                            351 ;	---------------------------------
+                            352 ; Function UIDrawText
+                            353 ; ---------------------------------
+   0064                     354 ___UIDrawText_start:
+   0064                     355 _UIDrawText:
+   0064 E8 FB               356 	lda	sp,-5(sp)
+                            357 ;	src/UI.c 73
+                            358 ;	genIpush
+                            359 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            360 ;	AOP_STK for 
+   0066 F8 07               361 	lda	hl,7(sp)
+   0068 2A                  362 	ld	a,(hl+)
+   0069 66                  363 	ld	h,(hl)
+   006A 6F                  364 	ld	l,a
+   006B E5                  365 	push	hl
+                            366 ;	genCall
+   006C CD 00 00            367 	call	_strlen
+   006F 42                  368 	ld	b,d
+   0070 4B                  369 	ld	c,e
+   0071 E8 02               370 	lda	sp,2(sp)
+                            371 ;	genCast
+                            372 ;	AOP_STK for _UIDrawText_len_1_1
+   0073 F8 02               373 	lda	hl,2(sp)
+   0075 71                  374 	ld	(hl),c
+                            375 ;	src/UI.c 74
+                            376 ;	genAssign
+                            377 ;	AOP_STK for _UIDrawText_i_1_1
+   0076 23                  378 	inc	hl
+   0077 36 00               379 	ld	(hl),#0x00
+                            380 ;	genLabel
+   0079                     381 00101$:
+                            382 ;	genCmpEq
+                            383 ;	AOP_STK for _UIDrawText_i_1_1
+                            384 ;	AOP_STK for _UIDrawText_len_1_1
+                            385 ; genCmpEq: left 1, right 1, result 0
+   0079 F8 02               386 	lda	hl,2(sp)
+   007B 2A                  387 	ld	a,(hl+)
+   007C BE                  388 	cp	(hl)
+   007D 20 03               389 	jr	nz,00109$
+   007F C3 C2 00            390 	jp	00105$
+   0082                     391 00109$:
+                            392 ;	src/UI.c 76
+                            393 ;	genPlus
+                            394 ;	AOP_STK for 
+                            395 ;	AOP_STK for _UIDrawText_i_1_1
+                            396 ;	AOP_STK for _UIDrawText_sloc0_1_0
+                            397 ;	Can't optimise plus by inc, falling back to the normal way
+   0082 F8 07               398 	lda	hl,7(sp)
+   0084 5E                  399 	ld	e,(hl)
+   0085 23                  400 	inc	hl
+   0086 56                  401 	ld	d,(hl)
+   0087 F8 03               402 	lda	hl,3(sp)
+   0089 6E                  403 	ld	l,(hl)
+   008A 26 00               404 	ld	h,#0x00
+   008C 19                  405 	add	hl,de
+   008D 7D                  406 	ld	a,l
+   008E 54                  407 	ld	d,h
+   008F F8 00               408 	lda	hl,0(sp)
+                            409 ;	genPointerGet
+                            410 ;	AOP_STK for _UIDrawText_sloc0_1_0
+   0091 22                  411 	ld	(hl+),a
+   0092 72                  412 	ld	(hl),d
+   0093 5F                  413 	ld	e,a
+   0094 1A                  414 	ld	a,(de)
+                            415 ;	genPlus
+                            416 ;	AOP_STK for _UIDrawText_letter_1_1
+                            417 ;	genPlusIncr
+                            418 ;	Can't optimise plus by inc, falling back to the normal way
+   0095 4F                  419 	ld	c,a
+   0096 C6 A5               420 	add	a,#0xA5
+   0098 F8 04               421 	lda	hl,4(sp)
+   009A 77                  422 	ld	(hl),a
+                            423 ;	src/UI.c 77
+                            424 ;	genAddrOf
+   009B F8 04               425 	lda	hl,4(sp)
+   009D 4D                  426 	ld	c,l
+   009E 44                  427 	ld	b,h
+                            428 ;	genPlus
+                            429 ;	AOP_STK for 
+                            430 ;	AOP_STK for _UIDrawText_i_1_1
+                            431 ;	AOP_STK for _UIDrawText_sloc0_1_0
+                            432 ;	Can't optimise plus by inc, falling back to the normal way
+   009F F8 09               433 	lda	hl,9(sp)
+   00A1 7E                  434 	ld	a,(hl)
+   00A2 F8 03               435 	lda	hl,3(sp)
+   00A4 86                  436 	add	a,(hl)
+   00A5 F8 00               437 	lda	hl,0(sp)
+   00A7 77                  438 	ld	(hl),a
+                            439 ;	genIpush
+                            440 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00A8 C5                  441 	push	bc
+                            442 ;	genIpush
+   00A9 21 01 01            443 	ld	hl,#0x0101
+   00AC E5                  444 	push	hl
+                            445 ;	genIpush
+                            446 ;	AOP_STK for 
+   00AD F8 0E               447 	lda	hl,14(sp)
+   00AF 7E                  448 	ld	a,(hl)
+   00B0 F5                  449 	push	af
+   00B1 33                  450 	inc	sp
+                            451 ;	genIpush
+                            452 ;	AOP_STK for _UIDrawText_sloc0_1_0
+   00B2 F8 05               453 	lda	hl,5(sp)
+   00B4 7E                  454 	ld	a,(hl)
+   00B5 F5                  455 	push	af
+   00B6 33                  456 	inc	sp
+                            457 ;	genCall
+   00B7 CD 00 00            458 	call	_set_win_tiles
+   00BA E8 06               459 	lda	sp,6(sp)
+                            460 ;	src/UI.c 74
+                            461 ;	genPlus
+                            462 ;	AOP_STK for _UIDrawText_i_1_1
+                            463 ;	genPlusIncr
+   00BC F8 03               464 	lda	hl,3(sp)
+   00BE 34                  465 	inc	(hl)
+                            466 ;	genGoto
+   00BF C3 79 00            467 	jp	00101$
+                            468 ;	genLabel
+   00C2                     469 00105$:
+                            470 ;	genEndFunction
+   00C2 E8 05               471 	lda	sp,5(sp)
+   00C4 C9                  472 	ret
+   00C5                     473 ___UIDrawText_end:
+                            474 ;	src/UI.c 81
+                            475 ;	genLabel
+                            476 ;	genFunction
+                            477 ;	---------------------------------
+                            478 ; Function UIDrawTextBkg
+                            479 ; ---------------------------------
+   00C5                     480 ___UIDrawTextBkg_start:
+   00C5                     481 _UIDrawTextBkg:
+   00C5 E8 FB               482 	lda	sp,-5(sp)
+                            483 ;	src/UI.c 84
+                            484 ;	genIpush
+                            485 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            486 ;	AOP_STK for 
+   00C7 F8 07               487 	lda	hl,7(sp)
+   00C9 2A                  488 	ld	a,(hl+)
+   00CA 66                  489 	ld	h,(hl)
+   00CB 6F                  490 	ld	l,a
+   00CC E5                  491 	push	hl
+                            492 ;	genCall
+   00CD CD 00 00            493 	call	_strlen
+   00D0 42                  494 	ld	b,d
+   00D1 4B                  495 	ld	c,e
+   00D2 E8 02               496 	lda	sp,2(sp)
+                            497 ;	genCast
+                            498 ;	AOP_STK for _UIDrawTextBkg_len_1_1
+   00D4 F8 02               499 	lda	hl,2(sp)
+   00D6 71                  500 	ld	(hl),c
+                            501 ;	src/UI.c 85
+                            502 ;	genAssign
+                            503 ;	AOP_STK for _UIDrawTextBkg_i_1_1
+   00D7 23                  504 	inc	hl
+   00D8 36 00               505 	ld	(hl),#0x00
+                            506 ;	genLabel
+   00DA                     507 00101$:
+                            508 ;	genCmpEq
+                            509 ;	AOP_STK for _UIDrawTextBkg_i_1_1
+                            510 ;	AOP_STK for _UIDrawTextBkg_len_1_1
+                            511 ; genCmpEq: left 1, right 1, result 0
+   00DA F8 02               512 	lda	hl,2(sp)
+   00DC 2A                  513 	ld	a,(hl+)
+   00DD BE                  514 	cp	(hl)
+   00DE 20 03               515 	jr	nz,00109$
+   00E0 C3 23 01            516 	jp	00105$
+   00E3                     517 00109$:
+                            518 ;	src/UI.c 87
+                            519 ;	genPlus
+                            520 ;	AOP_STK for 
+                            521 ;	AOP_STK for _UIDrawTextBkg_i_1_1
+                            522 ;	AOP_STK for _UIDrawTextBkg_sloc0_1_0
+                            523 ;	Can't optimise plus by inc, falling back to the normal way
+   00E3 F8 07               524 	lda	hl,7(sp)
+   00E5 5E                  525 	ld	e,(hl)
+   00E6 23                  526 	inc	hl
+   00E7 56                  527 	ld	d,(hl)
+   00E8 F8 03               528 	lda	hl,3(sp)
+   00EA 6E                  529 	ld	l,(hl)
+   00EB 26 00               530 	ld	h,#0x00
+   00ED 19                  531 	add	hl,de
+   00EE 7D                  532 	ld	a,l
+   00EF 54                  533 	ld	d,h
+   00F0 F8 00               534 	lda	hl,0(sp)
+                            535 ;	genPointerGet
+                            536 ;	AOP_STK for _UIDrawTextBkg_sloc0_1_0
+   00F2 22                  537 	ld	(hl+),a
+   00F3 72                  538 	ld	(hl),d
+   00F4 5F                  539 	ld	e,a
+   00F5 1A                  540 	ld	a,(de)
+                            541 ;	genPlus
+                            542 ;	AOP_STK for _UIDrawTextBkg_letter_1_1
+                            543 ;	genPlusIncr
+                            544 ;	Can't optimise plus by inc, falling back to the normal way
+   00F6 4F                  545 	ld	c,a
+   00F7 C6 A5               546 	add	a,#0xA5
+   00F9 F8 04               547 	lda	hl,4(sp)
+   00FB 77                  548 	ld	(hl),a
+                            549 ;	src/UI.c 88
+                            550 ;	genAddrOf
+   00FC F8 04               551 	lda	hl,4(sp)
+   00FE 4D                  552 	ld	c,l
+   00FF 44                  553 	ld	b,h
+                            554 ;	genPlus
+                            555 ;	AOP_STK for 
+                            556 ;	AOP_STK for _UIDrawTextBkg_i_1_1
+                            557 ;	AOP_STK for _UIDrawTextBkg_sloc0_1_0
+                            558 ;	Can't optimise plus by inc, falling back to the normal way
+   0100 F8 09               559 	lda	hl,9(sp)
+   0102 7E                  560 	ld	a,(hl)
+   0103 F8 03               561 	lda	hl,3(sp)
+   0105 86                  562 	add	a,(hl)
+   0106 F8 00               563 	lda	hl,0(sp)
+   0108 77                  564 	ld	(hl),a
+                            565 ;	genIpush
+                            566 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0109 C5                  567 	push	bc
+                            568 ;	genIpush
+   010A 21 01 01            569 	ld	hl,#0x0101
+   010D E5                  570 	push	hl
+                            571 ;	genIpush
+                            572 ;	AOP_STK for 
+   010E F8 0E               573 	lda	hl,14(sp)
+   0110 7E                  574 	ld	a,(hl)
+   0111 F5                  575 	push	af
+   0112 33                  576 	inc	sp
+                            577 ;	genIpush
+                            578 ;	AOP_STK for _UIDrawTextBkg_sloc0_1_0
+   0113 F8 05               579 	lda	hl,5(sp)
+   0115 7E                  580 	ld	a,(hl)
+   0116 F5                  581 	push	af
+   0117 33                  582 	inc	sp
+                            583 ;	genCall
+   0118 CD 00 00            584 	call	_set_bkg_tiles
+   011B E8 06               585 	lda	sp,6(sp)
+                            586 ;	src/UI.c 85
+                            587 ;	genPlus
+                            588 ;	AOP_STK for _UIDrawTextBkg_i_1_1
+                            589 ;	genPlusIncr
+   011D F8 03               590 	lda	hl,3(sp)
+   011F 34                  591 	inc	(hl)
+                            592 ;	genGoto
+   0120 C3 DA 00            593 	jp	00101$
+                            594 ;	genLabel
+   0123                     595 00105$:
+                            596 ;	genEndFunction
+   0123 E8 05               597 	lda	sp,5(sp)
+   0125 C9                  598 	ret
+   0126                     599 ___UIDrawTextBkg_end:
+                            600 ;	src/UI.c 92
+                            601 ;	genLabel
+                            602 ;	genFunction
+                            603 ;	---------------------------------
+                            604 ; Function UIShowText
+                            605 ; ---------------------------------
+   0126                     606 ___UIShowText_start:
+   0126                     607 _UIShowText:
+   0126 E8 E4               608 	lda	sp,-28(sp)
+                            609 ;	src/UI.c 100
+                            610 ;	genIpush
+                            611 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0128 21 FD 03            612 	ld	hl,#__str_0
+   012B E5                  613 	push	hl
+                            614 ;	genIpush
+   012C 21 63 00            615 	ld	hl,#_tmp_text_lines
+   012F E5                  616 	push	hl
+                            617 ;	genCall
+   0130 CD 00 00            618 	call	_strcpy
+   0133 E8 04               619 	lda	sp,4(sp)
+                            620 ;	src/UI.c 102
+                            621 ;	genMult
+                            622 ;	AOP_STK for 
+   0135 F8 1E               623 	lda	hl,30(sp)
+   0137 5E                  624 	ld	e,(hl)
+   0138 23                  625 	inc	hl
+   0139 56                  626 	ld	d,(hl)
+   013A 6B                  627 	ld	l,e
+   013B 62                  628 	ld	h,d
+   013C 29                  629 	add	hl,hl
+   013D 19                  630 	add	hl,de
+   013E 4D                  631 	ld	c,l
+   013F 44                  632 	ld	b,h
+                            633 ;	genPlus
+                            634 ;	Can't optimise plus by inc, falling back to the normal way
+   0140 21 00 00            635 	ld	hl,#_string_bank_ptrs
+   0143 09                  636 	add	hl,bc
+   0144 4D                  637 	ld	c,l
+   0145 44                  638 	ld	b,h
+                            639 ;	genAddrOf
+                            640 ;	AOP_STK for _UIShowText_sloc0_1_0
+   0146 F8 19               641 	lda	hl,25(sp)
+   0148 7D                  642 	ld	a,l
+   0149 54                  643 	ld	d,h
+   014A F8 0A               644 	lda	hl,10(sp)
+   014C 22                  645 	ld	(hl+),a
+   014D 72                  646 	ld	(hl),d
+                            647 ;	genIpush
+                            648 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   014E C5                  649 	push	bc
+                            650 ;	genIpush
+                            651 ;	AOP_STK for _UIShowText_sloc0_1_0
+   014F 2B                  652 	dec	hl
+   0150 2A                  653 	ld	a,(hl+)
+   0151 66                  654 	ld	h,(hl)
+   0152 6F                  655 	ld	l,a
+   0153 E5                  656 	push	hl
+                            657 ;	genIpush
+   0154 3E 05               658 	ld	a,#0x05
+   0156 F5                  659 	push	af
+   0157 33                  660 	inc	sp
+                            661 ;	genCall
+   0158 CD 00 00            662 	call	_ReadBankedBankPtr
+   015B E8 05               663 	lda	sp,5(sp)
+                            664 ;	src/UI.c 103
+                            665 ;	genPointerGet
+                            666 ;	AOP_STK for _UIShowText_sloc0_1_0
+   015D F8 0A               667 	lda	hl,10(sp)
+   015F 5E                  668 	ld	e,(hl)
+   0160 23                  669 	inc	hl
+   0161 56                  670 	ld	d,(hl)
+   0162 1A                  671 	ld	a,(de)
+   0163 4F                  672 	ld	c,a
+                            673 ;	genCast
+                            674 ;	AOP_STK for _UIShowText_sloc1_1_0
+   0164 F8 08               675 	lda	hl,8(sp)
+   0166 71                  676 	ld	(hl),c
+   0167 23                  677 	inc	hl
+   0168 36 00               678 	ld	(hl),#0x00
+                            679 ;	genLeftShift
+                            680 ;	AOP_STK for _UIShowText_sloc1_1_0
+                            681 ;	AOP_STK for _UIShowText_sloc2_1_0
+   016A 2B                  682 	dec	hl
+   016B 7E                  683 	ld	a,(hl)
+   016C 2B                  684 	dec	hl
+   016D 2B                  685 	dec	hl
+   016E 77                  686 	ld	(hl),a
+   016F F8 09               687 	lda	hl,9(sp)
+   0171 7E                  688 	ld	a,(hl)
+   0172 2B                  689 	dec	hl
+   0173 2B                  690 	dec	hl
+   0174 32                  691 	ld      (hl-),a
+   0175 CB 26               692 	sla	(hl)
+   0177 23                  693 	inc	hl
+   0178 CB 16               694 	rl	(hl)
+                            695 ;	genPlus
+                            696 ;	AOP_STK for _UIShowText_sloc2_1_0
+                            697 ;	AOP_STK for _UIShowText_sloc1_1_0
+                            698 ;	Can't optimise plus by inc, falling back to the normal way
+   017A 11 00 00            699 	ld	de,#_bank_data_ptrs
+   017D 2B                  700 	dec	hl
+   017E 2A                  701 	ld	a,(hl+)
+   017F 66                  702 	ld	h,(hl)
+   0180 6F                  703 	ld	l,a
+   0181 19                  704 	add	hl,de
+   0182 7D                  705 	ld	a,l
+   0183 54                  706 	ld	d,h
+   0184 F8 08               707 	lda	hl,8(sp)
+                            708 ;	genPointerGet
+                            709 ;	AOP_STK for _UIShowText_sloc1_1_0
+                            710 ;	AOP_STK for _UIShowText_sloc2_1_0
+   0186 22                  711 	ld	(hl+),a
+   0187 72                  712 	ld	(hl),d
+   0188 5F                  713 	ld	e,a
+   0189 1A                  714 	ld	a,(de)
+   018A F8 06               715 	lda	hl,6(sp)
+   018C 77                  716 	ld	(hl),a
+   018D 13                  717 	inc	de
+   018E 1A                  718 	ld	a,(de)
+   018F 23                  719 	inc	hl
+                            720 ;	genCast
+                            721 ;	AOP_STK for _UIShowText_sloc2_1_0
+                            722 ;	AOP_STK for _UIShowText_sloc1_1_0
+   0190 32                  723 	ld      (hl-),a
+   0191 2A                  724 	ld	a,(hl+)
+   0192 23                  725 	inc	hl
+   0193 32                  726 	ld      (hl-),a
+   0194 2A                  727 	ld	a,(hl+)
+   0195 23                  728 	inc	hl
+                            729 ;	genPlus
+                            730 ;	AOP_STK for _UIShowText_sloc0_1_0
+                            731 ;	AOP_STK for _UIShowText_sloc2_1_0
+                            732 ;	genPlusIncr
+                            733 ;	Can't optimise plus by inc, falling back to the normal way
+   0196 22                  734 	ld	(hl+),a
+   0197 5E                  735 	ld	e,(hl)
+   0198 23                  736 	inc	hl
+   0199 56                  737 	ld	d,(hl)
+   019A 21 01 00            738 	ld	hl,#0x0001
+   019D 19                  739 	add	hl,de
+   019E 7D                  740 	ld	a,l
+   019F 54                  741 	ld	d,h
+   01A0 F8 06               742 	lda	hl,6(sp)
+                            743 ;	genPointerGet
+                            744 ;	AOP_STK for _UIShowText_sloc2_1_0
+                            745 ;	AOP_STK for _UIShowText_sloc0_1_0
+   01A2 22                  746 	ld	(hl+),a
+   01A3 72                  747 	ld	(hl),d
+   01A4 5F                  748 	ld	e,a
+   01A5 1A                  749 	ld	a,(de)
+   01A6 F8 0A               750 	lda	hl,10(sp)
+   01A8 77                  751 	ld	(hl),a
+   01A9 13                  752 	inc	de
+   01AA 1A                  753 	ld	a,(de)
+   01AB 23                  754 	inc	hl
+   01AC 77                  755 	ld	(hl),a
+                            756 ;	genPlus
+                            757 ;	AOP_STK for _UIShowText_sloc1_1_0
+                            758 ;	AOP_STK for _UIShowText_sloc0_1_0
+                            759 ;	AOP_STK for _UIShowText_ptr_1_1
+                            760 ;	Can't optimise plus by inc, falling back to the normal way
+   01AD F8 08               761 	lda	hl,8(sp)
+   01AF 5E                  762 	ld	e,(hl)
+   01B0 23                  763 	inc	hl
+   01B1 56                  764 	ld	d,(hl)
+   01B2 23                  765 	inc	hl
+   01B3 2A                  766 	ld	a,(hl+)
+   01B4 66                  767 	ld	h,(hl)
+   01B5 6F                  768 	ld	l,a
+   01B6 19                  769 	add	hl,de
+   01B7 7D                  770 	ld	a,l
+   01B8 54                  771 	ld	d,h
+   01B9 F8 17               772 	lda	hl,23(sp)
+   01BB 22                  773 	ld	(hl+),a
+   01BC 72                  774 	ld	(hl),d
+                            775 ;	genAssign
+                            776 ;	AOP_STK for _UIShowText_ptr_1_1
+                            777 ;	(registers are the same)
+                            778 ;	src/UI.c 105
+                            779 ;	genIpush
+                            780 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   01BD 79                  781 	ld	a,c
+   01BE F5                  782 	push	af
+   01BF 33                  783 	inc	sp
+                            784 ;	genCall
+   01C0 CD 00 00            785 	call	_PushBank
+   01C3 E8 01               786 	lda	sp,1(sp)
+                            787 ;	src/UI.c 106
+                            788 ;	genCast
+                            789 ;	AOP_STK for _UIShowText_ptr_1_1
+   01C5 F8 17               790 	lda	hl,23(sp)
+   01C7 4E                  791 	ld	c,(hl)
+   01C8 23                  792 	inc	hl
+   01C9 46                  793 	ld	b,(hl)
+                            794 ;	genIpush
+                            795 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   01CA C5                  796 	push	bc
+                            797 ;	genIpush
+   01CB 21 63 00            798 	ld	hl,#_tmp_text_lines
+   01CE E5                  799 	push	hl
+                            800 ;	genCall
+   01CF CD 00 00            801 	call	_strcat
+   01D2 E8 04               802 	lda	sp,4(sp)
+                            803 ;	src/UI.c 107
+                            804 ;	genCall
+                            805 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   01D4 CD 00 00            806 	call	_PopBank
+                            807 ;	src/UI.c 109
+                            808 ;	genPointerGet
+   01D7 11 63 00            809 	ld	de,#_tmp_text_lines
+   01DA 1A                  810 	ld	a,(de)
+   01DB 4F                  811 	ld	c,a
+                            812 ;	genAssign
+                            813 ;	AOP_STK for _UIShowText_height_1_1
+   01DC F8 0E               814 	lda	hl,14(sp)
+   01DE 71                  815 	ld	(hl),c
+                            816 ;	src/UI.c 110
+                            817 ;	genIpush
+                            818 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            819 ;	AOP_STK for _UIShowText_height_1_1
+   01DF 7E                  820 	ld	a,(hl)
+   01E0 F5                  821 	push	af
+   01E1 33                  822 	inc	sp
+                            823 ;	genCall
+   01E2 CD 4B 00            824 	call	_UIDrawDialogueFrame
+   01E5 E8 01               825 	lda	sp,1(sp)
+                            826 ;	src/UI.c 112
+                            827 ;	genAssign
+                            828 ;	AOP_STK for _UIShowText_i_1_1
+   01E7 F8 10               829 	lda	hl,16(sp)
+   01E9 36 01               830 	ld	(hl),#0x01
+                            831 ;	genAssign
+                            832 ;	AOP_STK for _UIShowText_k_1_1
+   01EB 2B                  833 	dec	hl
+   01EC 36 00               834 	ld	(hl),#0x00
+                            835 ;	genLabel
+   01EE                     836 00114$:
+                            837 ;	genCmpLt
+                            838 ;	AOP_STK for _UIShowText_i_1_1
+   01EE F8 10               839 	lda	hl,16(sp)
+   01F0 7E                  840 	ld	a,(hl)
+   01F1 FE 51               841 	cp	#0x51
+   01F3 D2 B8 03            842 	jp	nc,00117$
+                            843 ;	src/UI.c 115
+                            844 ;	genPlus
+                            845 ;	AOP_STK for _UIShowText_i_1_1
+                            846 ;	AOP_STK for _UIShowText_sloc2_1_0
+                            847 ;	Can't optimise plus by inc, falling back to the normal way
+   01F6 11 63 00            848 	ld	de,#_tmp_text_lines
+   01F9 6E                  849 	ld	l,(hl)
+   01FA 26 00               850 	ld	h,#0x00
+   01FC 19                  851 	add	hl,de
+   01FD 7D                  852 	ld	a,l
+   01FE 54                  853 	ld	d,h
+   01FF F8 06               854 	lda	hl,6(sp)
+                            855 ;	genPointerGet
+                            856 ;	AOP_STK for _UIShowText_sloc2_1_0
+   0201 22                  857 	ld	(hl+),a
+   0202 72                  858 	ld	(hl),d
+   0203 5F                  859 	ld	e,a
+   0204 1A                  860 	ld	a,(de)
+                            861 ;	genCmpEq
+                            862 ; genCmpEq: left 1, right 1, result 0
+   0205 4F                  863 	ld	c,a
+   0206 FE 24               864 	cp	a,#0x24
+   0208 C2 9B 03            865 	jp	nz,00111$
+   020B 18 03               866 	jr	00132$
+   020D                     867 00131$:
+   020D C3 9B 03            868 	jp	00111$
+   0210                     869 00132$:
+                            870 ;	genPlus
+                            871 ;	AOP_STK for _UIShowText_i_1_1
+                            872 ;	AOP_STK for _UIShowText_sloc2_1_0
+                            873 ;	genPlusIncr
+                            874 ;	Can't optimise plus by inc, falling back to the normal way
+   0210 F8 10               875 	lda	hl,16(sp)
+   0212 7E                  876 	ld	a,(hl)
+   0213 C6 03               877 	add	a,#0x03
+   0215 F8 06               878 	lda	hl,6(sp)
+   0217 77                  879 	ld	(hl),a
+                            880 ;	genPlus
+                            881 ;	AOP_STK for _UIShowText_sloc2_1_0
+                            882 ;	AOP_STK for _UIShowText_sloc1_1_0
+                            883 ;	Can't optimise plus by inc, falling back to the normal way
+   0218 11 63 00            884 	ld	de,#_tmp_text_lines
+   021B 6E                  885 	ld	l,(hl)
+   021C 26 00               886 	ld	h,#0x00
+   021E 19                  887 	add	hl,de
+   021F 7D                  888 	ld	a,l
+   0220 54                  889 	ld	d,h
+   0221 F8 08               890 	lda	hl,8(sp)
+                            891 ;	genPointerGet
+                            892 ;	AOP_STK for _UIShowText_sloc1_1_0
+                            893 ;	AOP_STK for _UIShowText_sloc0_1_0
+   0223 22                  894 	ld	(hl+),a
+   0224 72                  895 	ld	(hl),d
+   0225 5F                  896 	ld	e,a
+   0226 1A                  897 	ld	a,(de)
+   0227 23                  898 	inc	hl
+                            899 ;	genCmpEq
+                            900 ;	AOP_STK for _UIShowText_sloc0_1_0
+                            901 ; genCmpEq: left 1, right 1, result 0
+   0228 77                  902 	ld      (hl),a
+                            903 ; Removed redundent load
+   0229 FE 24               904 	cp	a,#0x24
+   022B C2 9B 03            905 	jp	nz,00111$
+   022E 18 03               906 	jr	00134$
+   0230                     907 00133$:
+   0230 C3 9B 03            908 	jp	00111$
+   0233                     909 00134$:
+                            910 ;	src/UI.c 117
+                            911 ;	genPlus
+                            912 ;	AOP_STK for _UIShowText_i_1_1
+                            913 ;	AOP_STK for _UIShowText_sloc1_1_0
+                            914 ;	genPlusIncr
+                            915 ;	Can't optimise plus by inc, falling back to the normal way
+   0233 F8 10               916 	lda	hl,16(sp)
+   0235 7E                  917 	ld	a,(hl)
+   0236 C6 01               918 	add	a,#0x01
+   0238 F8 08               919 	lda	hl,8(sp)
+   023A 77                  920 	ld	(hl),a
+                            921 ;	genPlus
+                            922 ;	AOP_STK for _UIShowText_sloc1_1_0
+                            923 ;	AOP_STK for _UIShowText_sloc0_1_0
+                            924 ;	Can't optimise plus by inc, falling back to the normal way
+   023B 11 63 00            925 	ld	de,#_tmp_text_lines
+   023E 6E                  926 	ld	l,(hl)
+   023F 26 00               927 	ld	h,#0x00
+   0241 19                  928 	add	hl,de
+   0242 7D                  929 	ld	a,l
+   0243 54                  930 	ld	d,h
+   0244 F8 0A               931 	lda	hl,10(sp)
+                            932 ;	genPointerGet
+                            933 ;	AOP_STK for _UIShowText_sloc0_1_0
+                            934 ;	AOP_STK for _UIShowText_sloc1_1_0
+   0246 22                  935 	ld	(hl+),a
+   0247 72                  936 	ld	(hl),d
+   0248 5F                  937 	ld	e,a
+   0249 1A                  938 	ld	a,(de)
+   024A F8 08               939 	lda	hl,8(sp)
+                            940 ;	genMinus
+                            941 ;	AOP_STK for _UIShowText_sloc1_1_0
+                            942 ;	AOP_STK for _UIShowText_sloc0_1_0
+   024C 77                  943 	ld      (hl),a
+                            944 ; Removed redundent load
+   024D C6 D0               945 	add	a,#0xD0
+   024F 23                  946 	inc	hl
+   0250 23                  947 	inc	hl
+                            948 ;	genMult
+                            949 ;	AOP_STK for _UIShowText_sloc0_1_0
+                            950 ;	AOP_STK for _UIShowText_sloc1_1_0
+   0251 77                  951 	ld      (hl),a
+   0252 5F                  952 	ld      e,a
+   0253 16 00               953 	ld	d,#0x00
+   0255 6B                  954 	ld	l,e
+   0256 62                  955 	ld	h,d
+   0257 29                  956 	add	hl,hl
+   0258 29                  957 	add	hl,hl
+   0259 19                  958 	add	hl,de
+   025A 29                  959 	add	hl,hl
+   025B 7D                  960 	ld	a,l
+   025C 54                  961 	ld	d,h
+   025D F8 08               962 	lda	hl,8(sp)
+   025F 22                  963 	ld	(hl+),a
+   0260 72                  964 	ld	(hl),d
+                            965 ;	genPlus
+                            966 ;	AOP_STK for _UIShowText_i_1_1
+                            967 ;	AOP_STK for _UIShowText_sloc0_1_0
+                            968 ;	genPlusIncr
+                            969 ;	Can't optimise plus by inc, falling back to the normal way
+   0261 F8 10               970 	lda	hl,16(sp)
+   0263 7E                  971 	ld	a,(hl)
+   0264 C6 02               972 	add	a,#0x02
+   0266 F8 0A               973 	lda	hl,10(sp)
+   0268 77                  974 	ld	(hl),a
+                            975 ;	genPlus
+                            976 ;	AOP_STK for _UIShowText_sloc0_1_0
+                            977 ;	AOP_STK for _UIShowText_sloc3_1_0
+                            978 ;	Can't optimise plus by inc, falling back to the normal way
+   0269 11 63 00            979 	ld	de,#_tmp_text_lines
+   026C 6E                  980 	ld	l,(hl)
+   026D 26 00               981 	ld	h,#0x00
+   026F 19                  982 	add	hl,de
+   0270 7D                  983 	ld	a,l
+   0271 54                  984 	ld	d,h
+   0272 F8 04               985 	lda	hl,4(sp)
+                            986 ;	genPointerGet
+                            987 ;	AOP_STK for _UIShowText_sloc3_1_0
+                            988 ;	AOP_STK for _UIShowText_sloc0_1_0
+   0274 22                  989 	ld	(hl+),a
+   0275 72                  990 	ld	(hl),d
+   0276 5F                  991 	ld	e,a
+   0277 1A                  992 	ld	a,(de)
+   0278 F8 0A               993 	lda	hl,10(sp)
+                            994 ;	genMinus
+                            995 ;	AOP_STK for _UIShowText_sloc0_1_0
+                            996 ;	AOP_STK for _UIShowText_sloc3_1_0
+   027A 77                  997 	ld      (hl),a
+                            998 ; Removed redundent load
+   027B C6 D0               999 	add	a,#0xD0
+   027D F8 04              1000 	lda	hl,4(sp)
+                           1001 ;	genCast
+                           1002 ;	AOP_STK for _UIShowText_sloc3_1_0
+                           1003 ;	AOP_STK for _UIShowText_sloc0_1_0
+   027F 77                 1004 	ld      (hl),a
+                           1005 ; Removed redundent load
+   0280 F8 0A              1006 	lda	hl,10(sp)
+   0282 22                 1007 	ld	(hl+),a
+   0283 36 00              1008 	ld	(hl),#0x00
+                           1009 ;	genPlus
+                           1010 ;	AOP_STK for _UIShowText_sloc1_1_0
+                           1011 ;	AOP_STK for _UIShowText_sloc0_1_0
+                           1012 ;	AOP_STK for _UIShowText_sloc3_1_0
+                           1013 ;	Can't optimise plus by inc, falling back to the normal way
+   0285 F8 08              1014 	lda	hl,8(sp)
+   0287 5E                 1015 	ld	e,(hl)
+   0288 23                 1016 	inc	hl
+   0289 56                 1017 	ld	d,(hl)
+   028A 23                 1018 	inc	hl
+   028B 2A                 1019 	ld	a,(hl+)
+   028C 66                 1020 	ld	h,(hl)
+   028D 6F                 1021 	ld	l,a
+   028E 19                 1022 	add	hl,de
+   028F 7D                 1023 	ld	a,l
+   0290 54                 1024 	ld	d,h
+   0291 F8 04              1025 	lda	hl,4(sp)
+   0293 22                 1026 	ld	(hl+),a
+   0294 72                 1027 	ld	(hl),d
+                           1028 ;	genCast
+                           1029 ;	AOP_STK for _UIShowText_sloc3_1_0
+                           1030 ;	AOP_STK for _UIShowText_var_index_1_1
+   0295 2B                 1031 	dec	hl
+   0296 7E                 1032 	ld	a,(hl)
+   0297 F8 0C              1033 	lda	hl,12(sp)
+   0299 77                 1034 	ld	(hl),a
+                           1035 ;	src/UI.c 118
+                           1036 ;	genPlus
+                           1037 ;	AOP_STK for _UIShowText_var_index_1_1
+                           1038 ;	AOP_STK for _UIShowText_sloc3_1_0
+                           1039 ;	Can't optimise plus by inc, falling back to the normal way
+   029A 11 00 00           1040 	ld	de,#_script_variables
+   029D 6E                 1041 	ld	l,(hl)
+   029E 26 00              1042 	ld	h,#0x00
+   02A0 19                 1043 	add	hl,de
+   02A1 7D                 1044 	ld	a,l
+   02A2 54                 1045 	ld	d,h
+   02A3 F8 04              1046 	lda	hl,4(sp)
+                           1047 ;	genPointerGet
+                           1048 ;	AOP_STK for _UIShowText_sloc3_1_0
+                           1049 ;	AOP_STK for _UIShowText_value_1_1
+   02A5 22                 1050 	ld	(hl+),a
+   02A6 72                 1051 	ld	(hl),d
+   02A7 5F                 1052 	ld	e,a
+   02A8 1A                 1053 	ld	a,(de)
+   02A9 F8 0D              1054 	lda	hl,13(sp)
+   02AB 77                 1055 	ld	(hl),a
+                           1056 ;	genAssign
+                           1057 ;	AOP_STK for _UIShowText_value_1_1
+                           1058 ;	(registers are the same)
+                           1059 ;	src/UI.c 119
+                           1060 ;	genAssign
+   02AC 06 00              1061 	ld	b,#0x00
+                           1062 ;	src/UI.c 121
+                           1063 ;	genCmpEq
+                           1064 ;	AOP_STK for _UIShowText_value_1_1
+                           1065 ; genCmpEq: left 1, right 1, result 0
+   02AE 7E                 1066 	ld	a,(hl)
+   02AF B7                 1067 	or	a,a
+   02B0 C2 D1 02           1068 	jp	nz,00101$
+   02B3 18 03              1069 	jr	00136$
+   02B5                    1070 00135$:
+   02B5 C3 D1 02           1071 	jp	00101$
+   02B8                    1072 00136$:
+                           1073 ;	src/UI.c 123
+                           1074 ;	genPlus
+                           1075 ;	AOP_STK for _UIShowText_k_1_1
+                           1076 ;	AOP_STK for _UIShowText_sloc3_1_0
+                           1077 ;	Can't optimise plus by inc, falling back to the normal way
+   02B8 11 13 00           1078 	ld	de,#_text_lines
+   02BB F8 0F              1079 	lda	hl,15(sp)
+   02BD 6E                 1080 	ld	l,(hl)
+   02BE 26 00              1081 	ld	h,#0x00
+   02C0 19                 1082 	add	hl,de
+   02C1 7D                 1083 	ld	a,l
+   02C2 54                 1084 	ld	d,h
+   02C3 F8 04              1085 	lda	hl,4(sp)
+   02C5 22                 1086 	ld	(hl+),a
+   02C6 72                 1087 	ld	(hl),d
+                           1088 ;	genAssign (pointer)
+                           1089 ;	AOP_STK for _UIShowText_sloc3_1_0
+   02C7 2B                 1090 	dec	hl
+   02C8 5E                 1091 	ld	e,(hl)
+   02C9 23                 1092 	inc	hl
+   02CA 56                 1093 	ld	d,(hl)
+   02CB 3E 30              1094 	ld	a,#0x30
+   02CD 12                 1095 	ld	(de),a
+                           1096 ;	genGoto
+   02CE C3 92 03           1097 	jp	00109$
+                           1098 ;	src/UI.c 128
+                           1099 ;	genLabel
+   02D1                    1100 00101$:
+                           1101 ;	genCmpEq
+                           1102 ;	AOP_STK for _UIShowText_value_1_1
+                           1103 ; genCmpEq: left 1, right 1, result 1
+   02D1 F8 0D              1104 	lda	hl,13(sp)
+   02D3 7E                 1105 	ld	a,(hl)
+   02D4 B7                 1106 	or	a,a
+   02D5 C2 DC 02           1107 	jp	nz,00137$
+   02D8 3E 01              1108 	ld	a,#0x01
+   02DA 18 01              1109 	jr	00138$
+   02DC                    1110 00137$:
+   02DC AF                 1111 	xor	a,a
+   02DD                    1112 00138$:
+                           1113 ;	genIfx
+   02DD B7                 1114 	or	a,a
+   02DE C2 3D 03           1115 	jp	nz,00103$
+                           1116 ;	src/UI.c 130
+                           1117 ;	genAddrOf
+                           1118 ;	AOP_STK for _UIShowText_sloc3_1_0
+   02E1 F8 11              1119 	lda	hl,17(sp)
+   02E3 7D                 1120 	ld	a,l
+   02E4 54                 1121 	ld	d,h
+   02E5 F8 04              1122 	lda	hl,4(sp)
+   02E7 22                 1123 	ld	(hl+),a
+   02E8 72                 1124 	ld	(hl),d
+                           1125 ;	genAssign
+                           1126 ;	AOP_STK for _UIShowText_sloc1_1_0
+   02E9 F8 08              1127 	lda	hl,8(sp)
+   02EB 70                 1128 	ld	(hl),b
+                           1129 ;	genPlus
+                           1130 ;	AOP_STK for _UIShowText_sloc0_1_0
+                           1131 ;	genPlusIncr
+                           1132 ;	Can't optimise plus by inc, falling back to the normal way
+   02EC 78                 1133 	ld	a,b
+   02ED C6 01              1134 	add	a,#0x01
+   02EF 23                 1135 	inc	hl
+   02F0 23                 1136 	inc	hl
+                           1137 ;	genAssign
+                           1138 ;	AOP_STK for _UIShowText_sloc0_1_0
+   02F1 77                 1139 	ld      (hl),a
+   02F2 47                 1140 	ld      b,a
+                           1141 ;	genPlus
+                           1142 ;	AOP_STK for _UIShowText_sloc3_1_0
+                           1143 ;	AOP_STK for _UIShowText_sloc1_1_0
+                           1144 ;	AOP_STK for _UIShowText_sloc4_1_0
+                           1145 ;	Can't optimise plus by inc, falling back to the normal way
+   02F3 F8 04              1146 	lda	hl,4(sp)
+   02F5 5E                 1147 	ld	e,(hl)
+   02F6 23                 1148 	inc	hl
+   02F7 56                 1149 	ld	d,(hl)
+   02F8 F8 08              1150 	lda	hl,8(sp)
+   02FA 6E                 1151 	ld	l,(hl)
+   02FB 26 00              1152 	ld	h,#0x00
+   02FD 19                 1153 	add	hl,de
+   02FE 7D                 1154 	ld	a,l
+   02FF 54                 1155 	ld	d,h
+   0300 F8 02              1156 	lda	hl,2(sp)
+   0302 22                 1157 	ld	(hl+),a
+   0303 72                 1158 	ld	(hl),d
+                           1159 ;	genIpush
+                           1160 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0304 C5                 1161 	push	bc
+   0305 3E 0A              1162 	ld	a,#0x0A
+   0307 F5                 1163 	push	af
+   0308 33                 1164 	inc	sp
+                           1165 ;	genIpush
+                           1166 ;	AOP_STK for _UIShowText_value_1_1
+   0309 F8 10              1167 	lda	hl,16(sp)
+   030B 7E                 1168 	ld	a,(hl)
+   030C F5                 1169 	push	af
+   030D 33                 1170 	inc	sp
+                           1171 ;	genCall
+   030E CD 00 00           1172 	call	__moduchar_rrx_s
+                           1173 ;	AOP_STK for _UIShowText_sloc5_1_0
+   0311 F8 05              1174 	lda	hl,5(sp)
+   0313 73                 1175 	ld	(hl),e
+   0314 E8 02              1176 	lda	sp,2(sp)
+   0316 C1                 1177 	pop	bc
+                           1178 ;	genPlus
+                           1179 ;	AOP_STK for _UIShowText_sloc5_1_0
+                           1180 ;	genPlusIncr
+                           1181 ;	Can't optimise plus by inc, falling back to the normal way
+   0317 F8 01              1182 	lda	hl,1(sp)
+   0319 7E                 1183 	ld	a,(hl)
+   031A C6 30              1184 	add	a,#0x30
+                           1185 ;	genAssign (pointer)
+                           1186 ;	AOP_STK for _UIShowText_sloc4_1_0
+   031C 23                 1187 	inc	hl
+   031D 5E                 1188 	ld	e,(hl)
+   031E 23                 1189 	inc	hl
+   031F 56                 1190 	ld	d,(hl)
+   0320 12                 1191 	ld	(de),a
+                           1192 ;	src/UI.c 131
+                           1193 ;	genIpush
+                           1194 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0321 C5                 1195 	push	bc
+   0322 3E 0A              1196 	ld	a,#0x0A
+   0324 F5                 1197 	push	af
+   0325 33                 1198 	inc	sp
+                           1199 ;	genIpush
+                           1200 ;	AOP_STK for _UIShowText_value_1_1
+   0326 F8 10              1201 	lda	hl,16(sp)
+   0328 7E                 1202 	ld	a,(hl)
+   0329 F5                 1203 	push	af
+   032A 33                 1204 	inc	sp
+                           1205 ;	genCall
+   032B CD 00 00           1206 	call	__divuchar_rrx_s
+                           1207 ;	AOP_STK for _UIShowText_sloc6_1_0
+   032E F8 04              1208 	lda	hl,4(sp)
+   0330 73                 1209 	ld	(hl),e
+   0331 E8 02              1210 	lda	sp,2(sp)
+   0333 C1                 1211 	pop	bc
+                           1212 ;	genAssign
+                           1213 ;	AOP_STK for _UIShowText_sloc6_1_0
+                           1214 ;	AOP_STK for _UIShowText_value_1_1
+   0334 F8 00              1215 	lda	hl,0(sp)
+   0336 7E                 1216 	ld	a,(hl)
+   0337 F8 0D              1217 	lda	hl,13(sp)
+   0339 77                 1218 	ld	(hl),a
+                           1219 ;	genGoto
+   033A C3 D1 02           1220 	jp	00101$
+                           1221 ;	genLabel
+   033D                    1222 00103$:
+                           1223 ;	src/UI.c 133
+                           1224 ;	genMinus
+   033D 05                 1225 	dec	b
+                           1226 ;	src/UI.c 134
+                           1227 ;	genLabel
+   033E                    1228 00104$:
+                           1229 ;	genCmpEq
+                           1230 ; genCmpEq: left 1, right 1, result 1
+   033E 78                 1231 	ld	a,b
+   033F FE FF              1232 	cp	a,#0xFF
+   0341 C2 48 03           1233 	jp	nz,00139$
+   0344 3E 01              1234 	ld	a,#0x01
+   0346 18 01              1235 	jr	00140$
+   0348                    1236 00139$:
+   0348 AF                 1237 	xor	a,a
+   0349                    1238 00140$:
+                           1239 ;	genIfx
+   0349 B7                 1240 	or	a,a
+   034A C2 8F 03           1241 	jp	nz,00106$
+                           1242 ;	src/UI.c 136
+                           1243 ;	genPlus
+                           1244 ;	AOP_STK for _UIShowText_k_1_1
+                           1245 ;	AOP_STK for _UIShowText_sloc4_1_0
+                           1246 ;	Can't optimise plus by inc, falling back to the normal way
+   034D 11 13 00           1247 	ld	de,#_text_lines
+   0350 F8 0F              1248 	lda	hl,15(sp)
+   0352 6E                 1249 	ld	l,(hl)
+   0353 26 00              1250 	ld	h,#0x00
+   0355 19                 1251 	add	hl,de
+   0356 7D                 1252 	ld	a,l
+   0357 54                 1253 	ld	d,h
+   0358 F8 02              1254 	lda	hl,2(sp)
+   035A 22                 1255 	ld	(hl+),a
+   035B 72                 1256 	ld	(hl),d
+                           1257 ;	genAddrOf
+                           1258 ;	AOP_STK for _UIShowText_sloc3_1_0
+   035C F8 11              1259 	lda	hl,17(sp)
+   035E 7D                 1260 	ld	a,l
+   035F 54                 1261 	ld	d,h
+   0360 F8 04              1262 	lda	hl,4(sp)
+   0362 22                 1263 	ld	(hl+),a
+   0363 72                 1264 	ld	(hl),d
+                           1265 ;	genPlus
+                           1266 ;	AOP_STK for _UIShowText_sloc3_1_0
+                           1267 ;	AOP_STK for _UIShowText_sloc1_1_0
+                           1268 ;	Can't optimise plus by inc, falling back to the normal way
+   0364 2B                 1269 	dec	hl
+   0365 5E                 1270 	ld	e,(hl)
+   0366 23                 1271 	inc	hl
+   0367 56                 1272 	ld	d,(hl)
+   0368 68                 1273 	ld	l,b
+   0369 26 00              1274 	ld	h,#0x00
+   036B 19                 1275 	add	hl,de
+   036C 7D                 1276 	ld	a,l
+   036D 54                 1277 	ld	d,h
+   036E F8 08              1278 	lda	hl,8(sp)
+                           1279 ;	genPointerGet
+                           1280 ;	AOP_STK for _UIShowText_sloc1_1_0
+   0370 22                 1281 	ld	(hl+),a
+   0371 72                 1282 	ld	(hl),d
+   0372 5F                 1283 	ld	e,a
+   0373 1A                 1284 	ld	a,(de)
+                           1285 ;	genAssign (pointer)
+                           1286 ;	AOP_STK for _UIShowText_sloc4_1_0
+   0374 F8 02              1287 	lda	hl,2(sp)
+   0376 5E                 1288 	ld	e,(hl)
+   0377 23                 1289 	inc	hl
+   0378 56                 1290 	ld	d,(hl)
+   0379 12                 1291 	ld	(de),a
+                           1292 ;	src/UI.c 137
+                           1293 ;	genPlus
+                           1294 ;	AOP_STK for _UIShowText_k_1_1
+                           1295 ;	AOP_STK for _UIShowText_sloc6_1_0
+                           1296 ;	genPlusIncr
+                           1297 ;	Can't optimise plus by inc, falling back to the normal way
+   037A F8 0F              1298 	lda	hl,15(sp)
+   037C 7E                 1299 	ld	a,(hl)
+   037D C6 01              1300 	add	a,#0x01
+   037F F8 00              1301 	lda	hl,0(sp)
+                           1302 ;	genAssign
+                           1303 ;	AOP_STK for _UIShowText_sloc6_1_0
+                           1304 ;	AOP_STK for _UIShowText_k_1_1
+   0381 77                 1305 	ld      (hl),a
+                           1306 ; Removed redundent load
+   0382 F8 0F              1307 	lda	hl,15(sp)
+   0384 77                 1308 	ld	(hl),a
+                           1309 ;	src/UI.c 138
+                           1310 ;	genMinus
+                           1311 ;	AOP_STK for _UIShowText_sloc5_1_0
+   0385 78                 1312 	ld	a,b
+   0386 C6 FF              1313 	add	a,#0xFF
+   0388 F8 01              1314 	lda	hl,1(sp)
+                           1315 ;	genAssign
+                           1316 ;	AOP_STK for _UIShowText_sloc5_1_0
+   038A 77                 1317 	ld      (hl),a
+   038B 47                 1318 	ld      b,a
+                           1319 ;	genGoto
+   038C C3 3E 03           1320 	jp	00104$
+                           1321 ;	genLabel
+   038F                    1322 00106$:
+                           1323 ;	src/UI.c 140
+                           1324 ;	genMinus
+                           1325 ;	AOP_STK for _UIShowText_k_1_1
+   038F F8 0F              1326 	lda	hl,15(sp)
+   0391 35                 1327 	dec	(hl)
+                           1328 ;	genLabel
+   0392                    1329 00109$:
+                           1330 ;	src/UI.c 143
+                           1331 ;	genAssign
+                           1332 ;	AOP_STK for _UIShowText_sloc2_1_0
+   0392 F8 06              1333 	lda	hl,6(sp)
+   0394 46                 1334 	ld	b,(hl)
+                           1335 ;	genAssign
+                           1336 ;	AOP_STK for _UIShowText_i_1_1
+   0395 F8 10              1337 	lda	hl,16(sp)
+   0397 70                 1338 	ld	(hl),b
+                           1339 ;	genGoto
+   0398 C3 B0 03           1340 	jp	00112$
+                           1341 ;	genLabel
+   039B                    1342 00111$:
+                           1343 ;	src/UI.c 147
+                           1344 ;	genPlus
+                           1345 ;	AOP_STK for _UIShowText_k_1_1
+                           1346 ;	AOP_STK for _UIShowText_sloc4_1_0
+                           1347 ;	Can't optimise plus by inc, falling back to the normal way
+   039B 11 13 00           1348 	ld	de,#_text_lines
+   039E F8 0F              1349 	lda	hl,15(sp)
+   03A0 6E                 1350 	ld	l,(hl)
+   03A1 26 00              1351 	ld	h,#0x00
+   03A3 19                 1352 	add	hl,de
+   03A4 7D                 1353 	ld	a,l
+   03A5 54                 1354 	ld	d,h
+   03A6 F8 02              1355 	lda	hl,2(sp)
+   03A8 22                 1356 	ld	(hl+),a
+   03A9 72                 1357 	ld	(hl),d
+                           1358 ;	genAssign (pointer)
+                           1359 ;	AOP_STK for _UIShowText_sloc4_1_0
+   03AA 2B                 1360 	dec	hl
+   03AB 5E                 1361 	ld	e,(hl)
+   03AC 23                 1362 	inc	hl
+   03AD 56                 1363 	ld	d,(hl)
+   03AE 79                 1364 	ld	a,c
+   03AF 12                 1365 	ld	(de),a
+                           1366 ;	genLabel
+   03B0                    1367 00112$:
+                           1368 ;	src/UI.c 149
+                           1369 ;	genPlus
+                           1370 ;	AOP_STK for _UIShowText_k_1_1
+                           1371 ;	genPlusIncr
+   03B0 F8 0F              1372 	lda	hl,15(sp)
+   03B2 34                 1373 	inc	(hl)
+                           1374 ;	src/UI.c 112
+                           1375 ;	genPlus
+                           1376 ;	AOP_STK for _UIShowText_i_1_1
+                           1377 ;	genPlusIncr
+   03B3 23                 1378 	inc	hl
+   03B4 34                 1379 	inc	(hl)
+                           1380 ;	genGoto
+   03B5 C3 EE 01           1381 	jp	00114$
+                           1382 ;	genLabel
+   03B8                    1383 00117$:
+                           1384 ;	src/UI.c 152
+                           1385 ;	genIpush
+                           1386 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   03B8 21 00 90           1387 	ld	hl,#0x9000
+   03BB E5                 1388 	push	hl
+                           1389 ;	genCall
+   03BC CD C0 06           1390 	call	_UISetPos
+   03BF E8 02              1391 	lda	sp,2(sp)
+                           1392 ;	src/UI.c 153
+                           1393 ;	genPlus
+                           1394 ;	AOP_STK for _UIShowText_height_1_1
+                           1395 ;	genPlusIncr
+   03C1 F8 0E              1396 	lda	hl,14(sp)
+   03C3 4E                 1397 	ld	c,(hl)
+   03C4 0C                 1398 	inc	c
+   03C5 0C                 1399 	inc	c
+                           1400 ;	genLeftShift
+   03C6 79                 1401 	ld	a,c
+   03C7 CB 27              1402 	sla	a
+   03C9 CB 17              1403 	rl	a
+   03CB CB 17              1404 	rl	a
+   03CD E6 F8              1405 	and	a,#0xF8
+   03CF 4F                 1406 	ld	c,a
+                           1407 ;	genMinus
+   03D0 3E 90              1408 	ld	a,#0x90
+   03D2 91                 1409 	sub	a,c
+   03D3 4F                 1410 	ld	c,a
+                           1411 ;	genIpush
+                           1412 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                           1413 ;	AOP_HL for _text_in_speed
+   03D4 21 0A 00           1414 	ld	hl,#_text_in_speed
+   03D7 7E                 1415 	ld	a,(hl)
+   03D8 F5                 1416 	push	af
+   03D9 33                 1417 	inc	sp
+                           1418 ;	genIpush
+   03DA 79                 1419 	ld	a,c
+   03DB F5                 1420 	push	af
+   03DC 33                 1421 	inc	sp
+                           1422 ;	genIpush
+   03DD 3E 00              1423 	ld	a,#0x00
+   03DF F5                 1424 	push	af
+   03E0 33                 1425 	inc	sp
+                           1426 ;	genCall
+   03E1 CD D7 06           1427 	call	_UIMoveTo
+   03E4 E8 03              1428 	lda	sp,3(sp)
+                           1429 ;	src/UI.c 154
+                           1430 ;	genAssign
+                           1431 ;	AOP_HL for _text_drawn
+   03E6 21 07 00           1432 	ld	hl,#_text_drawn
+   03E9 36 00              1433 	ld	(hl),#0x00
+                           1434 ;	src/UI.c 155
+                           1435 ;	genAssign
+                           1436 ;	AOP_HL for _text_x
+   03EB 21 05 00           1437 	ld	hl,#_text_x
+   03EE 36 00              1438 	ld	(hl),#0x00
+                           1439 ;	src/UI.c 156
+                           1440 ;	genAssign
+                           1441 ;	AOP_HL for _text_y
+   03F0 21 06 00           1442 	ld	hl,#_text_y
+   03F3 36 00              1443 	ld	(hl),#0x00
+                           1444 ;	src/UI.c 157
+                           1445 ;	genAssign
+                           1446 ;	AOP_HL for _text_count
+   03F5 21 08 00           1447 	ld	hl,#_text_count
+   03F8 36 00              1448 	ld	(hl),#0x00
+                           1449 ;	genLabel
+   03FA                    1450 00118$:
+                           1451 ;	genEndFunction
+   03FA E8 1C              1452 	lda	sp,28(sp)
+   03FC C9                 1453 	ret
+   03FD                    1454 ___UIShowText_end:
+   03FD                    1455 __str_0:
+   03FD 00                 1456 	.db 0x00
+                           1457 ;	src/UI.c 160
+                           1458 ;	genLabel
+                           1459 ;	genFunction
+                           1460 ;	---------------------------------
+                           1461 ; Function UIShowChoice
+                           1462 ; ---------------------------------
+   03FE                    1463 ___UIShowChoice_start:
+   03FE                    1464 _UIShowChoice:
+                           1465 	
+                           1466 ;	src/UI.c 162
+                           1467 ;	genAssign
+                           1468 ;	AOP_HL for _choice_index
+   03FE 21 10 00           1469 	ld	hl,#_choice_index
+   0401 36 00              1470 	ld	(hl),#0x00
+                           1471 ;	src/UI.c 163
+                           1472 ;	genAssign
+                           1473 ;	AOP_STK for 
+                           1474 ;	AOP_HL for _choice_flag
+   0403 F8 02              1475 	lda	hl,2(sp)
+   0405 2A                 1476 	ld	a,(hl+)
+   0406 5E                 1477 	ld	e,(hl)
+   0407 21 11 00           1478 	ld	hl,#_choice_flag
+   040A 22                 1479 	ld	(hl+),a
+   040B 73                 1480 	ld	(hl),e
+                           1481 ;	src/UI.c 164
+                           1482 ;	genAssign
+                           1483 ;	AOP_HL for _choice_enabled
+   040C 21 0F 00           1484 	ld	hl,#_choice_enabled
+   040F 36 01              1485 	ld	(hl),#0x01
+                           1486 ;	src/UI.c 165
+                           1487 ;	genIpush
+                           1488 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                           1489 ;	AOP_STK for 
+   0411 F8 04              1490 	lda	hl,4(sp)
+   0413 2A                 1491 	ld	a,(hl+)
+   0414 66                 1492 	ld	h,(hl)
+   0415 6F                 1493 	ld	l,a
+   0416 E5                 1494 	push	hl
+                           1495 ;	genCall
+   0417 CD 26 01           1496 	call	_UIShowText
+   041A E8 02              1497 	lda	sp,2(sp)
+                           1498 ;	src/UI.c 166
+                           1499 ;	genIpush
+                           1500 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   041C 21 12 00           1501 	ld	hl,#_ui_cursor_tiles
+   041F E5                 1502 	push	hl
+                           1503 ;	genIpush
+   0420 21 01 01           1504 	ld	hl,#0x0101
+   0423 E5                 1505 	push	hl
+                           1506 ;	genIpush
+   0424 21 01 01           1507 	ld	hl,#0x0101
+   0427 E5                 1508 	push	hl
+                           1509 ;	genCall
+   0428 CD 00 00           1510 	call	_set_win_tiles
+   042B E8 06              1511 	lda	sp,6(sp)
+                           1512 ;	src/UI.c 167
+                           1513 ;	genIpush
+                           1514 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   042D 21 13 00           1515 	ld	hl,#_ui_bg_tiles
+   0430 E5                 1516 	push	hl
+                           1517 ;	genIpush
+   0431 21 01 01           1518 	ld	hl,#0x0101
+   0434 E5                 1519 	push	hl
+                           1520 ;	genIpush
+   0435 21 01 02           1521 	ld	hl,#0x0201
+   0438 E5                 1522 	push	hl
+                           1523 ;	genCall
+   0439 CD 00 00           1524 	call	_set_win_tiles
+   043C E8 06              1525 	lda	sp,6(sp)
+                           1526 ;	genLabel
+   043E                    1527 00101$:
+                           1528 ;	genEndFunction
+                           1529 	
+   043E C9                 1530 	ret
+   043F                    1531 ___UIShowChoice_end:
+                           1532 ;	src/UI.c 170
+                           1533 ;	genLabel
+                           1534 ;	genFunction
+                           1535 ;	---------------------------------
+                           1536 ; Function UISetTextBuffer
+                           1537 ; ---------------------------------
+   043F                    1538 ___UISetTextBuffer_start:
+   043F                    1539 _UISetTextBuffer:
+                           1540 	
+                           1541 ;	src/UI.c 172
+                           1542 ;	genIpush
+                           1543 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   043F 21 14 04           1544 	ld	hl,#0x0414
+   0442 E5                 1545 	push	hl
+                           1546 ;	genIpush
+   0443 21 00 02           1547 	ld	hl,#0x0200
+   0446 E5                 1548 	push	hl
+                           1549 ;	genCall
+   0447 CD 26 00           1550 	call	_UIDrawFrame
+   044A E8 04              1551 	lda	sp,4(sp)
+                           1552 ;	src/UI.c 173
+                           1553 ;	genAssign
+                           1554 ;	AOP_HL for _text_drawn
+   044C 21 07 00           1555 	ld	hl,#_text_drawn
+   044F 36 00              1556 	ld	(hl),#0x00
+                           1557 ;	src/UI.c 174
+                           1558 ;	genAssign
+                           1559 ;	AOP_STK for 
+   0451 F8 02              1560 	lda	hl,2(sp)
+   0453 4E                 1561 	ld	c,(hl)
+   0454 23                 1562 	inc	hl
+   0455 46                 1563 	ld	b,(hl)
+                           1564 ;	genIpush
+                           1565 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0456 C5                 1566 	push	bc
+                           1567 ;	genIpush
+   0457 21 13 00           1568 	ld	hl,#_text_lines
+   045A E5                 1569 	push	hl
+                           1570 ;	genCall
+   045B CD 00 00           1571 	call	_strcpy
+   045E E8 04              1572 	lda	sp,4(sp)
+                           1573 ;	src/UI.c 175
+                           1574 ;	genAssign
+                           1575 ;	AOP_HL for _text_x
+   0460 21 05 00           1576 	ld	hl,#_text_x
+   0463 36 00              1577 	ld	(hl),#0x00
+                           1578 ;	src/UI.c 176
+                           1579 ;	genAssign
+                           1580 ;	AOP_HL for _text_y
+   0465 21 06 00           1581 	ld	hl,#_text_y
+   0468 36 00              1582 	ld	(hl),#0x00
+                           1583 ;	src/UI.c 177
+                           1584 ;	genAssign
+                           1585 ;	AOP_HL for _text_count
+   046A 21 08 00           1586 	ld	hl,#_text_count
+   046D 36 00              1587 	ld	(hl),#0x00
+                           1588 ;	genLabel
+   046F                    1589 00101$:
+                           1590 ;	genEndFunction
+                           1591 	
+   046F C9                 1592 	ret
+   0470                    1593 ___UISetTextBuffer_end:
+                           1594 ;	src/UI.c 180
+                           1595 ;	genLabel
+                           1596 ;	genFunction
+                           1597 ;	---------------------------------
+                           1598 ; Function UIDrawTextBuffer
+                           1599 ; ---------------------------------
+   0470                    1600 ___UIDrawTextBuffer_start:
+   0470                    1601 _UIDrawTextBuffer:
+                           1602 	
+                           1603 ;	src/UI.c 182
+                           1604 ;	genAnd
+                           1605 ;	AOP_HL for _time
+   0470 21 00 00           1606 	ld	hl,#_time
+   0473 7E                 1607 	ld	a,(hl)
+   0474 E6 01              1608 	and	a,#0x01
+                           1609 ;	genCmpEq
+                           1610 ; genCmpEq: left 1, right 1, result 0
+   0476 4F                 1611 	ld	c,a
+   0477 B7                 1612 	or	a,a
+   0478 C2 83 04           1613 	jp	nz,00103$
+   047B 18 03              1614 	jr	00107$
+   047D                    1615 00106$:
+   047D C3 83 04           1616 	jp	00103$
+   0480                    1617 00107$:
+                           1618 ;	src/UI.c 184
+                           1619 ;	genCall
+                           1620 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0480 CD 84 04           1621 	call	_UIDrawTextBufferChar
+                           1622 ;	genLabel
+   0483                    1623 00103$:
+                           1624 ;	genEndFunction
+                           1625 	
+   0483 C9                 1626 	ret
+   0484                    1627 ___UIDrawTextBuffer_end:
+                           1628 ;	src/UI.c 188
+                           1629 ;	genLabel
+                           1630 ;	genFunction
+                           1631 ;	---------------------------------
+                           1632 ; Function UIDrawTextBufferChar
+                           1633 ; ---------------------------------
+   0484                    1634 ___UIDrawTextBufferChar_start:
+   0484                    1635 _UIDrawTextBufferChar:
+   0484 E8 F3              1636 	lda	sp,-13(sp)
+                           1637 ;	src/UI.c 192
+                           1638 ;	genIpush
+                           1639 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0486 21 13 00           1640 	ld	hl,#_text_lines
+   0489 E5                 1641 	push	hl
+                           1642 ;	genCall
+   048A CD 00 00           1643 	call	_strlen
+   048D 42                 1644 	ld	b,d
+   048E 4B                 1645 	ld	c,e
+   048F E8 02              1646 	lda	sp,2(sp)
+                           1647 ;	genCast
+                           1648 ;	AOP_STK for _UIDrawTextBufferChar_text_size_1_1
+   0491 F8 09              1649 	lda	hl,9(sp)
+   0493 71                 1650 	ld	(hl),c
+                           1651 ;	src/UI.c 196
+                           1652 ;	genCmpGt
+                           1653 ;	AOP_HL for _text_wait
+   0494 3E 00              1654 	ld	a,#0x00
+   0496 21 09 00           1655 	ld	hl,#_text_wait
+   0499 96                 1656 	sub	a,(hl)
+   049A D2 A1 04           1657 	jp	nc,00102$
+                           1658 ;	src/UI.c 198
+                           1659 ;	genMinus
+                           1660 ;	AOP_HL for _text_wait
+   049D 35                 1661 	dec	(hl)
+                           1662 ;	src/UI.c 199
+                           1663 ;	genRet
+   049E C3 BD 06           1664 	jp	00130$
+                           1665 ;	genLabel
+   04A1                    1666 00102$:
+                           1667 ;	src/UI.c 202
+                           1668 ;	genCmpLt
+                           1669 ;	AOP_HL for _text_count
+                           1670 ;	AOP_STK for _UIDrawTextBufferChar_text_size_1_1
+   04A1 21 08 00           1671 	ld	hl,#_text_count
+   04A4 7E                 1672 	ld	a,(hl)
+   04A5 F8 09              1673 	lda	hl,9(sp)
+   04A7 96                 1674 	sub	a,(hl)
+   04A8 D2 B8 06           1675 	jp	nc,00128$
+                           1676 ;	src/UI.c 204
+                           1677 ;	genAssign
+                           1678 ;	AOP_HL for _text_draw_speed
+                           1679 ;	AOP_HL for _win_speed
+   04AB 21 0C 00           1680 	ld	hl,#_text_draw_speed
+   04AE 7E                 1681 	ld	a,(hl)
+   04AF 21 04 00           1682 	ld	hl,#_win_speed
+   04B2 77                 1683 	ld	(hl),a
+                           1684 ;	src/UI.c 205
+                           1685 ;	genAssign
+                           1686 ;	AOP_HL for _text_drawn
+   04B3 21 07 00           1687 	ld	hl,#_text_drawn
+   04B6 36 00              1688 	ld	(hl),#0x00
+                           1689 ;	src/UI.c 207
+                           1690 ;	genCmpEq
+                           1691 ;	AOP_HL for _text_count
+                           1692 ; genCmpEq: left 1, right 1, result 0
+   04B8 21 08 00           1693 	ld	hl,#_text_count
+   04BB 7E                 1694 	ld	a,(hl)
+   04BC B7                 1695 	or	a,a
+   04BD C2 CF 04           1696 	jp	nz,00104$
+   04C0 18 03              1697 	jr	00148$
+   04C2                    1698 00147$:
+   04C2 C3 CF 04           1699 	jp	00104$
+   04C5                    1700 00148$:
+                           1701 ;	src/UI.c 209
+                           1702 ;	genAssign
+                           1703 ;	AOP_HL for _text_x
+   04C5 21 05 00           1704 	ld	hl,#_text_x
+   04C8 36 00              1705 	ld	(hl),#0x00
+                           1706 ;	src/UI.c 210
+                           1707 ;	genAssign
+                           1708 ;	AOP_HL for _text_y
+   04CA 21 06 00           1709 	ld	hl,#_text_y
+   04CD 36 00              1710 	ld	(hl),#0x00
+                           1711 ;	genLabel
+   04CF                    1712 00104$:
+                           1713 ;	src/UI.c 213
+                           1714 ;	genPlus
+                           1715 ;	AOP_HL for _text_count
+                           1716 ;	Can't optimise plus by inc, falling back to the normal way
+   04CF 3E 13              1717 	ld	a,#<_text_lines
+   04D1 21 08 00           1718 	ld	hl,#_text_count
+   04D4 86                 1719 	add	a,(hl)
+   04D5 47                 1720 	ld	b,a
+   04D6 3E 00              1721 	ld	a,#>_text_lines
+   04D8 CE 00              1722 	adc	a,#0x00
+   04DA 4F                 1723 	ld	c,a
+                           1724 ;	genPointerGet
+   04DB 58                 1725 	ld	e,b
+   04DC 51                 1726 	ld	d,c
+   04DD 1A                 1727 	ld	a,(de)
+                           1728 ;	genMinus
+                           1729 ;	AOP_STK for _UIDrawTextBufferChar_letter_1_1
+   04DE 4F                 1730 	ld	c,a
+   04DF C6 E0              1731 	add	a,#0xE0
+   04E1 F8 0C              1732 	lda	hl,12(sp)
+   04E3 77                 1733 	ld	(hl),a
+                           1734 ;	src/UI.c 216
+                           1735 ;	genPlus
+                           1736 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           1737 ;	genPlusIncr
+                           1738 ;	Can't optimise plus by inc, falling back to the normal way
+   04E4 11 00 00           1739 	ld	de,#_bank_data_ptrs
+   04E7 21 0C 00           1740 	ld	hl,#0x000C
+   04EA 19                 1741 	add	hl,de
+   04EB 7D                 1742 	ld	a,l
+   04EC 54                 1743 	ld	d,h
+   04ED F8 04              1744 	lda	hl,4(sp)
+                           1745 ;	genPointerGet
+                           1746 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           1747 ;	AOP_STK for _UIDrawTextBufferChar_sloc1_1_0
+   04EF 22                 1748 	ld	(hl+),a
+   04F0 72                 1749 	ld	(hl),d
+   04F1 5F                 1750 	ld	e,a
+   04F2 1A                 1751 	ld	a,(de)
+   04F3 F8 02              1752 	lda	hl,2(sp)
+   04F5 77                 1753 	ld	(hl),a
+   04F6 13                 1754 	inc	de
+   04F7 1A                 1755 	ld	a,(de)
+   04F8 23                 1756 	inc	hl
+                           1757 ;	genCast
+                           1758 ;	AOP_STK for _UIDrawTextBufferChar_sloc1_1_0
+                           1759 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+   04F9 32                 1760 	ld      (hl-),a
+   04FA 2A                 1761 	ld	a,(hl+)
+   04FB 23                 1762 	inc	hl
+   04FC 32                 1763 	ld      (hl-),a
+   04FD 2A                 1764 	ld	a,(hl+)
+   04FE 23                 1765 	inc	hl
+                           1766 ;	genPlus
+                           1767 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           1768 ;	AOP_STK for _UIDrawTextBufferChar_ptr_1_1
+                           1769 ;	genPlusIncr
+                           1770 ;	Can't optimise plus by inc, falling back to the normal way
+   04FF 32                 1771 	ld      (hl-),a
+   0500 5E                 1772 	ld	e,(hl)
+   0501 23                 1773 	inc	hl
+   0502 56                 1774 	ld	d,(hl)
+   0503 21 A7 29           1775 	ld	hl,#0x29A7
+   0506 19                 1776 	add	hl,de
+   0507 7D                 1777 	ld	a,l
+   0508 54                 1778 	ld	d,h
+   0509 F8 06              1779 	lda	hl,6(sp)
+   050B 22                 1780 	ld	(hl+),a
+   050C 72                 1781 	ld	(hl),d
+                           1782 ;	src/UI.c 219
+                           1783 ;	genMinus
+                           1784 ;	AOP_HL for _text_x
+                           1785 ;	AOP_STK for _UIDrawTextBufferChar_text_remaining_1_1
+   050D 3E 12              1786 	ld	a,#0x12
+   050F 21 05 00           1787 	ld	hl,#_text_x
+   0512 96                 1788 	sub	a,(hl)
+   0513 F8 0B              1789 	lda	hl,11(sp)
+                           1790 ;	src/UI.c 220
+                           1791 ;	genAssign
+                           1792 ;	AOP_STK for _UIDrawTextBufferChar_word_len_1_1
+   0515 32                 1793 	ld      (hl-),a
+   0516 36 00              1794 	ld	(hl),#0x00
+                           1795 ;	src/UI.c 221
+                           1796 ;	genAssign
+                           1797 ;	AOP_HL for _text_count
+   0518 21 08 00           1798 	ld	hl,#_text_count
+   051B 46                 1799 	ld	b,(hl)
+                           1800 ;	genLabel
+   051C                    1801 00109$:
+                           1802 ;	genCmpEq
+                           1803 ;	AOP_STK for _UIDrawTextBufferChar_text_size_1_1
+                           1804 ; genCmpEq: left 1, right 1, result 0
+   051C F8 09              1805 	lda	hl,9(sp)
+   051E 7E                 1806 	ld	a,(hl)
+   051F B8                 1807 	cp	b
+   0520 20 03              1808 	jr	nz,00149$
+   0522 C3 51 05           1809 	jp	00112$
+   0525                    1810 00149$:
+                           1811 ;	src/UI.c 223
+                           1812 ;	genPlus
+                           1813 ;	AOP_STK for _UIDrawTextBufferChar_sloc1_1_0
+                           1814 ;	Can't optimise plus by inc, falling back to the normal way
+   0525 11 13 00           1815 	ld	de,#_text_lines
+   0528 68                 1816 	ld	l,b
+   0529 26 00              1817 	ld	h,#0x00
+   052B 19                 1818 	add	hl,de
+   052C 7D                 1819 	ld	a,l
+   052D 54                 1820 	ld	d,h
+   052E F8 02              1821 	lda	hl,2(sp)
+                           1822 ;	genPointerGet
+                           1823 ;	AOP_STK for _UIDrawTextBufferChar_sloc1_1_0
+                           1824 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+   0530 22                 1825 	ld	(hl+),a
+   0531 72                 1826 	ld	(hl),d
+   0532 5F                 1827 	ld	e,a
+   0533 1A                 1828 	ld	a,(de)
+   0534 23                 1829 	inc	hl
+                           1830 ;	genCmpEq
+                           1831 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           1832 ; genCmpEq: left 1, right 1, result 0
+   0535 77                 1833 	ld      (hl),a
+                           1834 ; Removed redundent load
+   0536 FE 20              1835 	cp	a,#0x20
+   0538 CA 51 05           1836 	jp	z,00112$
+   053B                    1837 00150$:
+                           1838 ;	genCmpEq
+                           1839 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           1840 ; genCmpEq: left 1, right 1, result 0
+   053B F8 04              1841 	lda	hl,4(sp)
+   053D 7E                 1842 	ld	a,(hl)
+   053E FE 0A              1843 	cp	a,#0x0A
+   0540 CA 51 05           1844 	jp	z,00112$
+   0543                    1845 00151$:
+                           1846 ;	genCmpEq
+                           1847 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           1848 ; genCmpEq: left 1, right 1, result 0
+   0543 F8 04              1849 	lda	hl,4(sp)
+   0545 7E                 1850 	ld	a,(hl)
+   0546 B7                 1851 	or	a,a
+   0547 CA 51 05           1852 	jp	z,00112$
+   054A                    1853 00152$:
+                           1854 ;	src/UI.c 227
+                           1855 ;	genPlus
+                           1856 ;	AOP_STK for _UIDrawTextBufferChar_word_len_1_1
+                           1857 ;	genPlusIncr
+   054A F8 0A              1858 	lda	hl,10(sp)
+   054C 34                 1859 	inc	(hl)
+                           1860 ;	src/UI.c 221
+                           1861 ;	genPlus
+                           1862 ;	genPlusIncr
+                           1863 ; Removed redundent load
+   054D 04                 1864 	inc	b
+                           1865 ;	genGoto
+   054E C3 1C 05           1866 	jp	00109$
+                           1867 ;	genLabel
+   0551                    1868 00112$:
+                           1869 ;	src/UI.c 229
+                           1870 ;	genCmpGt
+                           1871 ;	AOP_STK for _UIDrawTextBufferChar_word_len_1_1
+                           1872 ;	AOP_STK for _UIDrawTextBufferChar_text_remaining_1_1
+   0551 F8 0B              1873 	lda	hl,11(sp)
+   0553 7E                 1874 	ld	a,(hl)
+   0554 2B                 1875 	dec	hl
+   0555 96                 1876 	sub	a,(hl)
+   0556 D2 68 05           1877 	jp	nc,00114$
+                           1878 ;	genCmpLt
+                           1879 ;	AOP_STK for _UIDrawTextBufferChar_word_len_1_1
+   0559 7E                 1880 	ld	a,(hl)
+   055A FE 12              1881 	cp	#0x12
+   055C D2 68 05           1882 	jp	nc,00114$
+                           1883 ;	src/UI.c 231
+                           1884 ;	genAssign
+                           1885 ;	AOP_HL for _text_x
+   055F 21 05 00           1886 	ld	hl,#_text_x
+   0562 36 00              1887 	ld	(hl),#0x00
+                           1888 ;	src/UI.c 232
+                           1889 ;	genPlus
+                           1890 ;	AOP_HL for _text_y
+                           1891 ;	genPlusIncr
+   0564 21 06 00           1892 	ld	hl,#_text_y
+   0567 34                 1893 	inc	(hl)
+                           1894 ;	genLabel
+   0568                    1895 00114$:
+                           1896 ;	src/UI.c 235
+                           1897 ;	genCmpEq
+                           1898 ; genCmpEq: left 1, right 1, result 1
+   0568 79                 1899 	ld	a,c
+   0569 FE 08              1900 	cp	a,#0x08
+   056B C2 72 05           1901 	jp	nz,00153$
+   056E 3E 01              1902 	ld	a,#0x01
+   0570 18 01              1903 	jr	00154$
+   0572                    1904 00153$:
+   0572 AF                 1905 	xor	a,a
+   0573                    1906 00154$:
+   0573 4F                 1907 	ld	c,a
+                           1908 ;	genIfx
+   0574 AF                 1909 	xor	a,a
+   0575 B1                 1910 	or	a,c
+   0576 C2 58 06           1911 	jp	nz,00117$
+                           1912 ;	src/UI.c 237
+                           1913 ;	genMult
+                           1914 ;	AOP_HL for _text_y
+                           1915 ;	AOP_STK for _UIDrawTextBufferChar_sloc1_1_0
+   0579 21 06 00           1916 	ld	hl,#_text_y
+   057C 5E                 1917 	ld	e,(hl)
+   057D 16 00              1918 	ld	d,#0x00
+   057F 6B                 1919 	ld	l,e
+   0580 62                 1920 	ld	h,d
+   0581 29                 1921 	add	hl,hl
+   0582 29                 1922 	add	hl,hl
+   0583 29                 1923 	add	hl,hl
+   0584 19                 1924 	add	hl,de
+   0585 29                 1925 	add	hl,hl
+   0586 7D                 1926 	ld	a,l
+   0587 54                 1927 	ld	d,h
+   0588 F8 02              1928 	lda	hl,2(sp)
+   058A 22                 1929 	ld	(hl+),a
+   058B 72                 1930 	ld	(hl),d
+                           1931 ;	genCast
+                           1932 ;	AOP_HL for _text_x
+                           1933 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+   058C 21 05 00           1934 	ld	hl,#_text_x
+   058F 7E                 1935 	ld	a,(hl)
+   0590 F8 04              1936 	lda	hl,4(sp)
+   0592 22                 1937 	ld	(hl+),a
+   0593 36 00              1938 	ld	(hl),#0x00
+                           1939 ;	genPlus
+                           1940 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           1941 ;	AOP_STK for _UIDrawTextBufferChar_sloc1_1_0
+                           1942 ;	AOP_STK for _UIDrawTextBufferChar_sloc2_1_0
+                           1943 ;	Can't optimise plus by inc, falling back to the normal way
+   0595 2B                 1944 	dec	hl
+   0596 5E                 1945 	ld	e,(hl)
+   0597 23                 1946 	inc	hl
+   0598 56                 1947 	ld	d,(hl)
+   0599 F8 02              1948 	lda	hl,2(sp)
+   059B 2A                 1949 	ld	a,(hl+)
+   059C 66                 1950 	ld	h,(hl)
+   059D 6F                 1951 	ld	l,a
+   059E 19                 1952 	add	hl,de
+   059F 7D                 1953 	ld	a,l
+   05A0 54                 1954 	ld	d,h
+   05A1 F8 00              1955 	lda	hl,0(sp)
+   05A3 22                 1956 	ld	(hl+),a
+   05A4 72                 1957 	ld	(hl),d
+                           1958 ;	genCast
+                           1959 ;	AOP_STK for _UIDrawTextBufferChar_sloc2_1_0
+   05A5 2B                 1960 	dec	hl
+   05A6 46                 1961 	ld	b,(hl)
+                           1962 ;	src/UI.c 238
+                           1963 ;	genCast
+                           1964 ;	AOP_STK for _UIDrawTextBufferChar_letter_1_1
+                           1965 ;	AOP_STK for _UIDrawTextBufferChar_sloc2_1_0
+   05A7 F8 0C              1966 	lda	hl,12(sp)
+   05A9 7E                 1967 	ld	a,(hl)
+   05AA F8 00              1968 	lda	hl,0(sp)
+   05AC 22                 1969 	ld	(hl+),a
+   05AD 36 00              1970 	ld	(hl),#0x00
+                           1971 ;	genLeftShift
+                           1972 ;	AOP_STK for _UIDrawTextBufferChar_sloc2_1_0
+                           1973 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+   05AF 2B                 1974 	dec	hl
+   05B0 7E                 1975 	ld	a,(hl)
+   05B1 F8 04              1976 	lda	hl,4(sp)
+   05B3 77                 1977 	ld	(hl),a
+   05B4 F8 01              1978 	lda	hl,1(sp)
+   05B6 7E                 1979 	ld	a,(hl)
+   05B7 F8 05              1980 	lda	hl,5(sp)
+   05B9 77                 1981 	ld	(hl),a
+   05BA 3E 05              1982 	ld	a,#0x04+1
+   05BC 18 07              1983 	jr	00156$
+   05BE                    1984 00155$:
+   05BE F8 04              1985 	lda	hl,4(sp)
+   05C0 CB 26              1986 	sla	(hl)
+   05C2 23                 1987 	inc	hl
+   05C3 CB 16              1988 	rl	(hl)
+   05C5                    1989 00156$:
+   05C5 3D                 1990 	dec	a
+   05C6 20 F6              1991 	jr	nz,00155$
+                           1992 ;	genPlus
+                           1993 ;	AOP_STK for _UIDrawTextBufferChar_ptr_1_1
+                           1994 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           1995 ;	AOP_STK for _UIDrawTextBufferChar_sloc2_1_0
+                           1996 ;	Can't optimise plus by inc, falling back to the normal way
+   05C8 F8 06              1997 	lda	hl,6(sp)
+   05CA 5E                 1998 	ld	e,(hl)
+   05CB 23                 1999 	inc	hl
+   05CC 56                 2000 	ld	d,(hl)
+   05CD F8 04              2001 	lda	hl,4(sp)
+   05CF 2A                 2002 	ld	a,(hl+)
+   05D0 66                 2003 	ld	h,(hl)
+   05D1 6F                 2004 	ld	l,a
+   05D2 19                 2005 	add	hl,de
+   05D3 7D                 2006 	ld	a,l
+   05D4 54                 2007 	ld	d,h
+   05D5 F8 00              2008 	lda	hl,0(sp)
+   05D7 22                 2009 	ld	(hl+),a
+   05D8 72                 2010 	ld	(hl),d
+                           2011 ;	genCast
+                           2012 ;	AOP_STK for _UIDrawTextBufferChar_sloc2_1_0
+                           2013 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+   05D9 2B                 2014 	dec	hl
+   05DA 7E                 2015 	ld	a,(hl)
+   05DB F8 04              2016 	lda	hl,4(sp)
+   05DD 77                 2017 	ld	(hl),a
+   05DE F8 01              2018 	lda	hl,1(sp)
+   05E0 7E                 2019 	ld	a,(hl)
+   05E1 F8 05              2020 	lda	hl,5(sp)
+   05E3 77                 2021 	ld	(hl),a
+                           2022 ;	genPlus
+                           2023 ;	genPlusIncr
+                           2024 ;	Can't optimise plus by inc, falling back to the normal way
+   05E4 78                 2025 	ld	a,b
+   05E5 C6 CC              2026 	add	a,#0xCC
+   05E7 47                 2027 	ld	b,a
+                           2028 ;	genIpush
+                           2029 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   05E8 C5                 2030 	push	bc
+                           2031 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+   05E9 2B                 2032 	dec	hl
+   05EA 2A                 2033 	ld	a,(hl+)
+   05EB 66                 2034 	ld	h,(hl)
+   05EC 6F                 2035 	ld	l,a
+   05ED E5                 2036 	push	hl
+                           2037 ;	genIpush
+   05EE 3E 01              2038 	ld	a,#0x01
+   05F0 F5                 2039 	push	af
+   05F1 33                 2040 	inc	sp
+                           2041 ;	genIpush
+   05F2 78                 2042 	ld	a,b
+   05F3 F5                 2043 	push	af
+   05F4 33                 2044 	inc	sp
+                           2045 ;	genIpush
+   05F5 3E 06              2046 	ld	a,#0x06
+   05F7 F5                 2047 	push	af
+   05F8 33                 2048 	inc	sp
+                           2049 ;	genCall
+   05F9 CD 00 00           2050 	call	_SetBankedBkgData
+   05FC E8 05              2051 	lda	sp,5(sp)
+   05FE E1                 2052 	pop	hl
+   05FF 4D                 2053 	ld	c,l
+                           2054 ;	src/UI.c 239
+                           2055 ;	genPlus
+                           2056 ;	AOP_HL for _text_x
+                           2057 ;	genPlusIncr
+                           2058 ;	Can't optimise plus by inc, falling back to the normal way
+   0600 21 05 00           2059 	ld	hl,#_text_x
+   0603 7E                 2060 	ld	a,(hl)
+   0604 C6 CC              2061 	add	a,#0xCC
+   0606 47                 2062 	ld	b,a
+                           2063 ;	genCast
+                           2064 ;	AOP_STK for _UIDrawTextBufferChar_sloc2_1_0
+   0607 F8 00              2065 	lda	hl,0(sp)
+   0609 70                 2066 	ld	(hl),b
+   060A 23                 2067 	inc	hl
+   060B 36 00              2068 	ld	(hl),#0x00
+                           2069 ;	genPlus
+                           2070 ;	AOP_STK for _UIDrawTextBufferChar_sloc2_1_0
+                           2071 ;	AOP_STK for _UIDrawTextBufferChar_sloc1_1_0
+                           2072 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           2073 ;	Can't optimise plus by inc, falling back to the normal way
+   060D 2B                 2074 	dec	hl
+   060E 5E                 2075 	ld	e,(hl)
+   060F 23                 2076 	inc	hl
+   0610 56                 2077 	ld	d,(hl)
+   0611 23                 2078 	inc	hl
+   0612 2A                 2079 	ld	a,(hl+)
+   0613 66                 2080 	ld	h,(hl)
+   0614 6F                 2081 	ld	l,a
+   0615 19                 2082 	add	hl,de
+   0616 7D                 2083 	ld	a,l
+   0617 54                 2084 	ld	d,h
+   0618 F8 04              2085 	lda	hl,4(sp)
+   061A 22                 2086 	ld	(hl+),a
+   061B 72                 2087 	ld	(hl),d
+                           2088 ;	genCast
+                           2089 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           2090 ;	AOP_STK for _UIDrawTextBufferChar_tile_1_1
+   061C 2B                 2091 	dec	hl
+   061D 7E                 2092 	ld	a,(hl)
+   061E F8 08              2093 	lda	hl,8(sp)
+   0620 77                 2094 	ld	(hl),a
+                           2095 ;	src/UI.c 240
+                           2096 ;	genAddrOf
+                           2097 ;	AOP_STK for _UIDrawTextBufferChar_sloc2_1_0
+   0621 F8 08              2098 	lda	hl,8(sp)
+   0623 7D                 2099 	ld	a,l
+   0624 54                 2100 	ld	d,h
+   0625 F8 00              2101 	lda	hl,0(sp)
+   0627 22                 2102 	ld	(hl+),a
+   0628 72                 2103 	ld	(hl),d
+                           2104 ;	genPlus
+                           2105 ;	AOP_HL for _text_y
+                           2106 ;	genPlusIncr
+   0629 21 06 00           2107 	ld	hl,#_text_y
+   062C 46                 2108 	ld	b,(hl)
+   062D 04                 2109 	inc	b
+                           2110 ;	genPlus
+                           2111 ;	AOP_HL for _text_x
+                           2112 ;	AOP_STK for _UIDrawTextBufferChar_sloc1_1_0
+                           2113 ;	genPlusIncr
+                           2114 ;	Can't optimise plus by inc, falling back to the normal way
+   062E 21 05 00           2115 	ld	hl,#_text_x
+   0631 7E                 2116 	ld	a,(hl)
+   0632 C6 01              2117 	add	a,#0x01
+   0634 F8 02              2118 	lda	hl,2(sp)
+                           2119 ;	genPlus
+                           2120 ;	AOP_STK for _UIDrawTextBufferChar_sloc1_1_0
+                           2121 ;	AOP_HL for _choice_enabled
+                           2122 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+                           2123 ;	Can't optimise plus by inc, falling back to the normal way
+   0636 77                 2124 	ld      (hl),a
+                           2125 ; Removed redundent load
+   0637 21 0F 00           2126 	ld	hl,#_choice_enabled
+   063A 86                 2127 	add	a,(hl)
+   063B F8 04              2128 	lda	hl,4(sp)
+   063D 77                 2129 	ld	(hl),a
+                           2130 ;	genIpush
+                           2131 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   063E C5                 2132 	push	bc
+                           2133 ;	AOP_STK for _UIDrawTextBufferChar_sloc2_1_0
+   063F F8 02              2134 	lda	hl,2(sp)
+   0641 2A                 2135 	ld	a,(hl+)
+   0642 66                 2136 	ld	h,(hl)
+   0643 6F                 2137 	ld	l,a
+   0644 E5                 2138 	push	hl
+                           2139 ;	genIpush
+   0645 21 01 01           2140 	ld	hl,#0x0101
+   0648 E5                 2141 	push	hl
+                           2142 ;	genIpush
+   0649 78                 2143 	ld	a,b
+   064A F5                 2144 	push	af
+   064B 33                 2145 	inc	sp
+                           2146 ;	genIpush
+                           2147 ;	AOP_STK for _UIDrawTextBufferChar_sloc0_1_0
+   064C F8 0B              2148 	lda	hl,11(sp)
+   064E 7E                 2149 	ld	a,(hl)
+   064F F5                 2150 	push	af
+   0650 33                 2151 	inc	sp
+                           2152 ;	genCall
+   0651 CD 00 00           2153 	call	_set_win_tiles
+   0654 E8 06              2154 	lda	sp,6(sp)
+   0656 E1                 2155 	pop	hl
+   0657 4D                 2156 	ld	c,l
+                           2157 ;	genLabel
+   0658                    2158 00117$:
+                           2159 ;	src/UI.c 243
+                           2160 ;	genIfx
+   0658 AF                 2161 	xor	a,a
+   0659 B1                 2162 	or	a,c
+   065A CA 66 06           2163 	jp	z,00119$
+                           2164 ;	src/UI.c 245
+                           2165 ;	genMinus
+                           2166 ;	AOP_HL for _text_x
+   065D 21 05 00           2167 	ld	hl,#_text_x
+   0660 35                 2168 	dec	(hl)
+                           2169 ;	src/UI.c 246
+                           2170 ;	genAssign
+                           2171 ;	AOP_HL for _text_wait
+   0661 21 09 00           2172 	ld	hl,#_text_wait
+   0664 36 0A              2173 	ld	(hl),#0x0A
+                           2174 ;	genLabel
+   0666                    2175 00119$:
+                           2176 ;	src/UI.c 249
+                           2177 ;	genPlus
+                           2178 ;	AOP_HL for _text_count
+                           2179 ;	genPlusIncr
+   0666 21 08 00           2180 	ld	hl,#_text_count
+   0669 34                 2181 	inc	(hl)
+                           2182 ;	src/UI.c 250
+                           2183 ;	genPlus
+                           2184 ;	AOP_HL for _text_x
+                           2185 ;	genPlusIncr
+   066A 21 05 00           2186 	ld	hl,#_text_x
+   066D 34                 2187 	inc	(hl)
+                           2188 ;	src/UI.c 251
+                           2189 ;	genPlus
+                           2190 ;	AOP_HL for _text_count
+                           2191 ;	Can't optimise plus by inc, falling back to the normal way
+   066E 3E 13              2192 	ld	a,#<_text_lines
+   0670 21 08 00           2193 	ld	hl,#_text_count
+   0673 86                 2194 	add	a,(hl)
+   0674 4F                 2195 	ld	c,a
+   0675 3E 00              2196 	ld	a,#>_text_lines
+   0677 CE 00              2197 	adc	a,#0x00
+   0679 47                 2198 	ld	b,a
+                           2199 ;	genPointerGet
+   067A 0A                 2200 	ld	a,(bc)
+                           2201 ;	genCmpEq
+                           2202 ; genCmpEq: left 1, right 1, result 0
+   067B 4F                 2203 	ld	c,a
+   067C FE 0A              2204 	cp	a,#0x0A
+   067E C2 96 06           2205 	jp	nz,00123$
+   0681 18 03              2206 	jr	00158$
+   0683                    2207 00157$:
+   0683 C3 96 06           2208 	jp	00123$
+   0686                    2209 00158$:
+                           2210 ;	src/UI.c 253
+                           2211 ;	genAssign
+                           2212 ;	AOP_HL for _text_x
+   0686 21 05 00           2213 	ld	hl,#_text_x
+   0689 36 00              2214 	ld	(hl),#0x00
+                           2215 ;	src/UI.c 254
+                           2216 ;	genPlus
+                           2217 ;	AOP_HL for _text_y
+                           2218 ;	genPlusIncr
+   068B 21 06 00           2219 	ld	hl,#_text_y
+   068E 34                 2220 	inc	(hl)
+                           2221 ;	src/UI.c 255
+                           2222 ;	genPlus
+                           2223 ;	AOP_HL for _text_count
+                           2224 ;	genPlusIncr
+   068F 21 08 00           2225 	ld	hl,#_text_count
+   0692 34                 2226 	inc	(hl)
+                           2227 ;	genGoto
+   0693 C3 A5 06           2228 	jp	00124$
+                           2229 ;	genLabel
+   0696                    2230 00123$:
+                           2231 ;	src/UI.c 257
+                           2232 ;	genCmpGt
+                           2233 ;	AOP_HL for _text_x
+   0696 3E 11              2234 	ld	a,#0x11
+   0698 21 05 00           2235 	ld	hl,#_text_x
+   069B 96                 2236 	sub	a,(hl)
+   069C D2 A5 06           2237 	jp	nc,00124$
+                           2238 ;	src/UI.c 259
+                           2239 ;	genAssign
+                           2240 ;	AOP_HL for _text_x
+   069F 36 00              2241 	ld	(hl),#0x00
+                           2242 ;	src/UI.c 260
+                           2243 ;	genPlus
+                           2244 ;	AOP_HL for _text_y
+                           2245 ;	genPlusIncr
+   06A1 21 06 00           2246 	ld	hl,#_text_y
+   06A4 34                 2247 	inc	(hl)
+                           2248 ;	genLabel
+   06A5                    2249 00124$:
+                           2250 ;	src/UI.c 263
+                           2251 ;	genCmpEq
+                           2252 ;	AOP_HL for _text_draw_speed
+                           2253 ; genCmpEq: left 1, right 1, result 0
+   06A5 21 0C 00           2254 	ld	hl,#_text_draw_speed
+   06A8 7E                 2255 	ld	a,(hl)
+   06A9 B7                 2256 	or	a,a
+   06AA C2 BD 06           2257 	jp	nz,00130$
+   06AD 18 03              2258 	jr	00160$
+   06AF                    2259 00159$:
+   06AF C3 BD 06           2260 	jp	00130$
+   06B2                    2261 00160$:
+                           2262 ;	src/UI.c 265
+                           2263 ;	genCall
+                           2264 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   06B2 CD 84 04           2265 	call	_UIDrawTextBufferChar
+                           2266 ;	genGoto
+   06B5 C3 BD 06           2267 	jp	00130$
+                           2268 ;	genLabel
+   06B8                    2269 00128$:
+                           2270 ;	src/UI.c 270
+                           2271 ;	genAssign
+                           2272 ;	AOP_HL for _text_drawn
+   06B8 21 07 00           2273 	ld	hl,#_text_drawn
+   06BB 36 01              2274 	ld	(hl),#0x01
+                           2275 ;	genLabel
+   06BD                    2276 00130$:
+                           2277 ;	genEndFunction
+   06BD E8 0D              2278 	lda	sp,13(sp)
+   06BF C9                 2279 	ret
+   06C0                    2280 ___UIDrawTextBufferChar_end:
+                           2281 ;	src/UI.c 274
+                           2282 ;	genLabel
+                           2283 ;	genFunction
+                           2284 ;	---------------------------------
+                           2285 ; Function UISetPos
+                           2286 ; ---------------------------------
+   06C0                    2287 ___UISetPos_start:
+   06C0                    2288 _UISetPos:
+                           2289 	
+                           2290 ;	src/UI.c 276
+                           2291 ;	genAssign
+                           2292 ;	AOP_STK for 
+   06C0 F8 02              2293 	lda	hl,2(sp)
+   06C2 4E                 2294 	ld	c,(hl)
+                           2295 ;	genAssign
+                           2296 ;	AOP_HL for _win_pos_x
+   06C3 21 00 00           2297 	ld	hl,#_win_pos_x
+   06C6 71                 2298 	ld	(hl),c
+                           2299 ;	src/UI.c 277
+                           2300 ;	genAssign
+                           2301 ;	AOP_HL for _win_dest_pos_x
+   06C7 21 02 00           2302 	ld	hl,#_win_dest_pos_x
+   06CA 71                 2303 	ld	(hl),c
+                           2304 ;	src/UI.c 278
+                           2305 ;	genAssign
+                           2306 ;	AOP_STK for 
+   06CB F8 03              2307 	lda	hl,3(sp)
+   06CD 4E                 2308 	ld	c,(hl)
+                           2309 ;	genAssign
+                           2310 ;	AOP_HL for _win_pos_y
+   06CE 21 01 00           2311 	ld	hl,#_win_pos_y
+   06D1 71                 2312 	ld	(hl),c
+                           2313 ;	src/UI.c 279
+                           2314 ;	genAssign
+                           2315 ;	AOP_HL for _win_dest_pos_y
+   06D2 21 03 00           2316 	ld	hl,#_win_dest_pos_y
+   06D5 71                 2317 	ld	(hl),c
+                           2318 ;	genLabel
+   06D6                    2319 00101$:
+                           2320 ;	genEndFunction
+                           2321 	
+   06D6 C9                 2322 	ret
+   06D7                    2323 ___UISetPos_end:
+                           2324 ;	src/UI.c 282
+                           2325 ;	genLabel
+                           2326 ;	genFunction
+                           2327 ;	---------------------------------
+                           2328 ; Function UIMoveTo
+                           2329 ; ---------------------------------
+   06D7                    2330 ___UIMoveTo_start:
+   06D7                    2331 _UIMoveTo:
+                           2332 	
+                           2333 ;	src/UI.c 284
+                           2334 ;	genAssign
+                           2335 ;	AOP_STK for 
+   06D7 F8 02              2336 	lda	hl,2(sp)
+   06D9 4E                 2337 	ld	c,(hl)
+                           2338 ;	genAssign
+                           2339 ;	AOP_HL for _win_dest_pos_x
+   06DA 21 02 00           2340 	ld	hl,#_win_dest_pos_x
+   06DD 71                 2341 	ld	(hl),c
+                           2342 ;	src/UI.c 285
+                           2343 ;	genAssign
+                           2344 ;	AOP_STK for 
+   06DE F8 03              2345 	lda	hl,3(sp)
+   06E0 46                 2346 	ld	b,(hl)
+                           2347 ;	genAssign
+                           2348 ;	AOP_HL for _win_dest_pos_y
+   06E1 21 03 00           2349 	ld	hl,#_win_dest_pos_y
+   06E4 70                 2350 	ld	(hl),b
+                           2351 ;	src/UI.c 286
+                           2352 ;	genCmpEq
+                           2353 ;	AOP_STK for 
+                           2354 ; genCmpEq: left 1, right 1, result 0
+   06E5 F8 04              2355 	lda	hl,4(sp)
+   06E7 7E                 2356 	ld	a,(hl)
+   06E8 B7                 2357 	or	a,a
+   06E9 C2 FC 06           2358 	jp	nz,00102$
+   06EC 18 03              2359 	jr	00108$
+   06EE                    2360 00107$:
+   06EE C3 FC 06           2361 	jp	00102$
+   06F1                    2362 00108$:
+                           2363 ;	src/UI.c 288
+                           2364 ;	genAssign
+                           2365 ;	AOP_HL for _win_pos_x
+   06F1 21 00 00           2366 	ld	hl,#_win_pos_x
+   06F4 71                 2367 	ld	(hl),c
+                           2368 ;	src/UI.c 289
+                           2369 ;	genAssign
+                           2370 ;	AOP_HL for _win_pos_y
+   06F5 21 01 00           2371 	ld	hl,#_win_pos_y
+   06F8 70                 2372 	ld	(hl),b
+                           2373 ;	genGoto
+   06F9 C3 03 07           2374 	jp	00104$
+                           2375 ;	genLabel
+   06FC                    2376 00102$:
+                           2377 ;	src/UI.c 293
+                           2378 ;	genAssign
+                           2379 ;	AOP_STK for 
+                           2380 ;	AOP_HL for _win_speed
+   06FC F8 04              2381 	lda	hl,4(sp)
+   06FE 7E                 2382 	ld	a,(hl)
+   06FF 21 04 00           2383 	ld	hl,#_win_speed
+   0702 77                 2384 	ld	(hl),a
+                           2385 ;	genLabel
+   0703                    2386 00104$:
+                           2387 ;	genEndFunction
+                           2388 	
+   0703 C9                 2389 	ret
+   0704                    2390 ___UIMoveTo_end:
+                           2391 ;	src/UI.c 297
+                           2392 ;	genLabel
+                           2393 ;	genFunction
+                           2394 ;	---------------------------------
+                           2395 ; Function UIIsClosed
+                           2396 ; ---------------------------------
+   0704                    2397 ___UIIsClosed_start:
+   0704                    2398 _UIIsClosed:
+                           2399 	
+                           2400 ;	src/UI.c 299
+                           2401 ;	genCmpEq
+                           2402 ;	AOP_HL for _win_pos_y
+                           2403 ; genCmpEq: left 1, right 1, result 1
+   0704 21 01 00           2404 	ld	hl,#_win_pos_y
+   0707 7E                 2405 	ld	a,(hl)
+   0708 FE 90              2406 	cp	a,#0x90
+   070A C2 11 07           2407 	jp	nz,00103$
+   070D 3E 01              2408 	ld	a,#0x01
+   070F 18 01              2409 	jr	00104$
+   0711                    2410 00103$:
+   0711 AF                 2411 	xor	a,a
+   0712                    2412 00104$:
+   0712 4F                 2413 	ld	c,a
+                           2414 ;	genCmpEq
+                           2415 ;	AOP_HL for _win_dest_pos_y
+                           2416 ; genCmpEq: left 1, right 1, result 1
+   0713 21 03 00           2417 	ld	hl,#_win_dest_pos_y
+   0716 7E                 2418 	ld	a,(hl)
+   0717 FE 90              2419 	cp	a,#0x90
+   0719 C2 20 07           2420 	jp	nz,00105$
+   071C 3E 01              2421 	ld	a,#0x01
+   071E 18 01              2422 	jr	00106$
+   0720                    2423 00105$:
+   0720 AF                 2424 	xor	a,a
+   0721                    2425 00106$:
+   0721 47                 2426 	ld	b,a
+                           2427 ;	genAndOp
+   0722 AF                 2428 	xor	a,a
+   0723 B1                 2429 	or	a,c
+   0724 28 02              2430 	jr	z,00107$
+   0726 AF                 2431 	xor	a,a
+   0727 B0                 2432 	or	a,b
+   0728                    2433 00107$:
+   0728 28 02              2434 	jr	z,00108$
+   072A 3E 01              2435 	ld	a,#0x01
+   072C                    2436 00108$:
+   072C 4F                 2437 	ld	c,a
+                           2438 ;	genRet
+   072D 59                 2439 	ld	e,c
+                           2440 ;	genLabel
+   072E                    2441 00101$:
+                           2442 ;	genEndFunction
+                           2443 	
+   072E C9                 2444 	ret
+   072F                    2445 ___UIIsClosed_end:
+                           2446 ;	src/UI.c 302
+                           2447 ;	genLabel
+                           2448 ;	genFunction
+                           2449 ;	---------------------------------
+                           2450 ; Function UIOnInteract
+                           2451 ; ---------------------------------
+   072F                    2452 ___UIOnInteract_start:
+   072F                    2453 _UIOnInteract:
+   072F E8 FF              2454 	lda	sp,-1(sp)
+                           2455 ;	src/UI.c 304
+                           2456 ;	genAnd
+                           2457 ;	AOP_HL for _joy
+   0731 21 00 00           2458 	ld	hl,#_joy
+   0734 7E                 2459 	ld	a,(hl)
+   0735 E6 10              2460 	and	a,#0x10
+   0737 20 03              2461 	jr	nz,00131$
+   0739 C3 9E 07           2462 	jp	00117$
+   073C                    2463 00131$:
+                           2464 ;	genAnd
+                           2465 ;	AOP_HL for _prev_joy
+   073C 21 00 00           2466 	ld	hl,#_prev_joy
+   073F 7E                 2467 	ld	a,(hl)
+   0740 E6 10              2468 	and	a,#0x10
+   0742 20 03              2469 	jr	nz,00132$
+   0744 C3 4A 07           2470 	jp	00133$
+   0747                    2471 00132$:
+   0747 C3 9E 07           2472 	jp	00117$
+   074A                    2473 00133$:
+                           2474 ;	src/UI.c 306
+                           2475 ;	genIfx
+                           2476 ;	AOP_HL for _text_drawn
+   074A AF                 2477 	xor	a,a
+   074B 21 07 00           2478 	ld	hl,#_text_drawn
+   074E B6                 2479 	or	a,(hl)
+   074F CA 49 08           2480 	jp	z,00120$
+                           2481 ;	genCmpEq
+                           2482 ;	AOP_HL for _text_count
+                           2483 ; genCmpEq: left 1, right 1, result 0
+   0752 21 08 00           2484 	ld	hl,#_text_count
+   0755 7E                 2485 	ld	a,(hl)
+   0756 B7                 2486 	or	a,a
+   0757 CA 49 08           2487 	jp	z,00120$
+   075A                    2488 00134$:
+                           2489 ;	src/UI.c 308
+                           2490 ;	genAssign
+                           2491 ;	AOP_HL for _text_count
+   075A 21 08 00           2492 	ld	hl,#_text_count
+   075D 36 00              2493 	ld	(hl),#0x00
+                           2494 ;	src/UI.c 309
+                           2495 ;	genAssign (pointer)
+   075F 11 13 00           2496 	ld	de,#_text_lines
+   0762 3E 00              2497 	ld	a,#0x00
+   0764 12                 2498 	ld	(de),a
+                           2499 ;	src/UI.c 310
+                           2500 ;	genIfx
+                           2501 ;	AOP_HL for _choice_enabled
+   0765 AF                 2502 	xor	a,a
+   0766 21 0F 00           2503 	ld	hl,#_choice_enabled
+   0769 B6                 2504 	or	a,(hl)
+   076A CA 8C 07           2505 	jp	z,00102$
+                           2506 ;	src/UI.c 312
+                           2507 ;	genPlus
+                           2508 ;	AOP_HL for _choice_flag
+                           2509 ;	Can't optimise plus by inc, falling back to the normal way
+   076D 3E 00              2510 	ld	a,#<_script_variables
+   076F 21 11 00           2511 	ld	hl,#_choice_flag
+   0772 86                 2512 	add	a,(hl)
+   0773 4F                 2513 	ld	c,a
+   0774 3E 00              2514 	ld	a,#>_script_variables
+   0776 23                 2515 	inc	hl
+   0777 8E                 2516 	adc	a,(hl)
+   0778 47                 2517 	ld	b,a
+                           2518 ;	genNot
+                           2519 ;	AOP_HL for _choice_index
+                           2520 ;	AOP_STK for _UIOnInteract_sloc0_1_0
+   0779 AF                 2521 	xor	a,a
+   077A 21 10 00           2522 	ld	hl,#_choice_index
+   077D B6                 2523 	or	a,(hl)
+   077E D6 01              2524 	sub	a,#0x01
+   0780 3E 00              2525 	ld	a,#0x00
+   0782 17                 2526 	rla
+   0783 F8 00              2527 	lda	hl,0(sp)
+                           2528 ;	genAssign (pointer)
+                           2529 ;	AOP_STK for _UIOnInteract_sloc0_1_0
+   0785 77                 2530 	ld      (hl),a
+                           2531 ; Removed redundent load
+   0786 02                 2532 	ld	(bc),a
+                           2533 ;	src/UI.c 313
+                           2534 ;	genAssign
+                           2535 ;	AOP_HL for _choice_enabled
+   0787 21 0F 00           2536 	ld	hl,#_choice_enabled
+   078A 36 00              2537 	ld	(hl),#0x00
+                           2538 ;	genLabel
+   078C                    2539 00102$:
+                           2540 ;	src/UI.c 315
+                           2541 ;	genIpush
+                           2542 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                           2543 ;	AOP_HL for _text_out_speed
+   078C 21 0B 00           2544 	ld	hl,#_text_out_speed
+   078F 7E                 2545 	ld	a,(hl)
+   0790 F5                 2546 	push	af
+   0791 33                 2547 	inc	sp
+                           2548 ;	genIpush
+   0792 21 00 90           2549 	ld	hl,#0x9000
+   0795 E5                 2550 	push	hl
+                           2551 ;	genCall
+   0796 CD D7 06           2552 	call	_UIMoveTo
+   0799 E8 03              2553 	lda	sp,3(sp)
+                           2554 ;	genGoto
+   079B C3 49 08           2555 	jp	00120$
+                           2556 ;	genLabel
+   079E                    2557 00117$:
+                           2558 ;	src/UI.c 318
+                           2559 ;	genIfx
+                           2560 ;	AOP_HL for _choice_enabled
+   079E AF                 2561 	xor	a,a
+   079F 21 0F 00           2562 	ld	hl,#_choice_enabled
+   07A2 B6                 2563 	or	a,(hl)
+   07A3 CA 49 08           2564 	jp	z,00120$
+                           2565 ;	src/UI.c 320
+                           2566 ;	genAnd
+                           2567 ;	AOP_HL for _joy
+   07A6 21 00 00           2568 	ld	hl,#_joy
+   07A9 7E                 2569 	ld	a,(hl)
+   07AA E6 04              2570 	and	a,#0x04
+   07AC 20 03              2571 	jr	nz,00135$
+   07AE C3 DB 07           2572 	jp	00112$
+   07B1                    2573 00135$:
+                           2574 ;	src/UI.c 322
+                           2575 ;	genIpush
+                           2576 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   07B1 21 12 00           2577 	ld	hl,#_ui_cursor_tiles
+   07B4 E5                 2578 	push	hl
+                           2579 ;	genIpush
+   07B5 21 01 01           2580 	ld	hl,#0x0101
+   07B8 E5                 2581 	push	hl
+                           2582 ;	genIpush
+   07B9 21 01 01           2583 	ld	hl,#0x0101
+   07BC E5                 2584 	push	hl
+                           2585 ;	genCall
+   07BD CD 00 00           2586 	call	_set_win_tiles
+   07C0 E8 06              2587 	lda	sp,6(sp)
+                           2588 ;	src/UI.c 323
+                           2589 ;	genIpush
+                           2590 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   07C2 21 13 00           2591 	ld	hl,#_ui_bg_tiles
+   07C5 E5                 2592 	push	hl
+                           2593 ;	genIpush
+   07C6 21 01 01           2594 	ld	hl,#0x0101
+   07C9 E5                 2595 	push	hl
+                           2596 ;	genIpush
+   07CA 21 01 02           2597 	ld	hl,#0x0201
+   07CD E5                 2598 	push	hl
+                           2599 ;	genCall
+   07CE CD 00 00           2600 	call	_set_win_tiles
+   07D1 E8 06              2601 	lda	sp,6(sp)
+                           2602 ;	src/UI.c 325
+                           2603 ;	genAssign
+                           2604 ;	AOP_HL for _choice_index
+   07D3 21 10 00           2605 	ld	hl,#_choice_index
+   07D6 36 00              2606 	ld	(hl),#0x00
+                           2607 ;	genGoto
+   07D8 C3 49 08           2608 	jp	00120$
+                           2609 ;	genLabel
+   07DB                    2610 00112$:
+                           2611 ;	src/UI.c 327
+                           2612 ;	genAnd
+                           2613 ;	AOP_HL for _joy
+   07DB 21 00 00           2614 	ld	hl,#_joy
+   07DE 7E                 2615 	ld	a,(hl)
+   07DF E6 08              2616 	and	a,#0x08
+   07E1 20 03              2617 	jr	nz,00136$
+   07E3 C3 10 08           2618 	jp	00109$
+   07E6                    2619 00136$:
+                           2620 ;	src/UI.c 329
+                           2621 ;	genIpush
+                           2622 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   07E6 21 13 00           2623 	ld	hl,#_ui_bg_tiles
+   07E9 E5                 2624 	push	hl
+                           2625 ;	genIpush
+   07EA 21 01 01           2626 	ld	hl,#0x0101
+   07ED E5                 2627 	push	hl
+                           2628 ;	genIpush
+   07EE 21 01 01           2629 	ld	hl,#0x0101
+   07F1 E5                 2630 	push	hl
+                           2631 ;	genCall
+   07F2 CD 00 00           2632 	call	_set_win_tiles
+   07F5 E8 06              2633 	lda	sp,6(sp)
+                           2634 ;	src/UI.c 330
+                           2635 ;	genIpush
+                           2636 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   07F7 21 12 00           2637 	ld	hl,#_ui_cursor_tiles
+   07FA E5                 2638 	push	hl
+                           2639 ;	genIpush
+   07FB 21 01 01           2640 	ld	hl,#0x0101
+   07FE E5                 2641 	push	hl
+                           2642 ;	genIpush
+   07FF 21 01 02           2643 	ld	hl,#0x0201
+   0802 E5                 2644 	push	hl
+                           2645 ;	genCall
+   0803 CD 00 00           2646 	call	_set_win_tiles
+   0806 E8 06              2647 	lda	sp,6(sp)
+                           2648 ;	src/UI.c 331
+                           2649 ;	genAssign
+                           2650 ;	AOP_HL for _choice_index
+   0808 21 10 00           2651 	ld	hl,#_choice_index
+   080B 36 01              2652 	ld	(hl),#0x01
+                           2653 ;	genGoto
+   080D C3 49 08           2654 	jp	00120$
+                           2655 ;	genLabel
+   0810                    2656 00109$:
+                           2657 ;	src/UI.c 333
+                           2658 ;	genAnd
+                           2659 ;	AOP_HL for _joy
+   0810 21 00 00           2660 	ld	hl,#_joy
+   0813 7E                 2661 	ld	a,(hl)
+   0814 E6 20              2662 	and	a,#0x20
+   0816 20 03              2663 	jr	nz,00137$
+   0818 C3 49 08           2664 	jp	00120$
+   081B                    2665 00137$:
+                           2666 ;	src/UI.c 335
+                           2667 ;	genAssign
+                           2668 ;	AOP_HL for _text_count
+   081B 21 08 00           2669 	ld	hl,#_text_count
+   081E 36 00              2670 	ld	(hl),#0x00
+                           2671 ;	src/UI.c 336
+                           2672 ;	genAssign (pointer)
+   0820 11 13 00           2673 	ld	de,#_text_lines
+   0823 3E 00              2674 	ld	a,#0x00
+   0825 12                 2675 	ld	(de),a
+                           2676 ;	src/UI.c 337
+                           2677 ;	genPlus
+                           2678 ;	AOP_HL for _choice_flag
+                           2679 ;	Can't optimise plus by inc, falling back to the normal way
+   0826 3E 00              2680 	ld	a,#<_script_variables
+   0828 21 11 00           2681 	ld	hl,#_choice_flag
+   082B 86                 2682 	add	a,(hl)
+   082C 4F                 2683 	ld	c,a
+   082D 3E 00              2684 	ld	a,#>_script_variables
+   082F 23                 2685 	inc	hl
+   0830 8E                 2686 	adc	a,(hl)
+   0831 47                 2687 	ld	b,a
+                           2688 ;	genAssign (pointer)
+   0832 3E 00              2689 	ld	a,#0x00
+   0834 02                 2690 	ld	(bc),a
+                           2691 ;	src/UI.c 338
+                           2692 ;	genAssign
+                           2693 ;	AOP_HL for _choice_enabled
+   0835 21 0F 00           2694 	ld	hl,#_choice_enabled
+   0838 36 00              2695 	ld	(hl),#0x00
+                           2696 ;	src/UI.c 339
+                           2697 ;	genIpush
+                           2698 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                           2699 ;	AOP_HL for _text_out_speed
+   083A 21 0B 00           2700 	ld	hl,#_text_out_speed
+   083D 7E                 2701 	ld	a,(hl)
+   083E F5                 2702 	push	af
+   083F 33                 2703 	inc	sp
+                           2704 ;	genIpush
+   0840 21 00 90           2705 	ld	hl,#0x9000
+   0843 E5                 2706 	push	hl
+                           2707 ;	genCall
+   0844 CD D7 06           2708 	call	_UIMoveTo
+   0847 E8 03              2709 	lda	sp,3(sp)
+                           2710 ;	genLabel
+   0849                    2711 00120$:
+                           2712 ;	genEndFunction
+   0849 E8 01              2713 	lda	sp,1(sp)
+   084B C9                 2714 	ret
+   084C                    2715 ___UIOnInteract_end:
+                           2716 ;	src/UI.c 344
+                           2717 ;	genLabel
+                           2718 ;	genFunction
+                           2719 ;	---------------------------------
+                           2720 ; Function UIAtDest
+                           2721 ; ---------------------------------
+   084C                    2722 ___UIAtDest_start:
+   084C                    2723 _UIAtDest:
+                           2724 	
+                           2725 ;	src/UI.c 346
+                           2726 ;	genCmpEq
+                           2727 ;	AOP_HL for _win_pos_x
+                           2728 ;	AOP_HL for _win_dest_pos_x
+                           2729 ; genCmpEq: left 1, right 1, result 1
+   084C 21 02 00           2730 	ld	hl,#_win_dest_pos_x
+   084F 7E                 2731 	ld	a,(hl)
+   0850 21 00 00           2732 	ld	hl,#_win_pos_x
+   0853 BE                 2733 	cp	(hl)
+   0854 20 04              2734 	jr	nz,00103$
+   0856 3E 01              2735 	ld	a,#0x01
+   0858 18 01              2736 	jr	00104$
+   085A                    2737 00103$:
+   085A AF                 2738 	xor	a,a
+   085B                    2739 00104$:
+   085B 4F                 2740 	ld	c,a
+                           2741 ;	genCmpEq
+                           2742 ;	AOP_HL for _win_pos_y
+                           2743 ;	AOP_HL for _win_dest_pos_y
+                           2744 ; genCmpEq: left 1, right 1, result 1
+   085C 21 03 00           2745 	ld	hl,#_win_dest_pos_y
+   085F 7E                 2746 	ld	a,(hl)
+   0860 21 01 00           2747 	ld	hl,#_win_pos_y
+   0863 BE                 2748 	cp	(hl)
+   0864 20 04              2749 	jr	nz,00105$
+   0866 3E 01              2750 	ld	a,#0x01
+   0868 18 01              2751 	jr	00106$
+   086A                    2752 00105$:
+   086A AF                 2753 	xor	a,a
+   086B                    2754 00106$:
+   086B 47                 2755 	ld	b,a
+                           2756 ;	genAndOp
+   086C AF                 2757 	xor	a,a
+   086D B1                 2758 	or	a,c
+   086E 28 02              2759 	jr	z,00107$
+   0870 AF                 2760 	xor	a,a
+   0871 B0                 2761 	or	a,b
+   0872                    2762 00107$:
+   0872 28 02              2763 	jr	z,00108$
+   0874 3E 01              2764 	ld	a,#0x01
+   0876                    2765 00108$:
+   0876 4F                 2766 	ld	c,a
+                           2767 ;	genRet
+   0877 59                 2768 	ld	e,c
+                           2769 ;	genLabel
+   0878                    2770 00101$:
+                           2771 ;	genEndFunction
+                           2772 	
+   0878 C9                 2773 	ret
+   0879                    2774 ___UIAtDest_end:
+                           2775 ;	src/UI.c 349
+                           2776 ;	genLabel
+                           2777 ;	genFunction
+                           2778 ;	---------------------------------
+                           2779 ; Function UISetColor
+                           2780 ; ---------------------------------
+   0879                    2781 ___UISetColor_start:
+   0879                    2782 _UISetColor:
+                           2783 	
+                           2784 ;	src/UI.c 351
+                           2785 ;	genIpush
+                           2786 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                           2787 ;	AOP_HL for _ui_bank
+   0879 21 00 00           2788 	ld	hl,#_ui_bank
+   087C 7E                 2789 	ld	a,(hl)
+   087D F5                 2790 	push	af
+   087E 33                 2791 	inc	sp
+                           2792 ;	genCall
+   087F CD 00 00           2793 	call	_PushBank
+   0882 E8 01              2794 	lda	sp,1(sp)
+                           2795 ;	src/UI.c 352
+                           2796 ;	genCast
+                           2797 ;	AOP_STK for 
+   0884 F8 02              2798 	lda	hl,2(sp)
+   0886 4E                 2799 	ld	c,(hl)
+   0887 06 00              2800 	ld	b,#0x00
+                           2801 ;	genIpush
+                           2802 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0889 C5                 2803 	push	bc
+                           2804 ;	genCall
+   088A CD 00 00           2805 	call	_UISetColor_b
+   088D E8 02              2806 	lda	sp,2(sp)
+                           2807 ;	src/UI.c 353
+                           2808 ;	genCall
+                           2809 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   088F CD 00 00           2810 	call	_PopBank
+                           2811 ;	genLabel
+   0892                    2812 00101$:
+                           2813 ;	genEndFunction
+                           2814 	
+   0892 C9                 2815 	ret
+   0893                    2816 ___UISetColor_end:
+                           2817 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+    _PopBank                           **** GX
+    _PushBank                          **** GX
+    _ReadBankedBankPtr                 **** GX
+    _SetBankedBkgData                  **** GX
+  0 _UIAtDest                          084C GR
+  0 _UIDrawDialogueFrame               004B GR
+    _UIDrawDialogueFrame_b             **** GX
+  0 _UIDrawFrame                       0026 GR
+    _UIDrawFrame_b                     **** GX
+  0 _UIDrawText                        0064 GR
+  0 _UIDrawTextBkg                     00C5 GR
+  0 _UIDrawTextBuffer                  0470 GR
+  0 _UIDrawTextBufferChar              0484 GR
+  0 _UIInit                            0000 GR
+    _UIInit_b                          **** GX
+  0 _UIIsClosed                        0704 GR
+  0 _UIMoveTo                          06D7 GR
+  0 _UIOnInteract                      072F GR
+  0 _UISetColor                        0879 GR
+    _UISetColor_b                      **** GX
+  0 _UISetPos                          06C0 GR
+  0 _UISetTextBuffer                   043F GR
+  0 _UIShowChoice                      03FE GR
+  0 _UIShowText                        0126 GR
+  0 _UIUpdate                          0014 GR
+    _UIUpdate_b                        **** GX
+  0 ___UIAtDest_end                    0879 R
+  0 ___UIAtDest_start                  084C R
+  0 ___UIDrawDialogueFrame_end         0064 R
+  0 ___UIDrawDialogueFrame_start       004B R
+  0 ___UIDrawFrame_end                 004B R
+  0 ___UIDrawFrame_start               0026 R
+  0 ___UIDrawTextBkg_end               0126 R
+  0 ___UIDrawTextBkg_start             00C5 R
+  0 ___UIDrawTextBufferChar_end        06C0 R
+  0 ___UIDrawTextBufferChar_start      0484 R
+  0 ___UIDrawTextBuffer_end            0484 R
+  0 ___UIDrawTextBuffer_start          0470 R
+  0 ___UIDrawText_end                  00C5 R
+  0 ___UIDrawText_start                0064 R
+  0 ___UIInit_end                      0012 R
+  0 ___UIInit_start                    0000 R
+  0 ___UIIsClosed_end                  072F R
+  0 ___UIIsClosed_start                0704 R
+  0 ___UIMoveTo_end                    0704 R
+  0 ___UIMoveTo_start                  06D7 R
+  0 ___UIOnInteract_end                084C R
+  0 ___UIOnInteract_start              072F R
+  0 ___UISetColor_end                  0893 R
+  0 ___UISetColor_start                0879 R
+  0 ___UISetPos_end                    06D7 R
+  0 ___UISetPos_start                  06C0 R
+  0 ___UISetTextBuffer_end             0470 R
+  0 ___UISetTextBuffer_start           043F R
+  0 ___UIShowChoice_end                043F R
+  0 ___UIShowChoice_start              03FE R
+  0 ___UIShowText_end                  03FD R
+  0 ___UIShowText_start                0126 R
+  0 ___UIUpdate_end                    0026 R
+  0 ___UIUpdate_start                  0014 R
+    __divuchar_rrx_s                   **** GX
+    __moduchar_rrx_s                   **** GX
+  0 __str_0                            03FD R
+    _bank_data_ptrs                    **** GX
+  1 _choice_enabled                    000F GR
+  1 _choice_flag                       0011 GR
+  1 _choice_index                      0010 GR
+    _joy                               **** GX
+    _prev_joy                          **** GX
+    _script_variables                  **** GX
+    _set_bkg_tiles                     **** GX
+    _set_win_tiles                     **** GX
+    _strcat                            **** GX
+    _strcpy                            **** GX
+    _string_bank_ptrs                  **** GX
+    _strlen                            **** GX
+  1 _text_count                        0008 GR
+  1 _text_draw_speed                   000C GR
+  1 _text_drawn                        0007 GR
+  1 _text_in_speed                     000A GR
+  1 _text_lines                        0013 GR
+  1 _text_out_speed                    000B GR
+  1 _text_wait                         0009 GR
+  1 _text_x                            0005 GR
+  1 _text_y                            0006 GR
+    _time                              **** GX
+  1 _tmp_text_in_speed                 000D GR
+  1 _tmp_text_lines                    0063 GR
+  1 _tmp_text_out_speed                000E GR
+    _ui_bank                           **** GX
+  0 _ui_bg_tiles                       0013 GR
+  0 _ui_cursor_tiles                   0012 GR
+  1 _win_dest_pos_x                    0002 GR
+  1 _win_dest_pos_y                    0003 GR
+  1 _win_pos_x                         0000 GR
+  1 _win_pos_y                         0001 GR
+  1 _win_speed                         0004 GR
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size  893   flags 0
+   1 _DATA                              size   B3   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size   2F   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

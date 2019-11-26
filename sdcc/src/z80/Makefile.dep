@@ -1,0 +1,30 @@
+gen.o: gen.c z80.h ../common.h ../SDCCglobl.h ../../sdccconf.h \
+  ../../support/Util/SDCCerr.h ../SDCCmem.h ../SDCCast.h ../SDCCsymt.h \
+  ../SDCChasht.h ../SDCCval.h ../SDCCset.h ../SDCCy.h ../SDCCbitv.h \
+  ../SDCCicode.h ../SDCClabel.h ../SDCCBBlock.h ../SDCCloop.h \
+  ../SDCCcse.h ../SDCCcflow.h ../SDCCdflow.h ../SDCClrange.h \
+  ../SDCCptropt.h ../SDCCopt.h ../SDCCglue.h ../SDCCpeeph.h ../asm.h \
+  ../port.h ../../support/Util/newalloc.h ralloc.h support.h gen.h
+main.o: main.c z80.h ../common.h ../SDCCglobl.h ../../sdccconf.h \
+  ../../support/Util/SDCCerr.h ../SDCCmem.h ../SDCCast.h ../SDCCsymt.h \
+  ../SDCChasht.h ../SDCCval.h ../SDCCset.h ../SDCCy.h ../SDCCbitv.h \
+  ../SDCCicode.h ../SDCClabel.h ../SDCCBBlock.h ../SDCCloop.h \
+  ../SDCCcse.h ../SDCCcflow.h ../SDCCdflow.h ../SDCClrange.h \
+  ../SDCCptropt.h ../SDCCopt.h ../SDCCglue.h ../SDCCpeeph.h ../asm.h \
+  ../port.h ../../support/Util/newalloc.h ralloc.h support.h \
+  ../../support/Util/MySystem.h ../../support/Util/BuildCmd.h \
+  ../SDCCutil.h peeph.rul peeph-z80.rul peeph-gbz80.rul mappings.i
+ralloc.o: ralloc.c z80.h ../common.h ../SDCCglobl.h ../../sdccconf.h \
+  ../../support/Util/SDCCerr.h ../SDCCmem.h ../SDCCast.h ../SDCCsymt.h \
+  ../SDCChasht.h ../SDCCval.h ../SDCCset.h ../SDCCy.h ../SDCCbitv.h \
+  ../SDCCicode.h ../SDCClabel.h ../SDCCBBlock.h ../SDCCloop.h \
+  ../SDCCcse.h ../SDCCcflow.h ../SDCCdflow.h ../SDCClrange.h \
+  ../SDCCptropt.h ../SDCCopt.h ../SDCCglue.h ../SDCCpeeph.h ../asm.h \
+  ../port.h ../../support/Util/newalloc.h ralloc.h support.h
+support.o: support.c z80.h ../common.h ../SDCCglobl.h ../../sdccconf.h \
+  ../../support/Util/SDCCerr.h ../SDCCmem.h ../SDCCast.h ../SDCCsymt.h \
+  ../SDCChasht.h ../SDCCval.h ../SDCCset.h ../SDCCy.h ../SDCCbitv.h \
+  ../SDCCicode.h ../SDCClabel.h ../SDCCBBlock.h ../SDCCloop.h \
+  ../SDCCcse.h ../SDCCcflow.h ../SDCCdflow.h ../SDCClrange.h \
+  ../SDCCptropt.h ../SDCCopt.h ../SDCCglue.h ../SDCCpeeph.h ../asm.h \
+  ../port.h ../../support/Util/newalloc.h ralloc.h support.h

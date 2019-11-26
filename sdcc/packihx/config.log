@@ -1,0 +1,64 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:531: checking for gcc
+configure:644: checking whether the C compiler (emcc  ) works
+configure:660: emcc -o conftest    conftest.c  1>&5
+configure:657:1: warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+main(){return(0);}
+^
+1 warning generated.
+configure:686: checking whether the C compiler (emcc  ) is a cross-compiler
+configure:691: checking whether we are using GNU C
+configure:719: checking whether emcc accepts -g
+configure:757: checking size of char
+configure:777: emcc -o conftest -g -O2   conftest.c  1>&5
+configure:768:1: warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+main()
+^
+configure:771:11: error: implicitly declaring library function 'exit' with type 'void (int) __attribute__((noreturn))' [-Werror,-Wimplicit-function-declaration]
+  if (!f) exit(1);
+          ^
+configure:771:11: note: include the header <stdlib.h> or explicitly provide a declaration for 'exit'
+1 warning and 1 error generated.
+ERROR:root:compiler frontend failed to generate LLVM bitcode, halting
+configure: failed program was:
+#line 765 "configure"
+#include "confdefs.h"
+#include <stdio.h>
+#include <sys/types.h>
+main()
+{
+  FILE *f=fopen("conftestval", "w");
+  if (!f) exit(1);
+  fprintf(f, "%d\n", sizeof(char));
+  exit(0);
+}
+configure:797: checking size of short
+configure:837: checking size of int
+configure:877: checking size of long
+configure:917: checking size of long long
+configure:937: emcc -o conftest -g -O2   conftest.c  1>&5
+configure:928:1: warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+main()
+^
+configure:931:11: error: implicitly declaring library function 'exit' with type 'void (int) __attribute__((noreturn))' [-Werror,-Wimplicit-function-declaration]
+  if (!f) exit(1);
+          ^
+configure:931:11: note: include the header <stdlib.h> or explicitly provide a declaration for 'exit'
+1 warning and 1 error generated.
+ERROR:root:compiler frontend failed to generate LLVM bitcode, halting
+configure: failed program was:
+#line 925 "configure"
+#include "confdefs.h"
+#include <stdio.h>
+#include <sys/types.h>
+main()
+{
+  FILE *f=fopen("conftestval", "w");
+  if (!f) exit(1);
+  fprintf(f, "%d\n", sizeof(long long));
+  exit(0);
+}
+configure:983: checking type name for byte
+configure:987: checking type name for word

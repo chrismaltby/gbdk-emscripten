@@ -1,0 +1,613 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:532: checking for mawk
+configure:563: checking version of the package
+configure:603: checking for c++
+configure:635: checking whether the C++ compiler (g++  ) works
+configure:651: g++ -o conftest    conftest.C  1>&5
+configure:677: checking whether the C++ compiler (g++  ) is a cross-compiler
+configure:682: checking whether we are using GNU C++
+configure:710: checking whether g++ accepts -g
+configure:742: checking how to run the C++ preprocessor
+configure:760: g++ -E  conftest.C >/dev/null 2>conftest.out
+configure:815: checking for a BSD compatible install
+configure:870: checking for ranlib
+configure:908: checking for strip
+configure:944: checking for ANSI C header files
+configure:1054: checking for getopt.h
+configure:1094: checking for unistd.h
+configure:1132: checking for sys/socket.h
+configure:1194: checking for dlfcn.h
+configure:1204: g++ -E  conftest.C >/dev/null 2>conftest.out
+configure:1230: checking for dirent.h that defines DIR
+configure:1268: checking for opendir in -ldir
+configure:1360: checking which header file defines FD_ macros
+configure:1476: checking for socket in -lsocket
+configure:1498: g++ -o conftest    conftest.C -lsocket   -ldir 1>&5
+In file included from configure:1484:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+ld: library not found for -lsocket
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+configure: failed program was:
+#line 1484 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char socket();
+
+int main() {
+socket()
+; return 0; }
+configure:1526: checking for xdr_short in -lnsl
+configure:1548: g++ -o conftest    conftest.C -lnsl   -ldir 1>&5
+In file included from configure:1534:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+ld: library not found for -lnsl
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+configure: failed program was:
+#line 1534 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char xdr_short();
+
+int main() {
+xdr_short()
+; return 0; }
+configure:1576: checking for dlopen in -ldl
+configure:1598: g++ -o conftest    conftest.C -ldl   -ldir 1>&5
+In file included from configure:1584:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+ld: library not found for -ldir
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+configure: failed program was:
+#line 1584 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char dlopen();
+
+int main() {
+dlopen()
+; return 0; }
+configure:1624: checking for panel_above in -lpanel
+configure:1646: g++ -o conftest    conftest.C -lpanel -lcurses  -ldir 1>&5
+In file included from configure:1632:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+ld: library not found for -ldir
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+configure: failed program was:
+#line 1632 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char panel_above();
+
+int main() {
+panel_above()
+; return 0; }
+configure:1669: checking for nl in -lcurses
+configure:1691: g++ -o conftest    conftest.C -lcurses   -ldir 1>&5
+In file included from configure:1677:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+ld: library not found for -ldir
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+configure: failed program was:
+#line 1677 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char nl();
+
+int main() {
+nl()
+; return 0; }
+configure:1722: checking for vprintf
+configure:1753: g++ -o conftest    conftest.C  -ldir 1>&5
+In file included from configure:1727:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+ld: library not found for -ldir
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+configure: failed program was:
+#line 1727 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char vprintf(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char vprintf();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_vprintf) || defined (__stub___vprintf)
+choke me
+#else
+vprintf();
+#endif
+
+; return 0; }
+configure:1777: checking for _doprnt
+configure:1808: g++ -o conftest    conftest.C  -ldir 1>&5
+In file included from configure:1782:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+ld: library not found for -ldir
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+configure: failed program was:
+#line 1782 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char _doprnt(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char _doprnt();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub__doprnt) || defined (__stub____doprnt)
+choke me
+#else
+_doprnt();
+#endif
+
+; return 0; }
+configure:1835: checking for vsnprintf
+configure:1866: g++ -o conftest    conftest.C  -ldir 1>&5
+In file included from configure:1840:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+ld: library not found for -ldir
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+configure: failed program was:
+#line 1840 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char vsnprintf(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char vsnprintf();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_vsnprintf) || defined (__stub___vsnprintf)
+choke me
+#else
+vsnprintf();
+#endif
+
+; return 0; }
+configure:1835: checking for vasprintf
+configure:1866: g++ -o conftest    conftest.C  -ldir 1>&5
+In file included from configure:1840:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:1860:11: warning: format string missing [-Wformat]
+vasprintf();
+~~~~~~~~~ ^
+2 warnings generated.
+ld: library not found for -ldir
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+configure: failed program was:
+#line 1840 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char vasprintf(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char vasprintf();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_vasprintf) || defined (__stub___vasprintf)
+choke me
+#else
+vasprintf();
+#endif
+
+; return 0; }
+configure:1893: checking for strlen
+configure:1893: checking for strcpy
+configure:1893: checking for strcat
+configure:1893: checking for strstr
+configure:1893: checking for strcmp
+configure:1893: checking for strerror
+configure:1893: checking for strtok
+configure:1893: checking for strdup
+configure:1951: checking for strchr
+configure:1951: checking for memcpy
+configure:2009: checking for fgets
+configure:2067: checking for yylex
+configure:2124: checking whether scanf knows %a
+configure:2156: g++ -o conftest    conftest.C  -ldir 1>&5
+In file included from configure:2133:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2139:1: error: 'main' must return 'int'
+void main(void)
+^~~~
+int
+1 warning and 1 error generated.
+configure: failed program was:
+#line 2133 "configure"
+#include "confdefs.h"
+#ifdef __cplusplus
+extern "C" void exit(int);
+#endif
+
+#include <stdio.h>
+void main(void)
+{
+  FILE *f;
+  char *a;
+  int  i;
+  if ((f= fopen("conftest.data", "r")) == NULL)
+    exit(1);
+  i= fscanf(f, " %a[a-z] ", &a);
+  fclose(f);
+  if (i == 0)
+    exit(2);
+  if (i == 1)
+    exit(0);
+  exit(3);
+}
+configure:2180: checking whether getcwd is GNUish
+configure:2202: g++ -o conftest    conftest.C  -ldir 1>&5
+In file included from configure:2188:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2194:1: error: 'main' must return 'int'
+void main(void)
+^~~~
+int
+1 warning and 1 error generated.
+configure: failed program was:
+#line 2188 "configure"
+#include "confdefs.h"
+#ifdef __cplusplus
+extern "C" void exit(int);
+#endif
+
+#include <unistd.h>
+void main(void)
+{
+  if ((getcwd(NULL, 0)) == NULL)
+    exit(1);
+  exit(0);
+}
+configure:2229: checking for type of length pointer parameter of accept
+configure:2246: g++ -c   -DACCEPT_SOCKLEN_T=int conftest.C 1>&5
+In file included from configure:2238:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2242:29: error: no matching function for call to 'accept'
+struct sockaddr a; int len; accept (0, &a, &len);
+                            ^~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/socket.h:691:9: note: candidate function not viable: no known conversion from 'int *' to 'socklen_t *' (aka 'unsigned int *') for 3rd argument
+int     accept(int, struct sockaddr * __restrict, socklen_t * __restrict)
+        ^
+1 warning and 1 error generated.
+configure: failed program was:
+#line 2238 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <sys/socket.h>
+int main() {
+struct sockaddr a; int len; accept (0, &a, &len);
+; return 0; }
+configure:2246: g++ -c   -DACCEPT_SOCKLEN_T=size_t conftest.C 1>&5
+In file included from configure:2238:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2242:32: error: no matching function for call to 'accept'
+struct sockaddr a; size_t len; accept (0, &a, &len);
+                               ^~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/socket.h:691:9: note: candidate function not viable: no known conversion from 'size_t *' (aka 'unsigned long *') to 'socklen_t *' (aka 'unsigned int *') for 3rd argument
+int     accept(int, struct sockaddr * __restrict, socklen_t * __restrict)
+        ^
+1 warning and 1 error generated.
+configure: failed program was:
+#line 2238 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <sys/socket.h>
+int main() {
+struct sockaddr a; size_t len; accept (0, &a, &len);
+; return 0; }
+configure:2246: g++ -c   -DACCEPT_SOCKLEN_T=socklen_t conftest.C 1>&5
+In file included from configure:2238:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+configure:2293: checking whether byte ordering is bigendian
+configure:2311: g++ -c   conftest.C 1>&5
+In file included from configure:2300:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+configure:2326: g++ -c   conftest.C 1>&5
+In file included from configure:2315:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2321:9: error: expected ';' after expression
+ not big endian
+        ^
+        ;
+configure:2321:6: error: use of undeclared identifier 'big'
+ not big endian
+     ^
+configure:2321:10: error: use of undeclared identifier 'endian'
+ not big endian
+         ^
+1 warning and 3 errors generated.
+configure: failed program was:
+#line 2315 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <sys/param.h>
+int main() {
+
+#if BYTE_ORDER != BIG_ENDIAN
+ not big endian
+#endif
+; return 0; }
+configure:2386: checking whether preprocessor accepts -MM or -M
+Apple clang version 11.0.0 (clang-1100.0.33.12)
+Target: x86_64-apple-darwin19.0.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+clang: warning: treating 'c' input as 'c++' when in C++ mode, this behavior is deprecated [-Wdeprecated]
+ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.15.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Eonly -disable-free -disable-llvm-verifier -discard-value-names -main-file-name _test_.c -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.15 -target-cpu penryn -dwarf-column-info -debugger-tuning=lldb -ggnu-pubnames -target-linker-version 520 -v -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0 -dependency-file - -skip-unused-modulemap-deps -w -MT _test_.o -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -stdlib=libc++ -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1 -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-extra-semi-stmt -Wno-quoted-include-in-framework-header -fdeprecated-macro -fdebug-compilation-dir /Users/cmaltby/Desktop/gbdk-mac/sdcc/sim/ucsim -ferror-limit 19 -fmessage-length 0 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.15.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -x c++ _test_.c
+clang -cc1 version 11.0.0 (clang-1100.0.33.12) default target x86_64-apple-darwin19.0.0
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/local/include
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+_test_.o: _test_.c
+configure:2409: checking whether g++ accepts -ggdb
+Apple clang version 11.0.0 (clang-1100.0.33.12)
+Target: x86_64-apple-darwin19.0.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+clang: warning: treating 'c' input as 'c++' when in C++ mode, this behavior is deprecated [-Wdeprecated]
+ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.15.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name _test_.c -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.15 -target-cpu penryn -dwarf-column-info -debug-info-kind=standalone -dwarf-version=4 -debugger-tuning=gdb -target-linker-version 520 -v -coverage-notes-file /Users/cmaltby/Desktop/gbdk-mac/sdcc/sim/ucsim/_test_.gcno -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -stdlib=libc++ -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1 -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-extra-semi-stmt -Wno-quoted-include-in-framework-header -fdeprecated-macro -fdebug-compilation-dir /Users/cmaltby/Desktop/gbdk-mac/sdcc/sim/ucsim -ferror-limit 19 -fmessage-length 0 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.15.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -o _test_.o -x c++ _test_.c
+clang -cc1 version 11.0.0 (clang-1100.0.33.12) default target x86_64-apple-darwin19.0.0
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/local/include
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+_test_.c:2:1: error: 'main' must return 'int'
+void main(void) {}
+^~~~
+int
+1 error generated.
+configure:2438: checking whether g++ accepts -pipe
+Apple clang version 11.0.0 (clang-1100.0.33.12)
+Target: x86_64-apple-darwin19.0.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+clang: warning: treating 'c' input as 'c++' when in C++ mode, this behavior is deprecated [-Wdeprecated]
+ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.15.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name _test_.c -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.15 -target-cpu penryn -dwarf-column-info -debugger-tuning=lldb -ggnu-pubnames -target-linker-version 520 -v -coverage-notes-file /Users/cmaltby/Desktop/gbdk-mac/sdcc/sim/ucsim/_test_.gcno -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -stdlib=libc++ -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1 -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-extra-semi-stmt -Wno-quoted-include-in-framework-header -fdeprecated-macro -fdebug-compilation-dir /Users/cmaltby/Desktop/gbdk-mac/sdcc/sim/ucsim -ferror-limit 19 -fmessage-length 0 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.15.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -o _test_.o -x c++ _test_.c
+clang -cc1 version 11.0.0 (clang-1100.0.33.12) default target x86_64-apple-darwin19.0.0
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/local/include
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+_test_.c:2:1: error: 'main' must return 'int'
+void main(void) {}
+^~~~
+int
+1 error generated.
+configure:2465: checking whether g++ accepts -fPIC
+Apple clang version 11.0.0 (clang-1100.0.33.12)
+Target: x86_64-apple-darwin19.0.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+clang: warning: treating 'c' input as 'c++' when in C++ mode, this behavior is deprecated [-Wdeprecated]
+ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.15.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name _test_.c -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.15 -target-cpu penryn -dwarf-column-info -debugger-tuning=lldb -ggnu-pubnames -target-linker-version 520 -v -coverage-notes-file /Users/cmaltby/Desktop/gbdk-mac/sdcc/sim/ucsim/_test_.gcno -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -stdlib=libc++ -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1 -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-extra-semi-stmt -Wno-quoted-include-in-framework-header -fdeprecated-macro -fdebug-compilation-dir /Users/cmaltby/Desktop/gbdk-mac/sdcc/sim/ucsim -ferror-limit 19 -fmessage-length 0 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.15.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -o _test_.o -x c++ _test_.c
+clang -cc1 version 11.0.0 (clang-1100.0.33.12) default target x86_64-apple-darwin19.0.0
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/local/include
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+_test_.c:2:1: error: 'main' must return 'int'
+void main(void) {}
+^~~~
+int
+1 error generated.
+configure:2489: checking whether g++ accepts -fpic
+Apple clang version 11.0.0 (clang-1100.0.33.12)
+Target: x86_64-apple-darwin19.0.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+clang: warning: treating 'c' input as 'c++' when in C++ mode, this behavior is deprecated [-Wdeprecated]
+ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.15.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name _test_.c -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.15 -target-cpu penryn -dwarf-column-info -debugger-tuning=lldb -ggnu-pubnames -target-linker-version 520 -v -coverage-notes-file /Users/cmaltby/Desktop/gbdk-mac/sdcc/sim/ucsim/_test_.gcno -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -stdlib=libc++ -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1 -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-extra-semi-stmt -Wno-quoted-include-in-framework-header -fdeprecated-macro -fdebug-compilation-dir /Users/cmaltby/Desktop/gbdk-mac/sdcc/sim/ucsim -ferror-limit 19 -fmessage-length 0 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.15.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -o _test_.o -x c++ _test_.c
+clang -cc1 version 11.0.0 (clang-1100.0.33.12) default target x86_64-apple-darwin19.0.0
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/local/include
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include
+ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+_test_.c:2:1: error: 'main' must return 'int'
+void main(void) {}
+^~~~
+int
+1 error generated.
+configure:2531: checking return type of signal handlers
+configure:2572: checking size of char
+configure:2615: checking size of short
+configure:2658: checking size of int
+configure:2701: checking size of long
+configure:2744: checking size of long long
+configure:2813: checking type name for byte
+configure:2817: checking type name for word
+configure:2821: checking type name for dword

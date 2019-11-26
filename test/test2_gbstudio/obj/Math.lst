@@ -1,0 +1,132 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Mon Nov 25 14:16:01 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc553130
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _ClampUBYTE
+                             12 ;--------------------------------------------------------
+                             13 ; special function registers
+                             14 ;--------------------------------------------------------
+                             15 ;--------------------------------------------------------
+                             16 ; special function bits 
+                             17 ;--------------------------------------------------------
+                             18 ;--------------------------------------------------------
+                             19 ; internal ram data
+                             20 ;--------------------------------------------------------
+                             21 	.area _DATA
+                             22 ;--------------------------------------------------------
+                             23 ; overlayable items in internal ram 
+                             24 ;--------------------------------------------------------
+                             25 	.area _OVERLAY
+                             26 ;--------------------------------------------------------
+                             27 ; indirectly addressable internal ram data
+                             28 ;--------------------------------------------------------
+                             29 	.area _ISEG
+                             30 ;--------------------------------------------------------
+                             31 ; bit data
+                             32 ;--------------------------------------------------------
+                             33 	.area _BSEG
+                             34 ;--------------------------------------------------------
+                             35 ; external ram data
+                             36 ;--------------------------------------------------------
+                             37 	.area _XSEG
+                             38 ;--------------------------------------------------------
+                             39 ; global & static initialisations
+                             40 ;--------------------------------------------------------
+                             41 	.area _GSINIT
+                             42 	.area _GSFINAL
+                             43 	.area _GSINIT
+                             44 ;--------------------------------------------------------
+                             45 ; Home
+                             46 ;--------------------------------------------------------
+                             47 	.area _HOME
+                             48 	.area _CODE
+                             49 ;--------------------------------------------------------
+                             50 ; code
+                             51 ;--------------------------------------------------------
+                             52 	.area _CODE
+                             53 ;	src/Math.c 3
+                             54 ;	genLabel
+                             55 ;	genFunction
+                             56 ;	---------------------------------
+                             57 ; Function ClampUBYTE
+                             58 ; ---------------------------------
+   0000                      59 ___ClampUBYTE_start:
+   0000                      60 _ClampUBYTE:
+                             61 	
+                             62 ;	src/Math.c 6
+                             63 ;	genCmpLt
+                             64 ;	AOP_STK for 
+                             65 ;	AOP_STK for 
+   0000 F8 02                66 	lda	hl,2(sp)
+   0002 2A                   67 	ld	a,(hl+)
+   0003 96                   68 	sub	a,(hl)
+   0004 D2 0B 00             69 	jp	nc,00103$
+                             70 ;	genAssign
+                             71 ;	AOP_STK for 
+   0007 4E                   72 	ld	c,(hl)
+                             73 ;	genGoto
+   0008 C3 0E 00             74 	jp	00104$
+                             75 ;	genLabel
+   000B                      76 00103$:
+                             77 ;	genAssign
+                             78 ;	AOP_STK for 
+   000B F8 02                79 	lda	hl,2(sp)
+   000D 4E                   80 	ld	c,(hl)
+                             81 ;	genLabel
+   000E                      82 00104$:
+                             83 ;	genAssign
+                             84 ;	(registers are the same)
+                             85 ;	src/Math.c 7
+                             86 ;	genCmpGt
+                             87 ;	AOP_STK for 
+   000E F8 04                88 	lda	hl,4(sp)
+   0010 7E                   89 	ld	a,(hl)
+   0011 91                   90 	sub	a,c
+   0012 D2 19 00             91 	jp	nc,00105$
+                             92 ;	genAssign
+                             93 ;	AOP_STK for 
+   0015 46                   94 	ld	b,(hl)
+                             95 ;	genGoto
+   0016 C3 1A 00             96 	jp	00106$
+                             97 ;	genLabel
+   0019                      98 00105$:
+                             99 ;	genAssign
+   0019 41                  100 	ld	b,c
+                            101 ;	genLabel
+   001A                     102 00106$:
+                            103 ;	genRet
+   001A 58                  104 	ld	e,b
+                            105 ;	genLabel
+   001B                     106 00101$:
+                            107 ;	genEndFunction
+                            108 	
+   001B C9                  109 	ret
+   001C                     110 ___ClampUBYTE_end:
+                            111 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+  0 _ClampUBYTE                        0000 GR
+  0 ___ClampUBYTE_end                  001C R
+  0 ___ClampUBYTE_start                0000 R
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size   1C   flags 0
+   1 _DATA                              size    0   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size    0   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

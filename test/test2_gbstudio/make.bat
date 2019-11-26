@@ -1,0 +1,21 @@
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/BankData.o src/BankData.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/BankManager.o src/BankManager.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/FadeManager.o src/FadeManager.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/Math.o src/Math.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/MusicManager.o src/MusicManager.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/Scene.o src/Scene.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/Scene_b.o src/Scene_b.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/ScriptRunner.o src/ScriptRunner.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/ScriptRunner_b.o src/ScriptRunner_b.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/SpriteHelpers.o src/SpriteHelpers.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/Stack.o src/Stack.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/UI.o src/UI.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/UI_b.o src/UI_b.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/game.o src/game.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/gbt_player.o src/gbt_player.s
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/gbt_player_bank1.o src/gbt_player_bank1.s
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/data/bank_6.o src/data/bank_6.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/data/bank_7.o src/data/bank_7.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/data/data_ptrs.o src/data/data_ptrs.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -c -o obj/music/music_7aae73fe0.o src/music/music_7aae73fe0.c
+..\_gbs\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wl-yt27 -Iinclude -DUSE_SFR_FOR_REG -Wl-yo64 -Wl-ya4 -o build/rom/game.gb obj/BankData.o obj/BankManager.o obj/FadeManager.o obj/Math.o obj/MusicManager.o obj/Scene.o obj/Scene_b.o obj/ScriptRunner.o obj/ScriptRunner_b.o obj/SpriteHelpers.o obj/Stack.o obj/UI.o obj/UI_b.o obj/game.o obj/gbt_player.o obj/gbt_player_bank1.o obj/data/bank_6.o obj/data/bank_7.o obj/data/data_ptrs.o obj/music/music_7aae73fe0.o

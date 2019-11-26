@@ -1,0 +1,2029 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Thu Nov 21 08:53:19 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc631480
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _UISetColor_b
+                             12 	.globl _UIDrawDialogueFrame_b
+                             13 	.globl _UIDrawFrame_b
+                             14 	.globl _UIUpdate_b
+                             15 	.globl _UIInit_b
+                             16 	.globl _ui_bank
+                             17 	.globl _ui_black
+                             18 	.globl _ui_white
+                             19 	.globl _ui_colors
+                             20 	.globl _ui_frame_bg_tiles
+                             21 	.globl _ui_frame_r_tiles
+                             22 	.globl _ui_frame_l_tiles
+                             23 	.globl _ui_frame_b_tiles
+                             24 	.globl _ui_frame_t_tiles
+                             25 	.globl _ui_frame_br_tiles
+                             26 	.globl _ui_frame_tr_tiles
+                             27 	.globl _ui_frame_bl_tiles
+                             28 	.globl _ui_frame_tl_tiles
+                             29 ;--------------------------------------------------------
+                             30 ; special function registers
+                             31 ;--------------------------------------------------------
+                             32 ;--------------------------------------------------------
+                             33 ; special function bits 
+                             34 ;--------------------------------------------------------
+                             35 ;--------------------------------------------------------
+                             36 ; internal ram data
+                             37 ;--------------------------------------------------------
+                             38 	.area _DATA
+   0000                      39 _ui_bank::
+   0000                      40 	.ds 1
+                             41 ;--------------------------------------------------------
+                             42 ; overlayable items in internal ram 
+                             43 ;--------------------------------------------------------
+                             44 	.area _OVERLAY
+                             45 ;--------------------------------------------------------
+                             46 ; indirectly addressable internal ram data
+                             47 ;--------------------------------------------------------
+                             48 	.area _ISEG
+                             49 ;--------------------------------------------------------
+                             50 ; bit data
+                             51 ;--------------------------------------------------------
+                             52 	.area _BSEG
+                             53 ;--------------------------------------------------------
+                             54 ; external ram data
+                             55 ;--------------------------------------------------------
+                             56 	.area _XSEG
+                             57 ;--------------------------------------------------------
+                             58 ; global & static initialisations
+                             59 ;--------------------------------------------------------
+                             60 	.area _GSINIT
+                             61 	.area _GSFINAL
+                             62 	.area _GSINIT
+                             63 ;	src/UI_b.c 9
+                             64 ;	genAssign
+                             65 ;	AOP_HL for _ui_bank
+   0000 21 00 00             66 	ld	hl,#_ui_bank
+   0003 36 04                67 	ld	(hl),#0x04
+                             68 ;--------------------------------------------------------
+                             69 ; Home
+                             70 ;--------------------------------------------------------
+                             71 	.area _HOME
+                             72 	.area _CODE
+                             73 ;--------------------------------------------------------
+                             74 ; code
+                             75 ;--------------------------------------------------------
+                             76 	.area _CODE_4
+                             77 ;	src/UI_b.c 28
+                             78 ;	genLabel
+                             79 ;	genFunction
+                             80 ;	---------------------------------
+                             81 ; Function UIInit_b
+                             82 ; ---------------------------------
+   0000                      83 ___UIInit_b_start:
+   0000                      84 _UIInit_b:
+   0000 E8 FA                85 	lda	sp,-6(sp)
+                             86 ;	src/UI_b.c 32
+                             87 ;	genIpush
+                             88 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0002 21 A0 90             89 	ld	hl,#0x90A0
+   0005 E5                   90 	push	hl
+                             91 ;	genCall
+   0006 CD 00 00             92 	call	_UISetPos
+   0009 E8 02                93 	lda	sp,2(sp)
+                             94 ;	src/UI_b.c 35
+                             95 ;	genPlus
+                             96 ;	genPlusIncr
+   000B 01 0C 00             97 	ld	bc,#_bank_data_ptrs + 12
+                             98 ;	genPointerGet
+                             99 ;	AOP_STK for _UIInit_b_sloc0_1_0
+   000E 59                  100 	ld	e,c
+   000F 50                  101 	ld	d,b
+   0010 1A                  102 	ld	a,(de)
+   0011 F8 02               103 	lda	hl,2(sp)
+   0013 77                  104 	ld	(hl),a
+   0014 13                  105 	inc	de
+   0015 1A                  106 	ld	a,(de)
+   0016 23                  107 	inc	hl
+                            108 ;	genCast
+                            109 ;	AOP_STK for _UIInit_b_sloc0_1_0
+                            110 ;	AOP_STK for _UIInit_b_sloc1_1_0
+   0017 32                  111 	ld      (hl-),a
+   0018 7E                  112 	ld	a,(hl)
+   0019 2B                  113 	dec	hl
+   001A 2B                  114 	dec	hl
+   001B 77                  115 	ld	(hl),a
+   001C F8 03               116 	lda	hl,3(sp)
+   001E 7E                  117 	ld	a,(hl)
+   001F 2B                  118 	dec	hl
+   0020 2B                  119 	dec	hl
+                            120 ;	genPlus
+                            121 ;	AOP_STK for _UIInit_b_sloc1_1_0
+                            122 ;	AOP_STK for _UIInit_b_ptr_1_1
+                            123 ;	genPlusIncr
+                            124 ;	Can't optimise plus by inc, falling back to the normal way
+   0021 32                  125 	ld      (hl-),a
+   0022 5E                  126 	ld	e,(hl)
+   0023 23                  127 	inc	hl
+   0024 56                  128 	ld	d,(hl)
+   0025 21 A7 37            129 	ld	hl,#0x37A7
+   0028 19                  130 	add	hl,de
+   0029 7D                  131 	ld	a,l
+   002A 54                  132 	ld	d,h
+   002B F8 04               133 	lda	hl,4(sp)
+   002D 22                  134 	ld	(hl+),a
+   002E 72                  135 	ld	(hl),d
+                            136 ;	src/UI_b.c 36
+                            137 ;	genCast
+                            138 ;	AOP_STK for _UIInit_b_ptr_1_1
+                            139 ;	AOP_STK for _UIInit_b_sloc1_1_0
+   002F 2B                  140 	dec	hl
+   0030 7E                  141 	ld	a,(hl)
+   0031 F8 00               142 	lda	hl,0(sp)
+   0033 77                  143 	ld	(hl),a
+   0034 F8 05               144 	lda	hl,5(sp)
+   0036 7E                  145 	ld	a,(hl)
+   0037 F8 01               146 	lda	hl,1(sp)
+   0039 77                  147 	ld	(hl),a
+                            148 ;	genIpush
+                            149 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   003A C5                  150 	push	bc
+                            151 ;	AOP_STK for _UIInit_b_sloc1_1_0
+   003B 2B                  152 	dec	hl
+   003C 2A                  153 	ld	a,(hl+)
+   003D 66                  154 	ld	h,(hl)
+   003E 6F                  155 	ld	l,a
+   003F E5                  156 	push	hl
+                            157 ;	genIpush
+   0040 21 C0 09            158 	ld	hl,#0x09C0
+   0043 E5                  159 	push	hl
+                            160 ;	genIpush
+   0044 3E 06               161 	ld	a,#0x06
+   0046 F5                  162 	push	af
+   0047 33                  163 	inc	sp
+                            164 ;	genCall
+   0048 CD 00 00            165 	call	_SetBankedBkgData
+   004B E8 05               166 	lda	sp,5(sp)
+   004D C1                  167 	pop	bc
+                            168 ;	src/UI_b.c 38
+                            169 ;	genIpush
+                            170 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   004E C5                  171 	push	bc
+   004F 21 6B 03            172 	ld	hl,#_ui_white
+   0052 E5                  173 	push	hl
+                            174 ;	genIpush
+   0053 21 C9 01            175 	ld	hl,#0x01C9
+   0056 E5                  176 	push	hl
+                            177 ;	genCall
+   0057 CD 00 00            178 	call	_set_bkg_data
+   005A E8 04               179 	lda	sp,4(sp)
+   005C C1                  180 	pop	bc
+                            181 ;	src/UI_b.c 39
+                            182 ;	genIpush
+                            183 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   005D C5                  184 	push	bc
+   005E 21 7B 03            185 	ld	hl,#_ui_black
+   0061 E5                  186 	push	hl
+                            187 ;	genIpush
+   0062 21 CA 01            188 	ld	hl,#0x01CA
+   0065 E5                  189 	push	hl
+                            190 ;	genCall
+   0066 CD 00 00            191 	call	_set_bkg_data
+   0069 E8 04               192 	lda	sp,4(sp)
+   006B C1                  193 	pop	bc
+                            194 ;	src/UI_b.c 41
+                            195 ;	genPointerGet
+   006C 59                  196 	ld	e,c
+   006D 50                  197 	ld	d,b
+   006E 1A                  198 	ld	a,(de)
+   006F 4F                  199 	ld	c,a
+   0070 13                  200 	inc	de
+   0071 1A                  201 	ld	a,(de)
+   0072 47                  202 	ld	b,a
+                            203 ;	genCast
+                            204 ;	genPlus
+                            205 ;	AOP_STK for _UIInit_b_ptr_1_1
+                            206 ;	genPlusIncr
+                            207 ;	Can't optimise plus by inc, falling back to the normal way
+   0073 21 37 38            208 	ld	hl,#0x3837
+   0076 09                  209 	add	hl,bc
+   0077 7D                  210 	ld	a,l
+   0078 54                  211 	ld	d,h
+   0079 F8 04               212 	lda	hl,4(sp)
+   007B 22                  213 	ld	(hl+),a
+   007C 72                  214 	ld	(hl),d
+                            215 ;	src/UI_b.c 42
+                            216 ;	genCast
+                            217 ;	AOP_STK for _UIInit_b_ptr_1_1
+   007D 2B                  218 	dec	hl
+   007E 4E                  219 	ld	c,(hl)
+   007F 23                  220 	inc	hl
+   0080 46                  221 	ld	b,(hl)
+                            222 ;	genIpush
+                            223 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0081 C5                  224 	push	bc
+                            225 ;	genIpush
+   0082 21 CB 01            226 	ld	hl,#0x01CB
+   0085 E5                  227 	push	hl
+                            228 ;	genIpush
+   0086 3E 06               229 	ld	a,#0x06
+   0088 F5                  230 	push	af
+   0089 33                  231 	inc	sp
+                            232 ;	genCall
+   008A CD 00 00            233 	call	_SetBankedBkgData
+   008D E8 05               234 	lda	sp,5(sp)
+                            235 ;	genLabel
+   008F                     236 00101$:
+                            237 ;	genEndFunction
+   008F E8 06               238 	lda	sp,6(sp)
+   0091 C9                  239 	ret
+   0092                     240 ___UIInit_b_end:
+   0092                     241 _ui_frame_tl_tiles:
+   0092 C0                  242 	.db #0xC0
+   0093                     243 _ui_frame_bl_tiles:
+   0093 C6                  244 	.db #0xC6
+   0094                     245 _ui_frame_tr_tiles:
+   0094 C2                  246 	.db #0xC2
+   0095                     247 _ui_frame_br_tiles:
+   0095 C8                  248 	.db #0xC8
+   0096                     249 _ui_frame_t_tiles:
+   0096 C1                  250 	.db #0xC1
+   0097                     251 _ui_frame_b_tiles:
+   0097 C7                  252 	.db #0xC7
+   0098                     253 _ui_frame_l_tiles:
+   0098 C3                  254 	.db #0xC3
+   0099                     255 _ui_frame_r_tiles:
+   0099 C5                  256 	.db #0xC5
+   009A                     257 _ui_frame_bg_tiles:
+   009A C4                  258 	.db #0xC4
+   009B                     259 _ui_colors:
+   009B CA                  260 	.db #0xCA
+   009C CA                  261 	.db #0xCA
+   009D CA                  262 	.db #0xCA
+   009E CA                  263 	.db #0xCA
+   009F CA                  264 	.db #0xCA
+   00A0 CA                  265 	.db #0xCA
+   00A1 CA                  266 	.db #0xCA
+   00A2 CA                  267 	.db #0xCA
+   00A3 CA                  268 	.db #0xCA
+   00A4 CA                  269 	.db #0xCA
+   00A5 CA                  270 	.db #0xCA
+   00A6 CA                  271 	.db #0xCA
+   00A7 CA                  272 	.db #0xCA
+   00A8 CA                  273 	.db #0xCA
+   00A9 CA                  274 	.db #0xCA
+   00AA CA                  275 	.db #0xCA
+   00AB CA                  276 	.db #0xCA
+   00AC CA                  277 	.db #0xCA
+   00AD CA                  278 	.db #0xCA
+   00AE CA                  279 	.db #0xCA
+   00AF CA                  280 	.db #0xCA
+   00B0 CA                  281 	.db #0xCA
+   00B1 CA                  282 	.db #0xCA
+   00B2 CA                  283 	.db #0xCA
+   00B3 CA                  284 	.db #0xCA
+   00B4 CA                  285 	.db #0xCA
+   00B5 CA                  286 	.db #0xCA
+   00B6 CA                  287 	.db #0xCA
+   00B7 CA                  288 	.db #0xCA
+   00B8 CA                  289 	.db #0xCA
+   00B9 CA                  290 	.db #0xCA
+   00BA CA                  291 	.db #0xCA
+   00BB CA                  292 	.db #0xCA
+   00BC CA                  293 	.db #0xCA
+   00BD CA                  294 	.db #0xCA
+   00BE CA                  295 	.db #0xCA
+   00BF CA                  296 	.db #0xCA
+   00C0 CA                  297 	.db #0xCA
+   00C1 CA                  298 	.db #0xCA
+   00C2 CA                  299 	.db #0xCA
+   00C3 CA                  300 	.db #0xCA
+   00C4 CA                  301 	.db #0xCA
+   00C5 CA                  302 	.db #0xCA
+   00C6 CA                  303 	.db #0xCA
+   00C7 CA                  304 	.db #0xCA
+   00C8 CA                  305 	.db #0xCA
+   00C9 CA                  306 	.db #0xCA
+   00CA CA                  307 	.db #0xCA
+   00CB CA                  308 	.db #0xCA
+   00CC CA                  309 	.db #0xCA
+   00CD CA                  310 	.db #0xCA
+   00CE CA                  311 	.db #0xCA
+   00CF CA                  312 	.db #0xCA
+   00D0 CA                  313 	.db #0xCA
+   00D1 CA                  314 	.db #0xCA
+   00D2 CA                  315 	.db #0xCA
+   00D3 CA                  316 	.db #0xCA
+   00D4 CA                  317 	.db #0xCA
+   00D5 CA                  318 	.db #0xCA
+   00D6 CA                  319 	.db #0xCA
+   00D7 CA                  320 	.db #0xCA
+   00D8 CA                  321 	.db #0xCA
+   00D9 CA                  322 	.db #0xCA
+   00DA CA                  323 	.db #0xCA
+   00DB CA                  324 	.db #0xCA
+   00DC CA                  325 	.db #0xCA
+   00DD CA                  326 	.db #0xCA
+   00DE CA                  327 	.db #0xCA
+   00DF CA                  328 	.db #0xCA
+   00E0 CA                  329 	.db #0xCA
+   00E1 CA                  330 	.db #0xCA
+   00E2 CA                  331 	.db #0xCA
+   00E3 CA                  332 	.db #0xCA
+   00E4 CA                  333 	.db #0xCA
+   00E5 CA                  334 	.db #0xCA
+   00E6 CA                  335 	.db #0xCA
+   00E7 CA                  336 	.db #0xCA
+   00E8 CA                  337 	.db #0xCA
+   00E9 CA                  338 	.db #0xCA
+   00EA CA                  339 	.db #0xCA
+   00EB CA                  340 	.db #0xCA
+   00EC CA                  341 	.db #0xCA
+   00ED CA                  342 	.db #0xCA
+   00EE CA                  343 	.db #0xCA
+   00EF CA                  344 	.db #0xCA
+   00F0 CA                  345 	.db #0xCA
+   00F1 CA                  346 	.db #0xCA
+   00F2 CA                  347 	.db #0xCA
+   00F3 CA                  348 	.db #0xCA
+   00F4 CA                  349 	.db #0xCA
+   00F5 CA                  350 	.db #0xCA
+   00F6 CA                  351 	.db #0xCA
+   00F7 CA                  352 	.db #0xCA
+   00F8 CA                  353 	.db #0xCA
+   00F9 CA                  354 	.db #0xCA
+   00FA CA                  355 	.db #0xCA
+   00FB CA                  356 	.db #0xCA
+   00FC CA                  357 	.db #0xCA
+   00FD CA                  358 	.db #0xCA
+   00FE CA                  359 	.db #0xCA
+   00FF CA                  360 	.db #0xCA
+   0100 CA                  361 	.db #0xCA
+   0101 CA                  362 	.db #0xCA
+   0102 CA                  363 	.db #0xCA
+   0103 CA                  364 	.db #0xCA
+   0104 CA                  365 	.db #0xCA
+   0105 CA                  366 	.db #0xCA
+   0106 CA                  367 	.db #0xCA
+   0107 CA                  368 	.db #0xCA
+   0108 CA                  369 	.db #0xCA
+   0109 CA                  370 	.db #0xCA
+   010A CA                  371 	.db #0xCA
+   010B CA                  372 	.db #0xCA
+   010C CA                  373 	.db #0xCA
+   010D CA                  374 	.db #0xCA
+   010E CA                  375 	.db #0xCA
+   010F CA                  376 	.db #0xCA
+   0110 CA                  377 	.db #0xCA
+   0111 CA                  378 	.db #0xCA
+   0112 CA                  379 	.db #0xCA
+   0113 CA                  380 	.db #0xCA
+   0114 CA                  381 	.db #0xCA
+   0115 CA                  382 	.db #0xCA
+   0116 CA                  383 	.db #0xCA
+   0117 CA                  384 	.db #0xCA
+   0118 CA                  385 	.db #0xCA
+   0119 CA                  386 	.db #0xCA
+   011A CA                  387 	.db #0xCA
+   011B CA                  388 	.db #0xCA
+   011C CA                  389 	.db #0xCA
+   011D CA                  390 	.db #0xCA
+   011E CA                  391 	.db #0xCA
+   011F CA                  392 	.db #0xCA
+   0120 CA                  393 	.db #0xCA
+   0121 CA                  394 	.db #0xCA
+   0122 CA                  395 	.db #0xCA
+   0123 CA                  396 	.db #0xCA
+   0124 CA                  397 	.db #0xCA
+   0125 CA                  398 	.db #0xCA
+   0126 CA                  399 	.db #0xCA
+   0127 CA                  400 	.db #0xCA
+   0128 CA                  401 	.db #0xCA
+   0129 CA                  402 	.db #0xCA
+   012A CA                  403 	.db #0xCA
+   012B CA                  404 	.db #0xCA
+   012C CA                  405 	.db #0xCA
+   012D CA                  406 	.db #0xCA
+   012E CA                  407 	.db #0xCA
+   012F CA                  408 	.db #0xCA
+   0130 CA                  409 	.db #0xCA
+   0131 CA                  410 	.db #0xCA
+   0132 CA                  411 	.db #0xCA
+   0133 CA                  412 	.db #0xCA
+   0134 CA                  413 	.db #0xCA
+   0135 CA                  414 	.db #0xCA
+   0136 CA                  415 	.db #0xCA
+   0137 CA                  416 	.db #0xCA
+   0138 CA                  417 	.db #0xCA
+   0139 CA                  418 	.db #0xCA
+   013A CA                  419 	.db #0xCA
+   013B CA                  420 	.db #0xCA
+   013C CA                  421 	.db #0xCA
+   013D CA                  422 	.db #0xCA
+   013E CA                  423 	.db #0xCA
+   013F CA                  424 	.db #0xCA
+   0140 CA                  425 	.db #0xCA
+   0141 CA                  426 	.db #0xCA
+   0142 CA                  427 	.db #0xCA
+   0143 CA                  428 	.db #0xCA
+   0144 CA                  429 	.db #0xCA
+   0145 CA                  430 	.db #0xCA
+   0146 CA                  431 	.db #0xCA
+   0147 CA                  432 	.db #0xCA
+   0148 CA                  433 	.db #0xCA
+   0149 CA                  434 	.db #0xCA
+   014A CA                  435 	.db #0xCA
+   014B CA                  436 	.db #0xCA
+   014C CA                  437 	.db #0xCA
+   014D CA                  438 	.db #0xCA
+   014E CA                  439 	.db #0xCA
+   014F CA                  440 	.db #0xCA
+   0150 CA                  441 	.db #0xCA
+   0151 CA                  442 	.db #0xCA
+   0152 CA                  443 	.db #0xCA
+   0153 CA                  444 	.db #0xCA
+   0154 CA                  445 	.db #0xCA
+   0155 CA                  446 	.db #0xCA
+   0156 CA                  447 	.db #0xCA
+   0157 CA                  448 	.db #0xCA
+   0158 CA                  449 	.db #0xCA
+   0159 CA                  450 	.db #0xCA
+   015A CA                  451 	.db #0xCA
+   015B CA                  452 	.db #0xCA
+   015C CA                  453 	.db #0xCA
+   015D CA                  454 	.db #0xCA
+   015E CA                  455 	.db #0xCA
+   015F CA                  456 	.db #0xCA
+   0160 CA                  457 	.db #0xCA
+   0161 CA                  458 	.db #0xCA
+   0162 CA                  459 	.db #0xCA
+   0163 CA                  460 	.db #0xCA
+   0164 CA                  461 	.db #0xCA
+   0165 CA                  462 	.db #0xCA
+   0166 CA                  463 	.db #0xCA
+   0167 CA                  464 	.db #0xCA
+   0168 CA                  465 	.db #0xCA
+   0169 CA                  466 	.db #0xCA
+   016A CA                  467 	.db #0xCA
+   016B CA                  468 	.db #0xCA
+   016C CA                  469 	.db #0xCA
+   016D CA                  470 	.db #0xCA
+   016E CA                  471 	.db #0xCA
+   016F CA                  472 	.db #0xCA
+   0170 CA                  473 	.db #0xCA
+   0171 CA                  474 	.db #0xCA
+   0172 CA                  475 	.db #0xCA
+   0173 CA                  476 	.db #0xCA
+   0174 CA                  477 	.db #0xCA
+   0175 CA                  478 	.db #0xCA
+   0176 CA                  479 	.db #0xCA
+   0177 CA                  480 	.db #0xCA
+   0178 CA                  481 	.db #0xCA
+   0179 CA                  482 	.db #0xCA
+   017A CA                  483 	.db #0xCA
+   017B CA                  484 	.db #0xCA
+   017C CA                  485 	.db #0xCA
+   017D CA                  486 	.db #0xCA
+   017E CA                  487 	.db #0xCA
+   017F CA                  488 	.db #0xCA
+   0180 CA                  489 	.db #0xCA
+   0181 CA                  490 	.db #0xCA
+   0182 CA                  491 	.db #0xCA
+   0183 CA                  492 	.db #0xCA
+   0184 CA                  493 	.db #0xCA
+   0185 CA                  494 	.db #0xCA
+   0186 CA                  495 	.db #0xCA
+   0187 CA                  496 	.db #0xCA
+   0188 CA                  497 	.db #0xCA
+   0189 CA                  498 	.db #0xCA
+   018A CA                  499 	.db #0xCA
+   018B CA                  500 	.db #0xCA
+   018C CA                  501 	.db #0xCA
+   018D CA                  502 	.db #0xCA
+   018E CA                  503 	.db #0xCA
+   018F CA                  504 	.db #0xCA
+   0190 CA                  505 	.db #0xCA
+   0191 CA                  506 	.db #0xCA
+   0192 CA                  507 	.db #0xCA
+   0193 CA                  508 	.db #0xCA
+   0194 CA                  509 	.db #0xCA
+   0195 CA                  510 	.db #0xCA
+   0196 CA                  511 	.db #0xCA
+   0197 CA                  512 	.db #0xCA
+   0198 CA                  513 	.db #0xCA
+   0199 CA                  514 	.db #0xCA
+   019A CA                  515 	.db #0xCA
+   019B CA                  516 	.db #0xCA
+   019C CA                  517 	.db #0xCA
+   019D CA                  518 	.db #0xCA
+   019E CA                  519 	.db #0xCA
+   019F CA                  520 	.db #0xCA
+   01A0 CA                  521 	.db #0xCA
+   01A1 CA                  522 	.db #0xCA
+   01A2 CA                  523 	.db #0xCA
+   01A3 CA                  524 	.db #0xCA
+   01A4 CA                  525 	.db #0xCA
+   01A5 CA                  526 	.db #0xCA
+   01A6 CA                  527 	.db #0xCA
+   01A7 CA                  528 	.db #0xCA
+   01A8 CA                  529 	.db #0xCA
+   01A9 CA                  530 	.db #0xCA
+   01AA CA                  531 	.db #0xCA
+   01AB CA                  532 	.db #0xCA
+   01AC CA                  533 	.db #0xCA
+   01AD CA                  534 	.db #0xCA
+   01AE CA                  535 	.db #0xCA
+   01AF CA                  536 	.db #0xCA
+   01B0 CA                  537 	.db #0xCA
+   01B1 CA                  538 	.db #0xCA
+   01B2 CA                  539 	.db #0xCA
+   01B3 CA                  540 	.db #0xCA
+   01B4 CA                  541 	.db #0xCA
+   01B5 CA                  542 	.db #0xCA
+   01B6 CA                  543 	.db #0xCA
+   01B7 CA                  544 	.db #0xCA
+   01B8 CA                  545 	.db #0xCA
+   01B9 CA                  546 	.db #0xCA
+   01BA CA                  547 	.db #0xCA
+   01BB CA                  548 	.db #0xCA
+   01BC CA                  549 	.db #0xCA
+   01BD CA                  550 	.db #0xCA
+   01BE CA                  551 	.db #0xCA
+   01BF CA                  552 	.db #0xCA
+   01C0 CA                  553 	.db #0xCA
+   01C1 CA                  554 	.db #0xCA
+   01C2 CA                  555 	.db #0xCA
+   01C3 CA                  556 	.db #0xCA
+   01C4 CA                  557 	.db #0xCA
+   01C5 CA                  558 	.db #0xCA
+   01C6 CA                  559 	.db #0xCA
+   01C7 CA                  560 	.db #0xCA
+   01C8 CA                  561 	.db #0xCA
+   01C9 CA                  562 	.db #0xCA
+   01CA CA                  563 	.db #0xCA
+   01CB CA                  564 	.db #0xCA
+   01CC CA                  565 	.db #0xCA
+   01CD CA                  566 	.db #0xCA
+   01CE CA                  567 	.db #0xCA
+   01CF CA                  568 	.db #0xCA
+   01D0 CA                  569 	.db #0xCA
+   01D1 CA                  570 	.db #0xCA
+   01D2 CA                  571 	.db #0xCA
+   01D3 CA                  572 	.db #0xCA
+   01D4 CA                  573 	.db #0xCA
+   01D5 CA                  574 	.db #0xCA
+   01D6 CA                  575 	.db #0xCA
+   01D7 CA                  576 	.db #0xCA
+   01D8 CA                  577 	.db #0xCA
+   01D9 CA                  578 	.db #0xCA
+   01DA CA                  579 	.db #0xCA
+   01DB CA                  580 	.db #0xCA
+   01DC CA                  581 	.db #0xCA
+   01DD CA                  582 	.db #0xCA
+   01DE CA                  583 	.db #0xCA
+   01DF CA                  584 	.db #0xCA
+   01E0 CA                  585 	.db #0xCA
+   01E1 CA                  586 	.db #0xCA
+   01E2 CA                  587 	.db #0xCA
+   01E3 CA                  588 	.db #0xCA
+   01E4 CA                  589 	.db #0xCA
+   01E5 CA                  590 	.db #0xCA
+   01E6 CA                  591 	.db #0xCA
+   01E7 CA                  592 	.db #0xCA
+   01E8 CA                  593 	.db #0xCA
+   01E9 CA                  594 	.db #0xCA
+   01EA CA                  595 	.db #0xCA
+   01EB CA                  596 	.db #0xCA
+   01EC CA                  597 	.db #0xCA
+   01ED CA                  598 	.db #0xCA
+   01EE CA                  599 	.db #0xCA
+   01EF CA                  600 	.db #0xCA
+   01F0 CA                  601 	.db #0xCA
+   01F1 CA                  602 	.db #0xCA
+   01F2 CA                  603 	.db #0xCA
+   01F3 CA                  604 	.db #0xCA
+   01F4 CA                  605 	.db #0xCA
+   01F5 CA                  606 	.db #0xCA
+   01F6 CA                  607 	.db #0xCA
+   01F7 CA                  608 	.db #0xCA
+   01F8 CA                  609 	.db #0xCA
+   01F9 CA                  610 	.db #0xCA
+   01FA CA                  611 	.db #0xCA
+   01FB CA                  612 	.db #0xCA
+   01FC CA                  613 	.db #0xCA
+   01FD CA                  614 	.db #0xCA
+   01FE CA                  615 	.db #0xCA
+   01FF CA                  616 	.db #0xCA
+   0200 CA                  617 	.db #0xCA
+   0201 CA                  618 	.db #0xCA
+   0202 CA                  619 	.db #0xCA
+   0203 C9                  620 	.db #0xC9
+   0204 C9                  621 	.db #0xC9
+   0205 C9                  622 	.db #0xC9
+   0206 C9                  623 	.db #0xC9
+   0207 C9                  624 	.db #0xC9
+   0208 C9                  625 	.db #0xC9
+   0209 C9                  626 	.db #0xC9
+   020A C9                  627 	.db #0xC9
+   020B C9                  628 	.db #0xC9
+   020C C9                  629 	.db #0xC9
+   020D C9                  630 	.db #0xC9
+   020E C9                  631 	.db #0xC9
+   020F C9                  632 	.db #0xC9
+   0210 C9                  633 	.db #0xC9
+   0211 C9                  634 	.db #0xC9
+   0212 C9                  635 	.db #0xC9
+   0213 C9                  636 	.db #0xC9
+   0214 C9                  637 	.db #0xC9
+   0215 C9                  638 	.db #0xC9
+   0216 C9                  639 	.db #0xC9
+   0217 C9                  640 	.db #0xC9
+   0218 C9                  641 	.db #0xC9
+   0219 C9                  642 	.db #0xC9
+   021A C9                  643 	.db #0xC9
+   021B C9                  644 	.db #0xC9
+   021C C9                  645 	.db #0xC9
+   021D C9                  646 	.db #0xC9
+   021E C9                  647 	.db #0xC9
+   021F C9                  648 	.db #0xC9
+   0220 C9                  649 	.db #0xC9
+   0221 C9                  650 	.db #0xC9
+   0222 C9                  651 	.db #0xC9
+   0223 C9                  652 	.db #0xC9
+   0224 C9                  653 	.db #0xC9
+   0225 C9                  654 	.db #0xC9
+   0226 C9                  655 	.db #0xC9
+   0227 C9                  656 	.db #0xC9
+   0228 C9                  657 	.db #0xC9
+   0229 C9                  658 	.db #0xC9
+   022A C9                  659 	.db #0xC9
+   022B C9                  660 	.db #0xC9
+   022C C9                  661 	.db #0xC9
+   022D C9                  662 	.db #0xC9
+   022E C9                  663 	.db #0xC9
+   022F C9                  664 	.db #0xC9
+   0230 C9                  665 	.db #0xC9
+   0231 C9                  666 	.db #0xC9
+   0232 C9                  667 	.db #0xC9
+   0233 C9                  668 	.db #0xC9
+   0234 C9                  669 	.db #0xC9
+   0235 C9                  670 	.db #0xC9
+   0236 C9                  671 	.db #0xC9
+   0237 C9                  672 	.db #0xC9
+   0238 C9                  673 	.db #0xC9
+   0239 C9                  674 	.db #0xC9
+   023A C9                  675 	.db #0xC9
+   023B C9                  676 	.db #0xC9
+   023C C9                  677 	.db #0xC9
+   023D C9                  678 	.db #0xC9
+   023E C9                  679 	.db #0xC9
+   023F C9                  680 	.db #0xC9
+   0240 C9                  681 	.db #0xC9
+   0241 C9                  682 	.db #0xC9
+   0242 C9                  683 	.db #0xC9
+   0243 C9                  684 	.db #0xC9
+   0244 C9                  685 	.db #0xC9
+   0245 C9                  686 	.db #0xC9
+   0246 C9                  687 	.db #0xC9
+   0247 C9                  688 	.db #0xC9
+   0248 C9                  689 	.db #0xC9
+   0249 C9                  690 	.db #0xC9
+   024A C9                  691 	.db #0xC9
+   024B C9                  692 	.db #0xC9
+   024C C9                  693 	.db #0xC9
+   024D C9                  694 	.db #0xC9
+   024E C9                  695 	.db #0xC9
+   024F C9                  696 	.db #0xC9
+   0250 C9                  697 	.db #0xC9
+   0251 C9                  698 	.db #0xC9
+   0252 C9                  699 	.db #0xC9
+   0253 C9                  700 	.db #0xC9
+   0254 C9                  701 	.db #0xC9
+   0255 C9                  702 	.db #0xC9
+   0256 C9                  703 	.db #0xC9
+   0257 C9                  704 	.db #0xC9
+   0258 C9                  705 	.db #0xC9
+   0259 C9                  706 	.db #0xC9
+   025A C9                  707 	.db #0xC9
+   025B C9                  708 	.db #0xC9
+   025C C9                  709 	.db #0xC9
+   025D C9                  710 	.db #0xC9
+   025E C9                  711 	.db #0xC9
+   025F C9                  712 	.db #0xC9
+   0260 C9                  713 	.db #0xC9
+   0261 C9                  714 	.db #0xC9
+   0262 C9                  715 	.db #0xC9
+   0263 C9                  716 	.db #0xC9
+   0264 C9                  717 	.db #0xC9
+   0265 C9                  718 	.db #0xC9
+   0266 C9                  719 	.db #0xC9
+   0267 C9                  720 	.db #0xC9
+   0268 C9                  721 	.db #0xC9
+   0269 C9                  722 	.db #0xC9
+   026A C9                  723 	.db #0xC9
+   026B C9                  724 	.db #0xC9
+   026C C9                  725 	.db #0xC9
+   026D C9                  726 	.db #0xC9
+   026E C9                  727 	.db #0xC9
+   026F C9                  728 	.db #0xC9
+   0270 C9                  729 	.db #0xC9
+   0271 C9                  730 	.db #0xC9
+   0272 C9                  731 	.db #0xC9
+   0273 C9                  732 	.db #0xC9
+   0274 C9                  733 	.db #0xC9
+   0275 C9                  734 	.db #0xC9
+   0276 C9                  735 	.db #0xC9
+   0277 C9                  736 	.db #0xC9
+   0278 C9                  737 	.db #0xC9
+   0279 C9                  738 	.db #0xC9
+   027A C9                  739 	.db #0xC9
+   027B C9                  740 	.db #0xC9
+   027C C9                  741 	.db #0xC9
+   027D C9                  742 	.db #0xC9
+   027E C9                  743 	.db #0xC9
+   027F C9                  744 	.db #0xC9
+   0280 C9                  745 	.db #0xC9
+   0281 C9                  746 	.db #0xC9
+   0282 C9                  747 	.db #0xC9
+   0283 C9                  748 	.db #0xC9
+   0284 C9                  749 	.db #0xC9
+   0285 C9                  750 	.db #0xC9
+   0286 C9                  751 	.db #0xC9
+   0287 C9                  752 	.db #0xC9
+   0288 C9                  753 	.db #0xC9
+   0289 C9                  754 	.db #0xC9
+   028A C9                  755 	.db #0xC9
+   028B C9                  756 	.db #0xC9
+   028C C9                  757 	.db #0xC9
+   028D C9                  758 	.db #0xC9
+   028E C9                  759 	.db #0xC9
+   028F C9                  760 	.db #0xC9
+   0290 C9                  761 	.db #0xC9
+   0291 C9                  762 	.db #0xC9
+   0292 C9                  763 	.db #0xC9
+   0293 C9                  764 	.db #0xC9
+   0294 C9                  765 	.db #0xC9
+   0295 C9                  766 	.db #0xC9
+   0296 C9                  767 	.db #0xC9
+   0297 C9                  768 	.db #0xC9
+   0298 C9                  769 	.db #0xC9
+   0299 C9                  770 	.db #0xC9
+   029A C9                  771 	.db #0xC9
+   029B C9                  772 	.db #0xC9
+   029C C9                  773 	.db #0xC9
+   029D C9                  774 	.db #0xC9
+   029E C9                  775 	.db #0xC9
+   029F C9                  776 	.db #0xC9
+   02A0 C9                  777 	.db #0xC9
+   02A1 C9                  778 	.db #0xC9
+   02A2 C9                  779 	.db #0xC9
+   02A3 C9                  780 	.db #0xC9
+   02A4 C9                  781 	.db #0xC9
+   02A5 C9                  782 	.db #0xC9
+   02A6 C9                  783 	.db #0xC9
+   02A7 C9                  784 	.db #0xC9
+   02A8 C9                  785 	.db #0xC9
+   02A9 C9                  786 	.db #0xC9
+   02AA C9                  787 	.db #0xC9
+   02AB C9                  788 	.db #0xC9
+   02AC C9                  789 	.db #0xC9
+   02AD C9                  790 	.db #0xC9
+   02AE C9                  791 	.db #0xC9
+   02AF C9                  792 	.db #0xC9
+   02B0 C9                  793 	.db #0xC9
+   02B1 C9                  794 	.db #0xC9
+   02B2 C9                  795 	.db #0xC9
+   02B3 C9                  796 	.db #0xC9
+   02B4 C9                  797 	.db #0xC9
+   02B5 C9                  798 	.db #0xC9
+   02B6 C9                  799 	.db #0xC9
+   02B7 C9                  800 	.db #0xC9
+   02B8 C9                  801 	.db #0xC9
+   02B9 C9                  802 	.db #0xC9
+   02BA C9                  803 	.db #0xC9
+   02BB C9                  804 	.db #0xC9
+   02BC C9                  805 	.db #0xC9
+   02BD C9                  806 	.db #0xC9
+   02BE C9                  807 	.db #0xC9
+   02BF C9                  808 	.db #0xC9
+   02C0 C9                  809 	.db #0xC9
+   02C1 C9                  810 	.db #0xC9
+   02C2 C9                  811 	.db #0xC9
+   02C3 C9                  812 	.db #0xC9
+   02C4 C9                  813 	.db #0xC9
+   02C5 C9                  814 	.db #0xC9
+   02C6 C9                  815 	.db #0xC9
+   02C7 C9                  816 	.db #0xC9
+   02C8 C9                  817 	.db #0xC9
+   02C9 C9                  818 	.db #0xC9
+   02CA C9                  819 	.db #0xC9
+   02CB C9                  820 	.db #0xC9
+   02CC C9                  821 	.db #0xC9
+   02CD C9                  822 	.db #0xC9
+   02CE C9                  823 	.db #0xC9
+   02CF C9                  824 	.db #0xC9
+   02D0 C9                  825 	.db #0xC9
+   02D1 C9                  826 	.db #0xC9
+   02D2 C9                  827 	.db #0xC9
+   02D3 C9                  828 	.db #0xC9
+   02D4 C9                  829 	.db #0xC9
+   02D5 C9                  830 	.db #0xC9
+   02D6 C9                  831 	.db #0xC9
+   02D7 C9                  832 	.db #0xC9
+   02D8 C9                  833 	.db #0xC9
+   02D9 C9                  834 	.db #0xC9
+   02DA C9                  835 	.db #0xC9
+   02DB C9                  836 	.db #0xC9
+   02DC C9                  837 	.db #0xC9
+   02DD C9                  838 	.db #0xC9
+   02DE C9                  839 	.db #0xC9
+   02DF C9                  840 	.db #0xC9
+   02E0 C9                  841 	.db #0xC9
+   02E1 C9                  842 	.db #0xC9
+   02E2 C9                  843 	.db #0xC9
+   02E3 C9                  844 	.db #0xC9
+   02E4 C9                  845 	.db #0xC9
+   02E5 C9                  846 	.db #0xC9
+   02E6 C9                  847 	.db #0xC9
+   02E7 C9                  848 	.db #0xC9
+   02E8 C9                  849 	.db #0xC9
+   02E9 C9                  850 	.db #0xC9
+   02EA C9                  851 	.db #0xC9
+   02EB C9                  852 	.db #0xC9
+   02EC C9                  853 	.db #0xC9
+   02ED C9                  854 	.db #0xC9
+   02EE C9                  855 	.db #0xC9
+   02EF C9                  856 	.db #0xC9
+   02F0 C9                  857 	.db #0xC9
+   02F1 C9                  858 	.db #0xC9
+   02F2 C9                  859 	.db #0xC9
+   02F3 C9                  860 	.db #0xC9
+   02F4 C9                  861 	.db #0xC9
+   02F5 C9                  862 	.db #0xC9
+   02F6 C9                  863 	.db #0xC9
+   02F7 C9                  864 	.db #0xC9
+   02F8 C9                  865 	.db #0xC9
+   02F9 C9                  866 	.db #0xC9
+   02FA C9                  867 	.db #0xC9
+   02FB C9                  868 	.db #0xC9
+   02FC C9                  869 	.db #0xC9
+   02FD C9                  870 	.db #0xC9
+   02FE C9                  871 	.db #0xC9
+   02FF C9                  872 	.db #0xC9
+   0300 C9                  873 	.db #0xC9
+   0301 C9                  874 	.db #0xC9
+   0302 C9                  875 	.db #0xC9
+   0303 C9                  876 	.db #0xC9
+   0304 C9                  877 	.db #0xC9
+   0305 C9                  878 	.db #0xC9
+   0306 C9                  879 	.db #0xC9
+   0307 C9                  880 	.db #0xC9
+   0308 C9                  881 	.db #0xC9
+   0309 C9                  882 	.db #0xC9
+   030A C9                  883 	.db #0xC9
+   030B C9                  884 	.db #0xC9
+   030C C9                  885 	.db #0xC9
+   030D C9                  886 	.db #0xC9
+   030E C9                  887 	.db #0xC9
+   030F C9                  888 	.db #0xC9
+   0310 C9                  889 	.db #0xC9
+   0311 C9                  890 	.db #0xC9
+   0312 C9                  891 	.db #0xC9
+   0313 C9                  892 	.db #0xC9
+   0314 C9                  893 	.db #0xC9
+   0315 C9                  894 	.db #0xC9
+   0316 C9                  895 	.db #0xC9
+   0317 C9                  896 	.db #0xC9
+   0318 C9                  897 	.db #0xC9
+   0319 C9                  898 	.db #0xC9
+   031A C9                  899 	.db #0xC9
+   031B C9                  900 	.db #0xC9
+   031C C9                  901 	.db #0xC9
+   031D C9                  902 	.db #0xC9
+   031E C9                  903 	.db #0xC9
+   031F C9                  904 	.db #0xC9
+   0320 C9                  905 	.db #0xC9
+   0321 C9                  906 	.db #0xC9
+   0322 C9                  907 	.db #0xC9
+   0323 C9                  908 	.db #0xC9
+   0324 C9                  909 	.db #0xC9
+   0325 C9                  910 	.db #0xC9
+   0326 C9                  911 	.db #0xC9
+   0327 C9                  912 	.db #0xC9
+   0328 C9                  913 	.db #0xC9
+   0329 C9                  914 	.db #0xC9
+   032A C9                  915 	.db #0xC9
+   032B C9                  916 	.db #0xC9
+   032C C9                  917 	.db #0xC9
+   032D C9                  918 	.db #0xC9
+   032E C9                  919 	.db #0xC9
+   032F C9                  920 	.db #0xC9
+   0330 C9                  921 	.db #0xC9
+   0331 C9                  922 	.db #0xC9
+   0332 C9                  923 	.db #0xC9
+   0333 C9                  924 	.db #0xC9
+   0334 C9                  925 	.db #0xC9
+   0335 C9                  926 	.db #0xC9
+   0336 C9                  927 	.db #0xC9
+   0337 C9                  928 	.db #0xC9
+   0338 C9                  929 	.db #0xC9
+   0339 C9                  930 	.db #0xC9
+   033A C9                  931 	.db #0xC9
+   033B C9                  932 	.db #0xC9
+   033C C9                  933 	.db #0xC9
+   033D C9                  934 	.db #0xC9
+   033E C9                  935 	.db #0xC9
+   033F C9                  936 	.db #0xC9
+   0340 C9                  937 	.db #0xC9
+   0341 C9                  938 	.db #0xC9
+   0342 C9                  939 	.db #0xC9
+   0343 C9                  940 	.db #0xC9
+   0344 C9                  941 	.db #0xC9
+   0345 C9                  942 	.db #0xC9
+   0346 C9                  943 	.db #0xC9
+   0347 C9                  944 	.db #0xC9
+   0348 C9                  945 	.db #0xC9
+   0349 C9                  946 	.db #0xC9
+   034A C9                  947 	.db #0xC9
+   034B C9                  948 	.db #0xC9
+   034C C9                  949 	.db #0xC9
+   034D C9                  950 	.db #0xC9
+   034E C9                  951 	.db #0xC9
+   034F C9                  952 	.db #0xC9
+   0350 C9                  953 	.db #0xC9
+   0351 C9                  954 	.db #0xC9
+   0352 C9                  955 	.db #0xC9
+   0353 C9                  956 	.db #0xC9
+   0354 C9                  957 	.db #0xC9
+   0355 C9                  958 	.db #0xC9
+   0356 C9                  959 	.db #0xC9
+   0357 C9                  960 	.db #0xC9
+   0358 C9                  961 	.db #0xC9
+   0359 C9                  962 	.db #0xC9
+   035A C9                  963 	.db #0xC9
+   035B C9                  964 	.db #0xC9
+   035C C9                  965 	.db #0xC9
+   035D C9                  966 	.db #0xC9
+   035E C9                  967 	.db #0xC9
+   035F C9                  968 	.db #0xC9
+   0360 C9                  969 	.db #0xC9
+   0361 C9                  970 	.db #0xC9
+   0362 C9                  971 	.db #0xC9
+   0363 C9                  972 	.db #0xC9
+   0364 C9                  973 	.db #0xC9
+   0365 C9                  974 	.db #0xC9
+   0366 C9                  975 	.db #0xC9
+   0367 C9                  976 	.db #0xC9
+   0368 C9                  977 	.db #0xC9
+   0369 C9                  978 	.db #0xC9
+   036A C9                  979 	.db #0xC9
+   036B                     980 _ui_white:
+   036B 00                  981 	.db #0x00
+   036C 00                  982 	.db #0x00
+   036D 00                  983 	.db #0x00
+   036E 00                  984 	.db #0x00
+   036F 00                  985 	.db #0x00
+   0370 00                  986 	.db #0x00
+   0371 00                  987 	.db #0x00
+   0372 00                  988 	.db #0x00
+   0373 00                  989 	.db #0x00
+   0374 00                  990 	.db #0x00
+   0375 00                  991 	.db #0x00
+   0376 00                  992 	.db #0x00
+   0377 00                  993 	.db #0x00
+   0378 00                  994 	.db #0x00
+   0379 00                  995 	.db #0x00
+   037A 00                  996 	.db #0x00
+   037B                     997 _ui_black:
+   037B FF                  998 	.db #0xFF
+   037C FF                  999 	.db #0xFF
+   037D FF                 1000 	.db #0xFF
+   037E FF                 1001 	.db #0xFF
+   037F FF                 1002 	.db #0xFF
+   0380 FF                 1003 	.db #0xFF
+   0381 FF                 1004 	.db #0xFF
+   0382 FF                 1005 	.db #0xFF
+   0383 FF                 1006 	.db #0xFF
+   0384 FF                 1007 	.db #0xFF
+   0385 FF                 1008 	.db #0xFF
+   0386 FF                 1009 	.db #0xFF
+   0387 FF                 1010 	.db #0xFF
+   0388 FF                 1011 	.db #0xFF
+   0389 FF                 1012 	.db #0xFF
+   038A FF                 1013 	.db #0xFF
+                           1014 ;	src/UI_b.c 45
+                           1015 ;	genLabel
+                           1016 ;	genFunction
+                           1017 ;	---------------------------------
+                           1018 ; Function UIUpdate_b
+                           1019 ; ---------------------------------
+   038B                    1020 ___UIUpdate_b_start:
+   038B                    1021 _UIUpdate_b:
+                           1022 	
+                           1023 ;	src/UI_b.c 49
+                           1024 ;	genCmpEq
+                           1025 ;	AOP_HL for _win_speed
+                           1026 ; genCmpEq: left 1, right 1, result 0
+   038B 21 00 00           1027 	ld	hl,#_win_speed
+   038E 7E                 1028 	ld	a,(hl)
+   038F FE 05              1029 	cp	a,#0x05
+   0391 C2 A7 03           1030 	jp	nz,00109$
+   0394 18 03              1031 	jr	00140$
+   0396                    1032 00139$:
+   0396 C3 A7 03           1033 	jp	00109$
+   0399                    1034 00140$:
+                           1035 ;	genAnd
+                           1036 ;	AOP_HL for _time
+   0399 21 00 00           1037 	ld	hl,#_time
+   039C 7E                 1038 	ld	a,(hl)
+   039D E6 07              1039 	and	a,#0x07
+                           1040 ;	genCmpEq
+                           1041 ; genCmpEq: left 1, right 1, result 0
+   039F 4F                 1042 	ld	c,a
+   03A0 B7                 1043 	or	a,a
+                           1044 ;	src/UI_b.c 51
+                           1045 ;	genRet
+                           1046 ;	genLabel
+   03A1 CA A7 03           1047 	jp	z,00109$
+   03A4                    1048 00141$:
+   03A4 C3 5A 04           1049 	jp	00126$
+   03A7                    1050 00109$:
+                           1051 ;	src/UI_b.c 53
+                           1052 ;	genCmpEq
+                           1053 ;	AOP_HL for _win_speed
+                           1054 ; genCmpEq: left 1, right 1, result 0
+   03A7 21 00 00           1055 	ld	hl,#_win_speed
+   03AA 7E                 1056 	ld	a,(hl)
+   03AB FE 04              1057 	cp	a,#0x04
+   03AD C2 C3 03           1058 	jp	nz,00105$
+   03B0 18 03              1059 	jr	00143$
+   03B2                    1060 00142$:
+   03B2 C3 C3 03           1061 	jp	00105$
+   03B5                    1062 00143$:
+                           1063 ;	genAnd
+                           1064 ;	AOP_HL for _time
+   03B5 21 00 00           1065 	ld	hl,#_time
+   03B8 7E                 1066 	ld	a,(hl)
+   03B9 E6 03              1067 	and	a,#0x03
+                           1068 ;	genCmpEq
+                           1069 ; genCmpEq: left 1, right 1, result 0
+   03BB 4F                 1070 	ld	c,a
+   03BC B7                 1071 	or	a,a
+                           1072 ;	src/UI_b.c 55
+                           1073 ;	genRet
+                           1074 ;	genLabel
+   03BD CA C3 03           1075 	jp	z,00105$
+   03C0                    1076 00144$:
+   03C0 C3 5A 04           1077 	jp	00126$
+   03C3                    1078 00105$:
+                           1079 ;	src/UI_b.c 57
+                           1080 ;	genCmpEq
+                           1081 ;	AOP_HL for _win_speed
+                           1082 ; genCmpEq: left 1, right 1, result 0
+   03C3 21 00 00           1083 	ld	hl,#_win_speed
+   03C6 7E                 1084 	ld	a,(hl)
+   03C7 FE 03              1085 	cp	a,#0x03
+   03C9 C2 DF 03           1086 	jp	nz,00110$
+   03CC 18 03              1087 	jr	00146$
+   03CE                    1088 00145$:
+   03CE C3 DF 03           1089 	jp	00110$
+   03D1                    1090 00146$:
+                           1091 ;	genAnd
+                           1092 ;	AOP_HL for _time
+   03D1 21 00 00           1093 	ld	hl,#_time
+   03D4 7E                 1094 	ld	a,(hl)
+   03D5 E6 01              1095 	and	a,#0x01
+                           1096 ;	genCmpEq
+                           1097 ; genCmpEq: left 1, right 1, result 0
+   03D7 4F                 1098 	ld	c,a
+   03D8 B7                 1099 	or	a,a
+                           1100 ;	src/UI_b.c 59
+                           1101 ;	genRet
+                           1102 ;	genLabel
+   03D9 CA DF 03           1103 	jp	z,00110$
+   03DC                    1104 00147$:
+   03DC C3 5A 04           1105 	jp	00126$
+   03DF                    1106 00110$:
+                           1107 ;	src/UI_b.c 62
+                           1108 ;	genCmpEq
+                           1109 ;	AOP_HL for _win_speed
+                           1110 ; genCmpEq: left 1, right 1, result 0
+   03DF 21 00 00           1111 	ld	hl,#_win_speed
+   03E2 7E                 1112 	ld	a,(hl)
+   03E3 FE 01              1113 	cp	a,#0x01
+   03E5 C2 F2 03           1114 	jp	nz,00113$
+   03E8 18 03              1115 	jr	00149$
+   03EA                    1116 00148$:
+   03EA C3 F2 03           1117 	jp	00113$
+   03ED                    1118 00149$:
+                           1119 ;	src/UI_b.c 64
+                           1120 ;	genAssign
+   03ED 0E 02              1121 	ld	c,#0x02
+                           1122 ;	genGoto
+   03EF C3 F4 03           1123 	jp	00114$
+                           1124 ;	genLabel
+   03F2                    1125 00113$:
+                           1126 ;	src/UI_b.c 68
+                           1127 ;	genAssign
+   03F2 0E 01              1128 	ld	c,#0x01
+                           1129 ;	genLabel
+   03F4                    1130 00114$:
+                           1131 ;	src/UI_b.c 71
+                           1132 ;	genCmpEq
+                           1133 ;	AOP_HL for _win_pos_x
+                           1134 ;	AOP_HL for _win_dest_pos_x
+                           1135 ; genCmpEq: left 1, right 1, result 0
+   03F4 21 00 00           1136 	ld	hl,#_win_dest_pos_x
+   03F7 7E                 1137 	ld	a,(hl)
+   03F8 21 00 00           1138 	ld	hl,#_win_pos_x
+   03FB BE                 1139 	cp	(hl)
+   03FC 20 03              1140 	jr	nz,00150$
+   03FE C3 1B 04           1141 	jp	00119$
+   0401                    1142 00150$:
+                           1143 ;	src/UI_b.c 73
+                           1144 ;	genCmpLt
+                           1145 ;	AOP_HL for _win_pos_x
+                           1146 ;	AOP_HL for _win_dest_pos_x
+   0401 21 00 00           1147 	ld	hl,#_win_pos_x
+   0404 7E                 1148 	ld	a,(hl)
+   0405 21 00 00           1149 	ld	hl,#_win_dest_pos_x
+   0408 96                 1150 	sub	a,(hl)
+   0409 D2 15 04           1151 	jp	nc,00116$
+                           1152 ;	src/UI_b.c 75
+                           1153 ;	genPlus
+                           1154 ;	AOP_HL for _win_pos_x
+                           1155 ;	Can't optimise plus by inc, falling back to the normal way
+   040C 21 00 00           1156 	ld	hl,#_win_pos_x
+   040F 7E                 1157 	ld	a,(hl)
+   0410 81                 1158 	add	a,c
+   0411 77                 1159 	ld	(hl),a
+                           1160 ;	genGoto
+   0412 C3 1B 04           1161 	jp	00119$
+                           1162 ;	genLabel
+   0415                    1163 00116$:
+                           1164 ;	src/UI_b.c 79
+                           1165 ;	genMinus
+                           1166 ;	AOP_HL for _win_pos_x
+   0415 21 00 00           1167 	ld	hl,#_win_pos_x
+   0418 7E                 1168 	ld	a,(hl)
+   0419 91                 1169 	sub	a,c
+   041A 77                 1170 	ld	(hl),a
+                           1171 ;	genLabel
+   041B                    1172 00119$:
+                           1173 ;	src/UI_b.c 83
+                           1174 ;	genCmpEq
+                           1175 ;	AOP_HL for _win_pos_y
+                           1176 ;	AOP_HL for _win_dest_pos_y
+                           1177 ; genCmpEq: left 1, right 1, result 0
+   041B 21 00 00           1178 	ld	hl,#_win_dest_pos_y
+   041E 7E                 1179 	ld	a,(hl)
+   041F 21 00 00           1180 	ld	hl,#_win_pos_y
+   0422 BE                 1181 	cp	(hl)
+   0423 20 03              1182 	jr	nz,00151$
+   0425 C3 45 04           1183 	jp	00124$
+   0428                    1184 00151$:
+                           1185 ;	src/UI_b.c 85
+                           1186 ;	genCmpLt
+                           1187 ;	AOP_HL for _win_pos_y
+                           1188 ;	AOP_HL for _win_dest_pos_y
+   0428 21 00 00           1189 	ld	hl,#_win_pos_y
+   042B 7E                 1190 	ld	a,(hl)
+   042C 21 00 00           1191 	ld	hl,#_win_dest_pos_y
+   042F 96                 1192 	sub	a,(hl)
+   0430 D2 3C 04           1193 	jp	nc,00121$
+                           1194 ;	src/UI_b.c 87
+                           1195 ;	genPlus
+                           1196 ;	AOP_HL for _win_pos_y
+                           1197 ;	Can't optimise plus by inc, falling back to the normal way
+   0433 21 00 00           1198 	ld	hl,#_win_pos_y
+   0436 7E                 1199 	ld	a,(hl)
+   0437 81                 1200 	add	a,c
+   0438 77                 1201 	ld	(hl),a
+                           1202 ;	genGoto
+   0439 C3 48 04           1203 	jp	00125$
+                           1204 ;	genLabel
+   043C                    1205 00121$:
+                           1206 ;	src/UI_b.c 91
+                           1207 ;	genMinus
+                           1208 ;	AOP_HL for _win_pos_y
+   043C 21 00 00           1209 	ld	hl,#_win_pos_y
+   043F 7E                 1210 	ld	a,(hl)
+   0440 91                 1211 	sub	a,c
+   0441 77                 1212 	ld	(hl),a
+                           1213 ;	genGoto
+   0442 C3 48 04           1214 	jp	00125$
+                           1215 ;	genLabel
+   0445                    1216 00124$:
+                           1217 ;	src/UI_b.c 96
+                           1218 ;	genCall
+                           1219 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0445 CD 00 00           1220 	call	_UIDrawTextBuffer
+                           1221 ;	genLabel
+   0448                    1222 00125$:
+                           1223 ;	src/UI_b.c 99
+                           1224 ;	genAssign
+   0448 01 4B FF           1225 	ld	bc,#0xFF4B
+                           1226 ;	genPlus
+                           1227 ;	AOP_HL for _win_pos_x
+                           1228 ;	genPlusIncr
+                           1229 ;	Can't optimise plus by inc, falling back to the normal way
+   044B 21 00 00           1230 	ld	hl,#_win_pos_x
+   044E 7E                 1231 	ld	a,(hl)
+   044F C6 07              1232 	add	a,#0x07
+                           1233 ;	genAssign (pointer)
+   0451 02                 1234 	ld	(bc),a
+                           1235 ;	src/UI_b.c 100
+                           1236 ;	genAssign
+   0452 01 4A FF           1237 	ld	bc,#0xFF4A
+                           1238 ;	genAssign (pointer)
+                           1239 ;	AOP_HL for _win_pos_y
+   0455 21 00 00           1240 	ld	hl,#_win_pos_y
+   0458 7E                 1241 	ld	a,(hl)
+   0459 02                 1242 	ld	(bc),a
+                           1243 ;	genLabel
+   045A                    1244 00126$:
+                           1245 ;	genEndFunction
+                           1246 	
+   045A C9                 1247 	ret
+   045B                    1248 ___UIUpdate_b_end:
+                           1249 ;	src/UI_b.c 103
+                           1250 ;	genLabel
+                           1251 ;	genFunction
+                           1252 ;	---------------------------------
+                           1253 ; Function UIDrawFrame_b
+                           1254 ; ---------------------------------
+   045B                    1255 ___UIDrawFrame_b_start:
+   045B                    1256 _UIDrawFrame_b:
+   045B E8 FC              1257 	lda	sp,-4(sp)
+                           1258 ;	src/UI_b.c 106
+                           1259 ;	genIpush
+                           1260 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   045D 21 92 00           1261 	ld	hl,#_ui_frame_tl_tiles
+   0460 E5                 1262 	push	hl
+                           1263 ;	genIpush
+   0461 21 01 01           1264 	ld	hl,#0x0101
+   0464 E5                 1265 	push	hl
+                           1266 ;	genIpush
+                           1267 ;	AOP_STK for 
+   0465 F8 0B              1268 	lda	hl,11(sp)
+   0467 7E                 1269 	ld	a,(hl)
+   0468 F5                 1270 	push	af
+   0469 33                 1271 	inc	sp
+                           1272 ;	genIpush
+                           1273 ;	AOP_STK for 
+   046A 2B                 1274 	dec	hl
+   046B 7E                 1275 	ld	a,(hl)
+   046C F5                 1276 	push	af
+   046D 33                 1277 	inc	sp
+                           1278 ;	genCall
+   046E CD 00 00           1279 	call	_set_win_tiles
+   0471 E8 06              1280 	lda	sp,6(sp)
+                           1281 ;	src/UI_b.c 107
+                           1282 ;	genPlus
+                           1283 ;	AOP_STK for 
+                           1284 ;	AOP_STK for 
+                           1285 ;	Can't optimise plus by inc, falling back to the normal way
+   0473 F8 07              1286 	lda	hl,7(sp)
+   0475 2A                 1287 	ld	a,(hl+)
+   0476 23                 1288 	inc	hl
+   0477 86                 1289 	add	a,(hl)
+   0478 4F                 1290 	ld	c,a
+                           1291 ;	genMinus
+   0479 0D                 1292 	dec	c
+                           1293 ;	genIpush
+                           1294 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   047A C5                 1295 	push	bc
+   047B 21 93 00           1296 	ld	hl,#_ui_frame_bl_tiles
+   047E E5                 1297 	push	hl
+                           1298 ;	genIpush
+   047F 21 01 01           1299 	ld	hl,#0x0101
+   0482 E5                 1300 	push	hl
+                           1301 ;	genIpush
+   0483 79                 1302 	ld	a,c
+   0484 F5                 1303 	push	af
+   0485 33                 1304 	inc	sp
+                           1305 ;	genIpush
+                           1306 ;	AOP_STK for 
+   0486 F8 0D              1307 	lda	hl,13(sp)
+   0488 7E                 1308 	ld	a,(hl)
+   0489 F5                 1309 	push	af
+   048A 33                 1310 	inc	sp
+                           1311 ;	genCall
+   048B CD 00 00           1312 	call	_set_win_tiles
+   048E E8 06              1313 	lda	sp,6(sp)
+   0490 E1                 1314 	pop	hl
+   0491 4D                 1315 	ld	c,l
+                           1316 ;	src/UI_b.c 108
+                           1317 ;	genPlus
+                           1318 ;	AOP_STK for 
+                           1319 ;	AOP_STK for 
+                           1320 ;	Can't optimise plus by inc, falling back to the normal way
+   0492 F8 06              1321 	lda	hl,6(sp)
+   0494 2A                 1322 	ld	a,(hl+)
+   0495 23                 1323 	inc	hl
+   0496 86                 1324 	add	a,(hl)
+   0497 47                 1325 	ld	b,a
+                           1326 ;	genMinus
+   0498 05                 1327 	dec	b
+                           1328 ;	genIpush
+                           1329 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0499 C5                 1330 	push	bc
+   049A 21 94 00           1331 	ld	hl,#_ui_frame_tr_tiles
+   049D E5                 1332 	push	hl
+                           1333 ;	genIpush
+   049E 21 01 01           1334 	ld	hl,#0x0101
+   04A1 E5                 1335 	push	hl
+                           1336 ;	genIpush
+                           1337 ;	AOP_STK for 
+   04A2 F8 0D              1338 	lda	hl,13(sp)
+   04A4 7E                 1339 	ld	a,(hl)
+   04A5 F5                 1340 	push	af
+   04A6 33                 1341 	inc	sp
+                           1342 ;	genIpush
+   04A7 78                 1343 	ld	a,b
+   04A8 F5                 1344 	push	af
+   04A9 33                 1345 	inc	sp
+                           1346 ;	genCall
+   04AA CD 00 00           1347 	call	_set_win_tiles
+   04AD E8 06              1348 	lda	sp,6(sp)
+   04AF C1                 1349 	pop	bc
+                           1350 ;	src/UI_b.c 109
+                           1351 ;	genIpush
+                           1352 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   04B0 C5                 1353 	push	bc
+   04B1 21 95 00           1354 	ld	hl,#_ui_frame_br_tiles
+   04B4 E5                 1355 	push	hl
+                           1356 ;	genIpush
+   04B5 21 01 01           1357 	ld	hl,#0x0101
+   04B8 E5                 1358 	push	hl
+                           1359 ;	genIpush
+   04B9 79                 1360 	ld	a,c
+   04BA F5                 1361 	push	af
+   04BB 33                 1362 	inc	sp
+                           1363 ;	genIpush
+   04BC 78                 1364 	ld	a,b
+   04BD F5                 1365 	push	af
+   04BE 33                 1366 	inc	sp
+                           1367 ;	genCall
+   04BF CD 00 00           1368 	call	_set_win_tiles
+   04C2 E8 06              1369 	lda	sp,6(sp)
+   04C4 C1                 1370 	pop	bc
+                           1371 ;	src/UI_b.c 111
+                           1372 ;	genPlus
+                           1373 ;	AOP_STK for 
+                           1374 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+                           1375 ;	genPlusIncr
+                           1376 ;	Can't optimise plus by inc, falling back to the normal way
+   04C5 F8 06              1377 	lda	hl,6(sp)
+   04C7 7E                 1378 	ld	a,(hl)
+   04C8 C6 01              1379 	add	a,#0x01
+   04CA F8 03              1380 	lda	hl,3(sp)
+   04CC 77                 1381 	ld	(hl),a
+                           1382 ;	genLabel
+   04CD                    1383 00105$:
+                           1384 ;	genCmpLt
+                           1385 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+   04CD F8 03              1386 	lda	hl,3(sp)
+   04CF 7E                 1387 	ld	a,(hl)
+   04D0 90                 1388 	sub	a,b
+   04D1 D2 46 05           1389 	jp	nc,00108$
+                           1390 ;	src/UI_b.c 113
+                           1391 ;	genIpush
+                           1392 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   04D4 C5                 1393 	push	bc
+   04D5 21 96 00           1394 	ld	hl,#_ui_frame_t_tiles
+   04D8 E5                 1395 	push	hl
+                           1396 ;	genIpush
+   04D9 21 01 01           1397 	ld	hl,#0x0101
+   04DC E5                 1398 	push	hl
+                           1399 ;	genIpush
+                           1400 ;	AOP_STK for 
+   04DD F8 0D              1401 	lda	hl,13(sp)
+   04DF 7E                 1402 	ld	a,(hl)
+   04E0 F5                 1403 	push	af
+   04E1 33                 1404 	inc	sp
+                           1405 ;	genIpush
+                           1406 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+   04E2 F8 0A              1407 	lda	hl,10(sp)
+   04E4 7E                 1408 	ld	a,(hl)
+   04E5 F5                 1409 	push	af
+   04E6 33                 1410 	inc	sp
+                           1411 ;	genCall
+   04E7 CD 00 00           1412 	call	_set_win_tiles
+   04EA E8 06              1413 	lda	sp,6(sp)
+   04EC C1                 1414 	pop	bc
+                           1415 ;	src/UI_b.c 114
+                           1416 ;	genIpush
+                           1417 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   04ED C5                 1418 	push	bc
+   04EE 21 97 00           1419 	ld	hl,#_ui_frame_b_tiles
+   04F1 E5                 1420 	push	hl
+                           1421 ;	genIpush
+   04F2 21 01 01           1422 	ld	hl,#0x0101
+   04F5 E5                 1423 	push	hl
+                           1424 ;	genIpush
+   04F6 79                 1425 	ld	a,c
+   04F7 F5                 1426 	push	af
+   04F8 33                 1427 	inc	sp
+                           1428 ;	genIpush
+                           1429 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+   04F9 F8 0A              1430 	lda	hl,10(sp)
+   04FB 7E                 1431 	ld	a,(hl)
+   04FC F5                 1432 	push	af
+   04FD 33                 1433 	inc	sp
+                           1434 ;	genCall
+   04FE CD 00 00           1435 	call	_set_win_tiles
+   0501 E8 06              1436 	lda	sp,6(sp)
+   0503 C1                 1437 	pop	bc
+                           1438 ;	src/UI_b.c 115
+                           1439 ;	genPlus
+                           1440 ;	AOP_STK for 
+                           1441 ;	AOP_STK for _UIDrawFrame_b_j_1_1
+                           1442 ;	genPlusIncr
+                           1443 ;	Can't optimise plus by inc, falling back to the normal way
+   0504 F8 07              1444 	lda	hl,7(sp)
+   0506 7E                 1445 	ld	a,(hl)
+   0507 C6 01              1446 	add	a,#0x01
+   0509 F8 02              1447 	lda	hl,2(sp)
+   050B 77                 1448 	ld	(hl),a
+                           1449 ;	genLabel
+   050C                    1450 00101$:
+                           1451 ;	genCmpLt
+                           1452 ;	AOP_STK for _UIDrawFrame_b_j_1_1
+                           1453 ;	AOP_STK for _UIDrawFrame_b_sloc0_1_0
+   050C F8 02              1454 	lda	hl,2(sp)
+   050E 7E                 1455 	ld	a,(hl)
+   050F 91                 1456 	sub	a,c
+   0510 3E 00              1457 	ld	a,#0x00
+   0512 17                 1458 	rla
+   0513 2B                 1459 	dec	hl
+   0514 77                 1460 	ld	(hl),a
+                           1461 ;	genIfx
+                           1462 ;	AOP_STK for _UIDrawFrame_b_sloc0_1_0
+   0515 AF                 1463 	xor	a,a
+   0516 B6                 1464 	or	a,(hl)
+   0517 CA 40 05           1465 	jp	z,00107$
+                           1466 ;	src/UI_b.c 117
+                           1467 ;	genIpush
+                           1468 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   051A C5                 1469 	push	bc
+   051B 21 9A 00           1470 	ld	hl,#_ui_frame_bg_tiles
+   051E E5                 1471 	push	hl
+                           1472 ;	genIpush
+   051F 21 01 01           1473 	ld	hl,#0x0101
+   0522 E5                 1474 	push	hl
+                           1475 ;	genIpush
+                           1476 ;	AOP_STK for _UIDrawFrame_b_j_1_1
+   0523 F8 08              1477 	lda	hl,8(sp)
+   0525 7E                 1478 	ld	a,(hl)
+   0526 F5                 1479 	push	af
+   0527 33                 1480 	inc	sp
+                           1481 ;	genIpush
+                           1482 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+   0528 23                 1483 	inc	hl
+   0529 7E                 1484 	ld	a,(hl)
+   052A F5                 1485 	push	af
+   052B 33                 1486 	inc	sp
+                           1487 ;	genCall
+   052C CD 00 00           1488 	call	_set_win_tiles
+   052F E8 06              1489 	lda	sp,6(sp)
+   0531 C1                 1490 	pop	bc
+                           1491 ;	src/UI_b.c 115
+                           1492 ;	genPlus
+                           1493 ;	AOP_STK for _UIDrawFrame_b_j_1_1
+                           1494 ;	AOP_STK for _UIDrawFrame_b_sloc1_1_0
+                           1495 ;	genPlusIncr
+                           1496 ;	Can't optimise plus by inc, falling back to the normal way
+   0532 F8 02              1497 	lda	hl,2(sp)
+   0534 7E                 1498 	ld	a,(hl)
+   0535 C6 01              1499 	add	a,#0x01
+   0537 2B                 1500 	dec	hl
+   0538 2B                 1501 	dec	hl
+   0539 77                 1502 	ld	(hl),a
+                           1503 ;	genAssign
+                           1504 ;	AOP_STK for _UIDrawFrame_b_sloc1_1_0
+                           1505 ;	AOP_STK for _UIDrawFrame_b_j_1_1
+   053A 2A                 1506 	ld	a,(hl+)
+   053B 23                 1507 	inc	hl
+   053C 77                 1508 	ld	(hl),a
+                           1509 ;	genGoto
+   053D C3 0C 05           1510 	jp	00101$
+                           1511 ;	genLabel
+   0540                    1512 00107$:
+                           1513 ;	src/UI_b.c 111
+                           1514 ;	genPlus
+                           1515 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+                           1516 ;	genPlusIncr
+   0540 F8 03              1517 	lda	hl,3(sp)
+   0542 34                 1518 	inc	(hl)
+                           1519 ;	genGoto
+   0543 C3 CD 04           1520 	jp	00105$
+                           1521 ;	genLabel
+   0546                    1522 00108$:
+                           1523 ;	src/UI_b.c 120
+                           1524 ;	genPlus
+                           1525 ;	AOP_STK for 
+                           1526 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+                           1527 ;	genPlusIncr
+                           1528 ;	Can't optimise plus by inc, falling back to the normal way
+   0546 F8 07              1529 	lda	hl,7(sp)
+   0548 7E                 1530 	ld	a,(hl)
+   0549 C6 01              1531 	add	a,#0x01
+   054B F8 03              1532 	lda	hl,3(sp)
+   054D 77                 1533 	ld	(hl),a
+                           1534 ;	genLabel
+   054E                    1535 00109$:
+                           1536 ;	genCmpLt
+                           1537 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+   054E F8 03              1538 	lda	hl,3(sp)
+   0550 7E                 1539 	ld	a,(hl)
+   0551 91                 1540 	sub	a,c
+   0552 D2 8B 05           1541 	jp	nc,00113$
+                           1542 ;	src/UI_b.c 122
+                           1543 ;	genIpush
+                           1544 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0555 C5                 1545 	push	bc
+   0556 21 98 00           1546 	ld	hl,#_ui_frame_l_tiles
+   0559 E5                 1547 	push	hl
+                           1548 ;	genIpush
+   055A 21 01 01           1549 	ld	hl,#0x0101
+   055D E5                 1550 	push	hl
+                           1551 ;	genIpush
+                           1552 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+   055E F8 09              1553 	lda	hl,9(sp)
+   0560 7E                 1554 	ld	a,(hl)
+   0561 F5                 1555 	push	af
+   0562 33                 1556 	inc	sp
+                           1557 ;	genIpush
+                           1558 ;	AOP_STK for 
+   0563 F8 0D              1559 	lda	hl,13(sp)
+   0565 7E                 1560 	ld	a,(hl)
+   0566 F5                 1561 	push	af
+   0567 33                 1562 	inc	sp
+                           1563 ;	genCall
+   0568 CD 00 00           1564 	call	_set_win_tiles
+   056B E8 06              1565 	lda	sp,6(sp)
+   056D C1                 1566 	pop	bc
+                           1567 ;	src/UI_b.c 123
+                           1568 ;	genIpush
+                           1569 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   056E C5                 1570 	push	bc
+   056F 21 99 00           1571 	ld	hl,#_ui_frame_r_tiles
+   0572 E5                 1572 	push	hl
+                           1573 ;	genIpush
+   0573 21 01 01           1574 	ld	hl,#0x0101
+   0576 E5                 1575 	push	hl
+                           1576 ;	genIpush
+                           1577 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+   0577 F8 09              1578 	lda	hl,9(sp)
+   0579 7E                 1579 	ld	a,(hl)
+   057A F5                 1580 	push	af
+   057B 33                 1581 	inc	sp
+                           1582 ;	genIpush
+   057C 78                 1583 	ld	a,b
+   057D F5                 1584 	push	af
+   057E 33                 1585 	inc	sp
+                           1586 ;	genCall
+   057F CD 00 00           1587 	call	_set_win_tiles
+   0582 E8 06              1588 	lda	sp,6(sp)
+   0584 C1                 1589 	pop	bc
+                           1590 ;	src/UI_b.c 120
+                           1591 ;	genPlus
+                           1592 ;	AOP_STK for _UIDrawFrame_b_i_1_1
+                           1593 ;	genPlusIncr
+   0585 F8 03              1594 	lda	hl,3(sp)
+   0587 34                 1595 	inc	(hl)
+                           1596 ;	genGoto
+   0588 C3 4E 05           1597 	jp	00109$
+                           1598 ;	genLabel
+   058B                    1599 00113$:
+                           1600 ;	genEndFunction
+   058B E8 04              1601 	lda	sp,4(sp)
+   058D C9                 1602 	ret
+   058E                    1603 ___UIDrawFrame_b_end:
+                           1604 ;	src/UI_b.c 127
+                           1605 ;	genLabel
+                           1606 ;	genFunction
+                           1607 ;	---------------------------------
+                           1608 ; Function UIDrawDialogueFrame_b
+                           1609 ; ---------------------------------
+   058E                    1610 ___UIDrawDialogueFrame_b_start:
+   058E                    1611 _UIDrawDialogueFrame_b:
+   058E E8 FE              1612 	lda	sp,-2(sp)
+                           1613 ;	src/UI_b.c 131
+                           1614 ;	genIpush
+                           1615 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0590 21 92 00           1616 	ld	hl,#_ui_frame_tl_tiles
+   0593 E5                 1617 	push	hl
+                           1618 ;	genIpush
+   0594 21 01 01           1619 	ld	hl,#0x0101
+   0597 E5                 1620 	push	hl
+                           1621 ;	genIpush
+   0598 21 00 00           1622 	ld	hl,#0x0000
+   059B E5                 1623 	push	hl
+                           1624 ;	genCall
+   059C CD 00 00           1625 	call	_set_win_tiles
+   059F E8 06              1626 	lda	sp,6(sp)
+                           1627 ;	src/UI_b.c 132
+                           1628 ;	genPlus
+                           1629 ;	AOP_STK for 
+                           1630 ;	genPlusIncr
+   05A1 F8 04              1631 	lda	hl,4(sp)
+   05A3 4E                 1632 	ld	c,(hl)
+   05A4 0C                 1633 	inc	c
+                           1634 ;	genIpush
+                           1635 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   05A5 C5                 1636 	push	bc
+   05A6 21 93 00           1637 	ld	hl,#_ui_frame_bl_tiles
+   05A9 E5                 1638 	push	hl
+                           1639 ;	genIpush
+   05AA 21 01 01           1640 	ld	hl,#0x0101
+   05AD E5                 1641 	push	hl
+                           1642 ;	genIpush
+   05AE 79                 1643 	ld	a,c
+   05AF F5                 1644 	push	af
+   05B0 33                 1645 	inc	sp
+                           1646 ;	genIpush
+   05B1 3E 00              1647 	ld	a,#0x00
+   05B3 F5                 1648 	push	af
+   05B4 33                 1649 	inc	sp
+                           1650 ;	genCall
+   05B5 CD 00 00           1651 	call	_set_win_tiles
+   05B8 E8 06              1652 	lda	sp,6(sp)
+   05BA E1                 1653 	pop	hl
+   05BB 4D                 1654 	ld	c,l
+                           1655 ;	src/UI_b.c 133
+                           1656 ;	genIpush
+                           1657 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   05BC C5                 1658 	push	bc
+   05BD 21 94 00           1659 	ld	hl,#_ui_frame_tr_tiles
+   05C0 E5                 1660 	push	hl
+                           1661 ;	genIpush
+   05C1 21 01 01           1662 	ld	hl,#0x0101
+   05C4 E5                 1663 	push	hl
+                           1664 ;	genIpush
+   05C5 21 13 00           1665 	ld	hl,#0x0013
+   05C8 E5                 1666 	push	hl
+                           1667 ;	genCall
+   05C9 CD 00 00           1668 	call	_set_win_tiles
+   05CC E8 06              1669 	lda	sp,6(sp)
+   05CE E1                 1670 	pop	hl
+   05CF 4D                 1671 	ld	c,l
+                           1672 ;	src/UI_b.c 134
+                           1673 ;	genIpush
+                           1674 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   05D0 C5                 1675 	push	bc
+   05D1 21 95 00           1676 	ld	hl,#_ui_frame_br_tiles
+   05D4 E5                 1677 	push	hl
+                           1678 ;	genIpush
+   05D5 21 01 01           1679 	ld	hl,#0x0101
+   05D8 E5                 1680 	push	hl
+                           1681 ;	genIpush
+   05D9 79                 1682 	ld	a,c
+   05DA F5                 1683 	push	af
+   05DB 33                 1684 	inc	sp
+                           1685 ;	genIpush
+   05DC 3E 13              1686 	ld	a,#0x13
+   05DE F5                 1687 	push	af
+   05DF 33                 1688 	inc	sp
+                           1689 ;	genCall
+   05E0 CD 00 00           1690 	call	_set_win_tiles
+   05E3 E8 06              1691 	lda	sp,6(sp)
+   05E5 E1                 1692 	pop	hl
+   05E6 4D                 1693 	ld	c,l
+                           1694 ;	src/UI_b.c 136
+                           1695 ;	genAssign
+                           1696 ;	AOP_STK for _UIDrawDialogueFrame_b_y_1_1
+   05E7 F8 01              1697 	lda	hl,1(sp)
+   05E9 36 01              1698 	ld	(hl),#0x01
+                           1699 ;	genLabel
+   05EB                    1700 00105$:
+                           1701 ;	genCmpEq
+                           1702 ;	AOP_STK for _UIDrawDialogueFrame_b_y_1_1
+                           1703 ; genCmpEq: left 1, right 1, result 0
+   05EB F8 01              1704 	lda	hl,1(sp)
+   05ED 7E                 1705 	ld	a,(hl)
+   05EE B9                 1706 	cp	c
+   05EF CA 5C 06           1707 	jp	z,00108$
+   05F2                    1708 00121$:
+                           1709 ;	src/UI_b.c 138
+                           1710 ;	genIpush
+                           1711 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   05F2 C5                 1712 	push	bc
+   05F3 21 98 00           1713 	ld	hl,#_ui_frame_l_tiles
+   05F6 E5                 1714 	push	hl
+                           1715 ;	genIpush
+   05F7 21 01 01           1716 	ld	hl,#0x0101
+   05FA E5                 1717 	push	hl
+                           1718 ;	genIpush
+                           1719 ;	AOP_STK for _UIDrawDialogueFrame_b_y_1_1
+   05FB F8 07              1720 	lda	hl,7(sp)
+   05FD 7E                 1721 	ld	a,(hl)
+   05FE F5                 1722 	push	af
+   05FF 33                 1723 	inc	sp
+                           1724 ;	genIpush
+   0600 3E 00              1725 	ld	a,#0x00
+   0602 F5                 1726 	push	af
+   0603 33                 1727 	inc	sp
+                           1728 ;	genCall
+   0604 CD 00 00           1729 	call	_set_win_tiles
+   0607 E8 06              1730 	lda	sp,6(sp)
+   0609 E1                 1731 	pop	hl
+   060A 4D                 1732 	ld	c,l
+                           1733 ;	src/UI_b.c 139
+                           1734 ;	genIpush
+                           1735 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   060B C5                 1736 	push	bc
+   060C 21 99 00           1737 	ld	hl,#_ui_frame_r_tiles
+   060F E5                 1738 	push	hl
+                           1739 ;	genIpush
+   0610 21 01 01           1740 	ld	hl,#0x0101
+   0613 E5                 1741 	push	hl
+                           1742 ;	genIpush
+                           1743 ;	AOP_STK for _UIDrawDialogueFrame_b_y_1_1
+   0614 F8 07              1744 	lda	hl,7(sp)
+   0616 7E                 1745 	ld	a,(hl)
+   0617 F5                 1746 	push	af
+   0618 33                 1747 	inc	sp
+                           1748 ;	genIpush
+   0619 3E 13              1749 	ld	a,#0x13
+   061B F5                 1750 	push	af
+   061C 33                 1751 	inc	sp
+                           1752 ;	genCall
+   061D CD 00 00           1753 	call	_set_win_tiles
+   0620 E8 06              1754 	lda	sp,6(sp)
+   0622 E1                 1755 	pop	hl
+   0623 4D                 1756 	ld	c,l
+                           1757 ;	src/UI_b.c 140
+                           1758 ;	genAssign
+   0624 06 01              1759 	ld	b,#0x01
+                           1760 ;	genLabel
+   0626                    1761 00101$:
+                           1762 ;	genCmpEq
+                           1763 ; genCmpEq: left 1, right 1, result 1
+   0626 78                 1764 	ld	a,b
+   0627 FE 13              1765 	cp	a,#0x13
+   0629 C2 30 06           1766 	jp	nz,00122$
+   062C 3E 01              1767 	ld	a,#0x01
+   062E 18 01              1768 	jr	00123$
+   0630                    1769 00122$:
+   0630 AF                 1770 	xor	a,a
+   0631                    1771 00123$:
+                           1772 ;	genIfx
+   0631 B7                 1773 	or	a,a
+   0632 C2 56 06           1774 	jp	nz,00107$
+                           1775 ;	src/UI_b.c 142
+                           1776 ;	genIpush
+                           1777 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0635 C5                 1778 	push	bc
+   0636 21 9A 00           1779 	ld	hl,#_ui_frame_bg_tiles
+   0639 E5                 1780 	push	hl
+                           1781 ;	genIpush
+   063A 21 01 01           1782 	ld	hl,#0x0101
+   063D E5                 1783 	push	hl
+                           1784 ;	genIpush
+                           1785 ;	AOP_STK for _UIDrawDialogueFrame_b_y_1_1
+   063E F8 07              1786 	lda	hl,7(sp)
+   0640 7E                 1787 	ld	a,(hl)
+   0641 F5                 1788 	push	af
+   0642 33                 1789 	inc	sp
+                           1790 ;	genIpush
+   0643 78                 1791 	ld	a,b
+   0644 F5                 1792 	push	af
+   0645 33                 1793 	inc	sp
+                           1794 ;	genCall
+   0646 CD 00 00           1795 	call	_set_win_tiles
+   0649 E8 06              1796 	lda	sp,6(sp)
+   064B C1                 1797 	pop	bc
+                           1798 ;	src/UI_b.c 140
+                           1799 ;	genPlus
+                           1800 ;	AOP_STK for _UIDrawDialogueFrame_b_sloc0_1_0
+                           1801 ;	genPlusIncr
+                           1802 ;	Can't optimise plus by inc, falling back to the normal way
+   064C 78                 1803 	ld	a,b
+   064D C6 01              1804 	add	a,#0x01
+   064F F8 00              1805 	lda	hl,0(sp)
+                           1806 ;	genAssign
+                           1807 ;	AOP_STK for _UIDrawDialogueFrame_b_sloc0_1_0
+   0651 77                 1808 	ld      (hl),a
+   0652 47                 1809 	ld      b,a
+                           1810 ;	genGoto
+   0653 C3 26 06           1811 	jp	00101$
+                           1812 ;	genLabel
+   0656                    1813 00107$:
+                           1814 ;	src/UI_b.c 136
+                           1815 ;	genPlus
+                           1816 ;	AOP_STK for _UIDrawDialogueFrame_b_y_1_1
+                           1817 ;	genPlusIncr
+   0656 F8 01              1818 	lda	hl,1(sp)
+   0658 34                 1819 	inc	(hl)
+                           1820 ;	genGoto
+   0659 C3 EB 05           1821 	jp	00105$
+                           1822 ;	genLabel
+   065C                    1823 00108$:
+                           1824 ;	src/UI_b.c 146
+                           1825 ;	genAssign
+   065C 06 01              1826 	ld	b,#0x01
+                           1827 ;	genLabel
+   065E                    1828 00109$:
+                           1829 ;	genCmpEq
+                           1830 ; genCmpEq: left 1, right 1, result 0
+   065E 78                 1831 	ld	a,b
+   065F FE 13              1832 	cp	a,#0x13
+   0661 CA 93 06           1833 	jp	z,00113$
+   0664                    1834 00124$:
+                           1835 ;	src/UI_b.c 148
+                           1836 ;	genIpush
+                           1837 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0664 C5                 1838 	push	bc
+   0665 21 96 00           1839 	ld	hl,#_ui_frame_t_tiles
+   0668 E5                 1840 	push	hl
+                           1841 ;	genIpush
+   0669 21 01 01           1842 	ld	hl,#0x0101
+   066C E5                 1843 	push	hl
+                           1844 ;	genIpush
+   066D 3E 00              1845 	ld	a,#0x00
+   066F F5                 1846 	push	af
+   0670 33                 1847 	inc	sp
+                           1848 ;	genIpush
+   0671 78                 1849 	ld	a,b
+   0672 F5                 1850 	push	af
+   0673 33                 1851 	inc	sp
+                           1852 ;	genCall
+   0674 CD 00 00           1853 	call	_set_win_tiles
+   0677 E8 06              1854 	lda	sp,6(sp)
+   0679 C1                 1855 	pop	bc
+                           1856 ;	src/UI_b.c 149
+                           1857 ;	genIpush
+                           1858 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   067A C5                 1859 	push	bc
+   067B 21 97 00           1860 	ld	hl,#_ui_frame_b_tiles
+   067E E5                 1861 	push	hl
+                           1862 ;	genIpush
+   067F 21 01 01           1863 	ld	hl,#0x0101
+   0682 E5                 1864 	push	hl
+                           1865 ;	genIpush
+   0683 79                 1866 	ld	a,c
+   0684 F5                 1867 	push	af
+   0685 33                 1868 	inc	sp
+                           1869 ;	genIpush
+   0686 78                 1870 	ld	a,b
+   0687 F5                 1871 	push	af
+   0688 33                 1872 	inc	sp
+                           1873 ;	genCall
+   0689 CD 00 00           1874 	call	_set_win_tiles
+   068C E8 06              1875 	lda	sp,6(sp)
+   068E C1                 1876 	pop	bc
+                           1877 ;	src/UI_b.c 146
+                           1878 ;	genPlus
+                           1879 ;	genPlusIncr
+                           1880 ; Removed redundent load
+   068F 04                 1881 	inc	b
+                           1882 ;	genGoto
+   0690 C3 5E 06           1883 	jp	00109$
+                           1884 ;	genLabel
+   0693                    1885 00113$:
+                           1886 ;	genEndFunction
+   0693 E8 02              1887 	lda	sp,2(sp)
+   0695 C9                 1888 	ret
+   0696                    1889 ___UIDrawDialogueFrame_b_end:
+                           1890 ;	src/UI_b.c 153
+                           1891 ;	genLabel
+                           1892 ;	genFunction
+                           1893 ;	---------------------------------
+                           1894 ; Function UISetColor_b
+                           1895 ; ---------------------------------
+   0696                    1896 ___UISetColor_b_start:
+   0696                    1897 _UISetColor_b:
+                           1898 	
+                           1899 ;	src/UI_b.c 157
+                           1900 ;	genIpush
+                           1901 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0696 21 6B 03           1902 	ld	hl,#_ui_white
+   0699 E5                 1903 	push	hl
+                           1904 ;	genIpush
+   069A 21 C9 01           1905 	ld	hl,#0x01C9
+   069D E5                 1906 	push	hl
+                           1907 ;	genCall
+   069E CD 00 00           1908 	call	_set_bkg_data
+   06A1 E8 04              1909 	lda	sp,4(sp)
+                           1910 ;	src/UI_b.c 158
+                           1911 ;	genIpush
+                           1912 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   06A3 21 7B 03           1913 	ld	hl,#_ui_black
+   06A6 E5                 1914 	push	hl
+                           1915 ;	genIpush
+   06A7 21 CA 01           1916 	ld	hl,#0x01CA
+   06AA E5                 1917 	push	hl
+                           1918 ;	genCall
+   06AB CD 00 00           1919 	call	_set_bkg_data
+   06AE E8 04              1920 	lda	sp,4(sp)
+                           1921 ;	src/UI_b.c 159
+                           1922 ;	genCast
+                           1923 ;	AOP_STK for 
+   06B0 F8 02              1924 	lda	hl,2(sp)
+   06B2 4E                 1925 	ld	c,(hl)
+   06B3 06 00              1926 	ld	b,#0x00
+                           1927 ;	genMult
+   06B5 59                 1928 	ld	e,c
+   06B6 50                 1929 	ld	d,b
+   06B7 6B                 1930 	ld	l,e
+   06B8 62                 1931 	ld	h,d
+   06B9 29                 1932 	add	hl,hl
+   06BA 29                 1933 	add	hl,hl
+   06BB 19                 1934 	add	hl,de
+   06BC 29                 1935 	add	hl,hl
+   06BD 19                 1936 	add	hl,de
+   06BE 29                 1937 	add	hl,hl
+   06BF 29                 1938 	add	hl,hl
+   06C0 19                 1939 	add	hl,de
+   06C1 29                 1940 	add	hl,hl
+   06C2 29                 1941 	add	hl,hl
+   06C3 29                 1942 	add	hl,hl
+   06C4 4D                 1943 	ld	c,l
+   06C5 44                 1944 	ld	b,h
+                           1945 ;	genPlus
+                           1946 ;	Can't optimise plus by inc, falling back to the normal way
+   06C6 21 9B 00           1947 	ld	hl,#_ui_colors
+   06C9 09                 1948 	add	hl,bc
+   06CA 4D                 1949 	ld	c,l
+   06CB 44                 1950 	ld	b,h
+                           1951 ;	genCast
+                           1952 ;	genIpush
+                           1953 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   06CC C5                 1954 	push	bc
+                           1955 ;	genIpush
+   06CD 21 14 12           1956 	ld	hl,#0x1214
+   06D0 E5                 1957 	push	hl
+                           1958 ;	genIpush
+   06D1 21 00 00           1959 	ld	hl,#0x0000
+   06D4 E5                 1960 	push	hl
+                           1961 ;	genCall
+   06D5 CD 00 00           1962 	call	_set_win_tiles
+   06D8 E8 06              1963 	lda	sp,6(sp)
+                           1964 ;	genLabel
+   06DA                    1965 00101$:
+                           1966 ;	genEndFunction
+                           1967 	
+   06DA C9                 1968 	ret
+   06DB                    1969 ___UISetColor_b_end:
+                           1970 	.area _CODE_4
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+    _SetBankedBkgData                  **** GX
+  9 _UIDrawDialogueFrame_b             058E GR
+  9 _UIDrawFrame_b                     045B GR
+    _UIDrawTextBuffer                  **** GX
+  9 _UIInit_b                          0000 GR
+  9 _UISetColor_b                      0696 GR
+    _UISetPos                          **** GX
+  9 _UIUpdate_b                        038B GR
+  9 ___UIDrawDialogueFrame_b_end       0696 R
+  9 ___UIDrawDialogueFrame_b_start     058E R
+  9 ___UIDrawFrame_b_end               058E R
+  9 ___UIDrawFrame_b_start             045B R
+  9 ___UIInit_b_end                    0092 R
+  9 ___UIInit_b_start                  0000 R
+  9 ___UISetColor_b_end                06DB R
+  9 ___UISetColor_b_start              0696 R
+  9 ___UIUpdate_b_end                  045B R
+  9 ___UIUpdate_b_start                038B R
+    _bank_data_ptrs                    **** GX
+    _set_bkg_data                      **** GX
+    _set_win_tiles                     **** GX
+    _time                              **** GX
+  1 _ui_bank                           0000 GR
+  9 _ui_black                          037B GR
+  9 _ui_colors                         009B GR
+  9 _ui_frame_b_tiles                  0097 GR
+  9 _ui_frame_bg_tiles                 009A GR
+  9 _ui_frame_bl_tiles                 0093 GR
+  9 _ui_frame_br_tiles                 0095 GR
+  9 _ui_frame_l_tiles                  0098 GR
+  9 _ui_frame_r_tiles                  0099 GR
+  9 _ui_frame_t_tiles                  0096 GR
+  9 _ui_frame_tl_tiles                 0092 GR
+  9 _ui_frame_tr_tiles                 0094 GR
+  9 _ui_white                          036B GR
+    _win_dest_pos_x                    **** GX
+    _win_dest_pos_y                    **** GX
+    _win_pos_x                         **** GX
+    _win_pos_y                         **** GX
+    _win_speed                         **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size    0   flags 0
+   1 _DATA                              size    1   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size    5   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0
+   9 _CODE_4                            size  6DB   flags 0

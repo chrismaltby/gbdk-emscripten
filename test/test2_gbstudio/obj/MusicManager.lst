@@ -1,0 +1,272 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Mon Nov 25 14:16:01 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc553010
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _current_index
+                             12 	.globl _MusicPlay
+                             13 	.globl _MusicStop
+                             14 ;--------------------------------------------------------
+                             15 ; special function registers
+                             16 ;--------------------------------------------------------
+                             17 ;--------------------------------------------------------
+                             18 ; special function bits 
+                             19 ;--------------------------------------------------------
+                             20 ;--------------------------------------------------------
+                             21 ; internal ram data
+                             22 ;--------------------------------------------------------
+                             23 	.area _DATA
+   0000                      24 _current_index::
+   0000                      25 	.ds 1
+                             26 ;--------------------------------------------------------
+                             27 ; overlayable items in internal ram 
+                             28 ;--------------------------------------------------------
+                             29 	.area _OVERLAY
+                             30 ;--------------------------------------------------------
+                             31 ; indirectly addressable internal ram data
+                             32 ;--------------------------------------------------------
+                             33 	.area _ISEG
+                             34 ;--------------------------------------------------------
+                             35 ; bit data
+                             36 ;--------------------------------------------------------
+                             37 	.area _BSEG
+                             38 ;--------------------------------------------------------
+                             39 ; external ram data
+                             40 ;--------------------------------------------------------
+                             41 	.area _XSEG
+                             42 ;--------------------------------------------------------
+                             43 ; global & static initialisations
+                             44 ;--------------------------------------------------------
+                             45 	.area _GSINIT
+                             46 	.area _GSFINAL
+                             47 	.area _GSINIT
+                             48 ;	src/MusicManager.c 9
+                             49 ;	genAssign
+                             50 ;	AOP_HL for _current_index
+   0000 21 00 00             51 	ld	hl,#_current_index
+   0003 36 FF                52 	ld	(hl),#0xFF
+                             53 ;--------------------------------------------------------
+                             54 ; Home
+                             55 ;--------------------------------------------------------
+                             56 	.area _HOME
+                             57 	.area _CODE
+                             58 ;--------------------------------------------------------
+                             59 ; code
+                             60 ;--------------------------------------------------------
+                             61 	.area _CODE
+                             62 ;	src/MusicManager.c 11
+                             63 ;	genLabel
+                             64 ;	genFunction
+                             65 ;	---------------------------------
+                             66 ; Function MusicPlay
+                             67 ; ---------------------------------
+   0000                      68 ___MusicPlay_start:
+   0000                      69 _MusicPlay:
+   0000 E8 FD                70 	lda	sp,-3(sp)
+                             71 ;	src/MusicManager.c 15
+                             72 ;	genCmpEq
+                             73 ;	AOP_STK for 
+                             74 ;	AOP_HL for _current_index
+                             75 ; genCmpEq: left 1, right 1, result 0
+   0002 21 00 00             76 	ld	hl,#_current_index
+   0005 7E                   77 	ld	a,(hl)
+   0006 F8 05                78 	lda	hl,5(sp)
+   0008 BE                   79 	cp	(hl)
+   0009 20 03                80 	jr	nz,00106$
+   000B C3 73 00             81 	jp	00103$
+   000E                      82 00106$:
+                             83 ;	src/MusicManager.c 17
+                             84 ;	genAssign
+                             85 ;	AOP_STK for 
+   000E F8 05                86 	lda	hl,5(sp)
+   0010 4E                   87 	ld	c,(hl)
+                             88 ;	genAssign
+                             89 ;	AOP_HL for _current_index
+   0011 21 00 00             90 	ld	hl,#_current_index
+   0014 71                   91 	ld	(hl),c
+                             92 ;	src/MusicManager.c 18
+                             93 ;	genPlus
+                             94 ;	AOP_STK for _MusicPlay_sloc0_1_0
+                             95 ;	Can't optimise plus by inc, falling back to the normal way
+   0015 11 00 00             96 	ld	de,#_music_banks
+   0018 69                   97 	ld	l,c
+   0019 26 00                98 	ld	h,#0x00
+   001B 19                   99 	add	hl,de
+   001C 7D                  100 	ld	a,l
+   001D 54                  101 	ld	d,h
+   001E F8 00               102 	lda	hl,0(sp)
+   0020 22                  103 	ld	(hl+),a
+   0021 72                  104 	ld	(hl),d
+                            105 ;	genIpush
+                            106 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0022 C5                  107 	push	bc
+                            108 ;	AOP_STK for _MusicPlay_sloc0_1_0
+   0023 2B                  109 	dec	hl
+   0024 2A                  110 	ld	a,(hl+)
+   0025 66                  111 	ld	h,(hl)
+   0026 6F                  112 	ld	l,a
+   0027 E5                  113 	push	hl
+                            114 ;	genIpush
+   0028 3E 05               115 	ld	a,#0x05
+   002A F5                  116 	push	af
+   002B 33                  117 	inc	sp
+                            118 ;	genCall
+   002C CD 00 00            119 	call	_ReadBankedUBYTE
+   002F 43                  120 	ld	b,e
+   0030 E8 03               121 	lda	sp,3(sp)
+   0032 E1                  122 	pop	hl
+   0033 4D                  123 	ld	c,l
+                            124 ;	genAssign
+                            125 ;	AOP_STK for _MusicPlay_music_bank_1_1
+   0034 F8 02               126 	lda	hl,2(sp)
+   0036 70                  127 	ld	(hl),b
+                            128 ;	src/MusicManager.c 20
+                            129 ;	genIpush
+                            130 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0037 C5                  131 	push	bc
+                            132 ;	AOP_STK for 
+   0038 F8 09               133 	lda	hl,9(sp)
+   003A 7E                  134 	ld	a,(hl)
+   003B F5                  135 	push	af
+   003C 33                  136 	inc	sp
+                            137 ;	genCall
+   003D CD 00 00            138 	call	_PushBank
+   0040 E8 01               139 	lda	sp,1(sp)
+   0042 E1                  140 	pop	hl
+   0043 4D                  141 	ld	c,l
+                            142 ;	src/MusicManager.c 21
+                            143 ;	genCast
+                            144 ; Removed redundent load
+   0044 06 00               145 	ld	b,#0x00
+                            146 ;	genLeftShift
+   0046 CB 21               147 	sla	c
+   0048 CB 10               148 	rl	b
+                            149 ;	genPlus
+                            150 ;	Can't optimise plus by inc, falling back to the normal way
+   004A 21 00 00            151 	ld	hl,#_music_tracks
+   004D 09                  152 	add	hl,bc
+   004E 4D                  153 	ld	c,l
+   004F 44                  154 	ld	b,h
+                            155 ;	genPointerGet
+   0050 59                  156 	ld	e,c
+   0051 50                  157 	ld	d,b
+   0052 1A                  158 	ld	a,(de)
+   0053 4F                  159 	ld	c,a
+   0054 13                  160 	inc	de
+   0055 1A                  161 	ld	a,(de)
+   0056 47                  162 	ld	b,a
+                            163 ;	genIpush
+                            164 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0057 3E 07               165 	ld	a,#0x07
+   0059 F5                  166 	push	af
+   005A 33                  167 	inc	sp
+                            168 ;	genIpush
+                            169 ;	AOP_STK for _MusicPlay_music_bank_1_1
+   005B F8 03               170 	lda	hl,3(sp)
+   005D 7E                  171 	ld	a,(hl)
+   005E F5                  172 	push	af
+   005F 33                  173 	inc	sp
+                            174 ;	genIpush
+   0060 C5                  175 	push	bc
+                            176 ;	genCall
+   0061 CD 00 00            177 	call	_gbt_play
+   0064 E8 04               178 	lda	sp,4(sp)
+                            179 ;	src/MusicManager.c 22
+                            180 ;	genIpush
+                            181 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            182 ;	AOP_STK for 
+   0066 F8 06               183 	lda	hl,6(sp)
+   0068 7E                  184 	ld	a,(hl)
+   0069 F5                  185 	push	af
+   006A 33                  186 	inc	sp
+                            187 ;	genCall
+   006B CD 00 00            188 	call	_gbt_loop
+   006E E8 01               189 	lda	sp,1(sp)
+                            190 ;	src/MusicManager.c 24
+                            191 ;	genCall
+                            192 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0070 CD 00 00            193 	call	_PopBank
+                            194 ;	genLabel
+   0073                     195 00103$:
+                            196 ;	genEndFunction
+   0073 E8 03               197 	lda	sp,3(sp)
+   0075 C9                  198 	ret
+   0076                     199 ___MusicPlay_end:
+                            200 ;	src/MusicManager.c 28
+                            201 ;	genLabel
+                            202 ;	genFunction
+                            203 ;	---------------------------------
+                            204 ; Function MusicStop
+                            205 ; ---------------------------------
+   0076                     206 ___MusicStop_start:
+   0076                     207 _MusicStop:
+                            208 	
+                            209 ;	src/MusicManager.c 30
+                            210 ;	genIpush
+                            211 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            212 ;	AOP_STK for 
+   0076 F8 02               213 	lda	hl,2(sp)
+   0078 7E                  214 	ld	a,(hl)
+   0079 F5                  215 	push	af
+   007A 33                  216 	inc	sp
+                            217 ;	genCall
+   007B CD 00 00            218 	call	_PushBank
+   007E E8 01               219 	lda	sp,1(sp)
+                            220 ;	src/MusicManager.c 31
+                            221 ;	genCall
+                            222 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0080 CD 00 00            223 	call	_gbt_stop
+                            224 ;	src/MusicManager.c 32
+                            225 ;	genAssign
+                            226 ;	AOP_HL for _current_index
+   0083 21 00 00            227 	ld	hl,#_current_index
+   0086 36 FF               228 	ld	(hl),#0xFF
+                            229 ;	src/MusicManager.c 33
+                            230 ;	genCall
+                            231 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0088 CD 00 00            232 	call	_PopBank
+                            233 ;	genLabel
+   008B                     234 00101$:
+                            235 ;	genEndFunction
+                            236 	
+   008B C9                  237 	ret
+   008C                     238 ___MusicStop_end:
+                            239 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+  0 _MusicPlay                         0000 GR
+  0 _MusicStop                         0076 GR
+    _PopBank                           **** GX
+    _PushBank                          **** GX
+    _ReadBankedUBYTE                   **** GX
+  0 ___MusicPlay_end                   0076 R
+  0 ___MusicPlay_start                 0000 R
+  0 ___MusicStop_end                   008C R
+  0 ___MusicStop_start                 0076 R
+  1 _current_index                     0000 GR
+    _gbt_loop                          **** GX
+    _gbt_play                          **** GX
+    _gbt_stop                          **** GX
+    _music_banks                       **** GX
+    _music_tracks                      **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size   8C   flags 0
+   1 _DATA                              size    1   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size    5   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

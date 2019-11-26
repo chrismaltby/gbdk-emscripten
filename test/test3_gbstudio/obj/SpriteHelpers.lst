@@ -1,0 +1,140 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Thu Nov 21 08:53:19 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc631810
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _SpritesReset
+                             12 ;--------------------------------------------------------
+                             13 ; special function registers
+                             14 ;--------------------------------------------------------
+                             15 ;--------------------------------------------------------
+                             16 ; special function bits 
+                             17 ;--------------------------------------------------------
+                             18 ;--------------------------------------------------------
+                             19 ; internal ram data
+                             20 ;--------------------------------------------------------
+                             21 	.area _DATA
+                             22 ;--------------------------------------------------------
+                             23 ; overlayable items in internal ram 
+                             24 ;--------------------------------------------------------
+                             25 	.area _OVERLAY
+                             26 ;--------------------------------------------------------
+                             27 ; indirectly addressable internal ram data
+                             28 ;--------------------------------------------------------
+                             29 	.area _ISEG
+                             30 ;--------------------------------------------------------
+                             31 ; bit data
+                             32 ;--------------------------------------------------------
+                             33 	.area _BSEG
+                             34 ;--------------------------------------------------------
+                             35 ; external ram data
+                             36 ;--------------------------------------------------------
+                             37 	.area _XSEG
+                             38 ;--------------------------------------------------------
+                             39 ; global & static initialisations
+                             40 ;--------------------------------------------------------
+                             41 	.area _GSINIT
+                             42 	.area _GSFINAL
+                             43 	.area _GSINIT
+                             44 ;--------------------------------------------------------
+                             45 ; Home
+                             46 ;--------------------------------------------------------
+                             47 	.area _HOME
+                             48 	.area _CODE
+                             49 ;--------------------------------------------------------
+                             50 ; code
+                             51 ;--------------------------------------------------------
+                             52 	.area _CODE
+                             53 ;	src/SpriteHelpers.c 3
+                             54 ;	genLabel
+                             55 ;	genFunction
+                             56 ;	---------------------------------
+                             57 ; Function SpritesReset
+                             58 ; ---------------------------------
+   0000                      59 ___SpritesReset_start:
+   0000                      60 _SpritesReset:
+                             61 	
+                             62 ;	src/SpriteHelpers.c 7
+                             63 ;	genAssign
+   0000 0E 00                64 	ld	c,#0x00
+                             65 ;	genLabel
+   0002                      66 00101$:
+                             67 ;	genCmpEq
+                             68 ; genCmpEq: left 1, right 1, result 0
+   0002 79                   69 	ld	a,c
+   0003 FE 28                70 	cp	a,#0x28
+   0005 CA 2A 00             71 	jp	z,00105$
+   0008                      72 00109$:
+                             73 ;	src/SpriteHelpers.c 8
+                             74 ;	genIpush
+                             75 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0008 C5                   76 	push	bc
+   0009 21 00 00             77 	ld	hl,#0x0000
+   000C E5                   78 	push	hl
+                             79 ;	genIpush
+   000D 79                   80 	ld	a,c
+   000E F5                   81 	push	af
+   000F 33                   82 	inc	sp
+                             83 ;	genCall
+   0010 CD 00 00             84 	call	_move_sprite
+   0013 E8 03                85 	lda	sp,3(sp)
+   0015 E1                   86 	pop	hl
+   0016 4D                   87 	ld	c,l
+                             88 ;	src/SpriteHelpers.c 9
+                             89 ;	genIpush
+                             90 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0017 C5                   91 	push	bc
+   0018 3E 00                92 	ld	a,#0x00
+   001A F5                   93 	push	af
+   001B 33                   94 	inc	sp
+                             95 ;	genIpush
+   001C 79                   96 	ld	a,c
+   001D F5                   97 	push	af
+   001E 33                   98 	inc	sp
+                             99 ;	genCall
+   001F CD 00 00            100 	call	_set_sprite_prop
+   0022 E8 02               101 	lda	sp,2(sp)
+   0024 E1                  102 	pop	hl
+   0025 4D                  103 	ld	c,l
+                            104 ;	src/SpriteHelpers.c 7
+                            105 ;	genPlus
+                            106 ;	genPlusIncr
+                            107 ; Removed redundent load
+   0026 0C                  108 	inc	c
+                            109 ;	genGoto
+   0027 C3 02 00            110 	jp	00101$
+                            111 ;	genLabel
+   002A                     112 00105$:
+                            113 ;	genEndFunction
+                            114 	
+   002A C9                  115 	ret
+   002B                     116 ___SpritesReset_end:
+                            117 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+  0 _SpritesReset                      0000 GR
+  0 ___SpritesReset_end                002B R
+  0 ___SpritesReset_start              0000 R
+    _move_sprite                       **** GX
+    _set_sprite_prop                   **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size   2B   flags 0
+   1 _DATA                              size    0   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size    0   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

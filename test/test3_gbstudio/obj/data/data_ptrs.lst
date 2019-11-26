@@ -1,0 +1,351 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Thu Nov 21 08:53:19 2019
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc631650
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _music_banks
+                             12 	.globl _string_bank_ptrs
+                             13 	.globl _scene_bank_ptrs
+                             14 	.globl _sprite_bank_ptrs
+                             15 	.globl _background_bank_ptrs
+                             16 	.globl _tileset_bank_ptrs
+                             17 	.globl _script_variables
+                             18 	.globl _music_tracks
+                             19 	.globl _bank_data_ptrs
+                             20 ;--------------------------------------------------------
+                             21 ; special function registers
+                             22 ;--------------------------------------------------------
+                             23 ;--------------------------------------------------------
+                             24 ; special function bits 
+                             25 ;--------------------------------------------------------
+                             26 ;--------------------------------------------------------
+                             27 ; internal ram data
+                             28 ;--------------------------------------------------------
+                             29 	.area _DATA
+   0000                      30 _bank_data_ptrs::
+   0000                      31 	.ds 16
+   0010                      32 _music_tracks::
+   0010                      33 	.ds 4
+   0014                      34 _script_variables::
+   0014                      35 	.ds 103
+                             36 ;--------------------------------------------------------
+                             37 ; overlayable items in internal ram 
+                             38 ;--------------------------------------------------------
+                             39 	.area _OVERLAY
+                             40 ;--------------------------------------------------------
+                             41 ; indirectly addressable internal ram data
+                             42 ;--------------------------------------------------------
+                             43 	.area _ISEG
+                             44 ;--------------------------------------------------------
+                             45 ; bit data
+                             46 ;--------------------------------------------------------
+                             47 	.area _BSEG
+                             48 ;--------------------------------------------------------
+                             49 ; external ram data
+                             50 ;--------------------------------------------------------
+                             51 	.area _XSEG
+                             52 ;--------------------------------------------------------
+                             53 ; global & static initialisations
+                             54 ;--------------------------------------------------------
+                             55 	.area _GSINIT
+                             56 	.area _GSFINAL
+                             57 	.area _GSINIT
+                             58 ;	src/data/data_ptrs.c 38
+                             59 ;	genAssign (pointer)
+   0000 11 00 00             60 	ld	de,#_bank_data_ptrs
+   0003 3E 00                61 	ld	a,#0x00
+   0005 12                   62 	ld	(de),a
+   0006 13                   63 	inc	de
+   0007 3E 00                64 	ld	a,#0x00
+   0009 12                   65 	ld	(de),a
+                             66 ;	genPlus
+                             67 ;	genPlusIncr
+   000A 21 02 00             68 	ld	hl,#_bank_data_ptrs + 2
+                             69 ;	genAssign (pointer)
+   000D 5D                   70 	ld	e,l
+   000E 54                   71 	ld	d,h
+   000F 3E 00                72 	ld	a,#0x00
+   0011 12                   73 	ld	(de),a
+   0012 13                   74 	inc	de
+   0013 3E 00                75 	ld	a,#0x00
+   0015 12                   76 	ld	(de),a
+                             77 ;	genPlus
+                             78 ;	genPlusIncr
+   0016 23                   79 	inc	hl
+   0017 23                   80 	inc	hl
+                             81 ;	genAssign (pointer)
+   0018 5D                   82 	ld	e,l
+   0019 54                   83 	ld	d,h
+   001A 3E 00                84 	ld	a,#0x00
+   001C 12                   85 	ld	(de),a
+   001D 13                   86 	inc	de
+   001E 3E 00                87 	ld	a,#0x00
+   0020 12                   88 	ld	(de),a
+                             89 ;	genPlus
+                             90 ;	genPlusIncr
+   0021 23                   91 	inc	hl
+   0022 23                   92 	inc	hl
+                             93 ;	genAssign (pointer)
+   0023 5D                   94 	ld	e,l
+   0024 54                   95 	ld	d,h
+   0025 3E 00                96 	ld	a,#0x00
+   0027 12                   97 	ld	(de),a
+   0028 13                   98 	inc	de
+   0029 3E 00                99 	ld	a,#0x00
+   002B 12                  100 	ld	(de),a
+                            101 ;	genPlus
+                            102 ;	genPlusIncr
+   002C 23                  103 	inc	hl
+   002D 23                  104 	inc	hl
+                            105 ;	genAssign (pointer)
+   002E 5D                  106 	ld	e,l
+   002F 54                  107 	ld	d,h
+   0030 3E 00               108 	ld	a,#0x00
+   0032 12                  109 	ld	(de),a
+   0033 13                  110 	inc	de
+   0034 3E 00               111 	ld	a,#0x00
+   0036 12                  112 	ld	(de),a
+                            113 ;	genPlus
+                            114 ;	genPlusIncr
+   0037 23                  115 	inc	hl
+   0038 23                  116 	inc	hl
+                            117 ;	genAssign (pointer)
+   0039 5D                  118 	ld	e,l
+   003A 54                  119 	ld	d,h
+   003B 3E 00               120 	ld	a,#0x00
+   003D 12                  121 	ld	(de),a
+   003E 13                  122 	inc	de
+   003F 3E 00               123 	ld	a,#0x00
+   0041 12                  124 	ld	(de),a
+                            125 ;	genPlus
+                            126 ;	genPlusIncr
+   0042 01 0C 00            127 	ld	bc,#_bank_data_ptrs + 12
+                            128 ;	src/data/data_ptrs.c 6
+                            129 ;	genAssign (pointer)
+   0045 59                  130 	ld	e,c
+   0046 50                  131 	ld	d,b
+   0047 3E 00               132 	ld	a,#<_bank_6_data
+   0049 12                  133 	ld	(de),a
+   004A 13                  134 	inc	de
+   004B 3E 00               135 	ld	a,#>_bank_6_data
+   004D 12                  136 	ld	(de),a
+                            137 ;	src/data/data_ptrs.c 38
+                            138 ;	genPlus
+                            139 ;	genPlusIncr
+   004E 01 0E 00            140 	ld	bc,#_bank_data_ptrs + 14
+                            141 ;	src/data/data_ptrs.c 7
+                            142 ;	genAssign (pointer)
+   0051 59                  143 	ld	e,c
+   0052 50                  144 	ld	d,b
+   0053 3E 00               145 	ld	a,#<_bank_7_data
+   0055 12                  146 	ld	(de),a
+   0056 13                  147 	inc	de
+   0057 3E 00               148 	ld	a,#>_bank_7_data
+   0059 12                  149 	ld	(de),a
+                            150 ;	src/data/data_ptrs.c 38
+                            151 ;	genAssign (pointer)
+   005A 11 10 00            152 	ld	de,#_music_tracks
+   005D 3E 00               153 	ld	a,#<_music_edd10ca30_Data
+   005F 12                  154 	ld	(de),a
+   0060 13                  155 	inc	de
+   0061 3E 00               156 	ld	a,#>_music_edd10ca30_Data
+   0063 12                  157 	ld	(de),a
+                            158 ;	genPlus
+                            159 ;	genPlusIncr
+   0064 21 12 00            160 	ld	hl,#_music_tracks + 2
+                            161 ;	genAssign (pointer)
+   0067 5D                  162 	ld	e,l
+   0068 54                  163 	ld	d,h
+   0069 3E 00               164 	ld	a,#0x00
+   006B 12                  165 	ld	(de),a
+   006C 13                  166 	inc	de
+   006D 3E 00               167 	ld	a,#0x00
+   006F 12                  168 	ld	(de),a
+                            169 ;	src/data/data_ptrs.c 37
+                            170 ;	src/data/data_ptrs.c 38
+                            171 ;	genArrayInit
+                            172 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0070 21 14 00            173 	ld	hl,#_script_variables
+   0073 CD 00 00            174 	call	__initrleblock
+   0076 01                  175 	.db	1
+   0077 00                  176 	.db	0x00
+   0078 00                  177 	.db	0
+                            178 ;--------------------------------------------------------
+                            179 ; Home
+                            180 ;--------------------------------------------------------
+                            181 	.area _HOME
+                            182 	.area _CODE
+                            183 ;--------------------------------------------------------
+                            184 ; code
+                            185 ;--------------------------------------------------------
+                            186 	.area _CODE_5
+                            187 	.area _CODE_5
+   0000                     188 _tileset_bank_ptrs:
+   0000 06                  189 	.db #0x06
+   0001 15 05               190 	.dw #0x0515
+   0003 06                  191 	.db #0x06
+   0004 06 11               192 	.dw #0x1106
+   0006                     193 _background_bank_ptrs:
+   0006 06                  194 	.db #0x06
+   0007 87 16               195 	.dw #0x1687
+   0009 06                  196 	.db #0x06
+   000A F2 17               197 	.dw #0x17F2
+   000C 06                  198 	.db #0x06
+   000D 5D 19               199 	.dw #0x195D
+   000F 06                  200 	.db #0x06
+   0010 C8 1A               201 	.dw #0x1AC8
+   0012 06                  202 	.db #0x06
+   0013 33 1C               203 	.dw #0x1C33
+   0015 06                  204 	.db #0x06
+   0016 36 20               205 	.dw #0x2036
+   0018 06                  206 	.db #0x06
+   0019 39 24               207 	.dw #0x2439
+   001B 06                  208 	.db #0x06
+   001C A4 25               209 	.dw #0x25A4
+   001E                     210 _sprite_bank_ptrs:
+   001E 06                  211 	.db #0x06
+   001F 47 3A               212 	.dw #0x3A47
+   0021 06                  213 	.db #0x06
+   0022 88 3A               214 	.dw #0x3A88
+   0024 06                  215 	.db #0x06
+   0025 49 3B               216 	.dw #0x3B49
+   0027 06                  217 	.db #0x06
+   0028 8A 3B               218 	.dw #0x3B8A
+   002A 06                  219 	.db #0x06
+   002B 0B 3C               220 	.dw #0x3C0B
+   002D 06                  221 	.db #0x06
+   002E 0C 3D               222 	.dw #0x3D0C
+   0030 06                  223 	.db #0x06
+   0031 4D 3D               224 	.dw #0x3D4D
+   0033 06                  225 	.db #0x06
+   0034 0E 3E               226 	.dw #0x3E0E
+   0036 07                  227 	.db #0x07
+   0037 00 00               228 	.dw #0x0000
+   0039 07                  229 	.db #0x07
+   003A 81 01               230 	.dw #0x0181
+   003C 07                  231 	.db #0x07
+   003D 02 03               232 	.dw #0x0302
+   003F 07                  233 	.db #0x07
+   0040 43 03               234 	.dw #0x0343
+   0042 07                  235 	.db #0x07
+   0043 84 03               236 	.dw #0x0384
+   0045 07                  237 	.db #0x07
+   0046 C5 03               238 	.dw #0x03C5
+   0048 07                  239 	.db #0x07
+   0049 46 04               240 	.dw #0x0446
+   004B 07                  241 	.db #0x07
+   004C 87 04               242 	.dw #0x0487
+   004E                     243 _scene_bank_ptrs:
+   004E 07                  244 	.db #0x07
+   004F C8 04               245 	.dw #0x04C8
+   0051 07                  246 	.db #0x07
+   0052 CA 05               247 	.dw #0x05CA
+   0054 07                  248 	.db #0x07
+   0055 5A 06               249 	.dw #0x065A
+   0057 07                  250 	.db #0x07
+   0058 DC 06               251 	.dw #0x06DC
+   005A 07                  252 	.db #0x07
+   005B 73 07               253 	.dw #0x0773
+   005D 07                  254 	.db #0x07
+   005E A9 07               255 	.dw #0x07A9
+   0060 07                  256 	.db #0x07
+   0061 DF 07               257 	.dw #0x07DF
+   0063 07                  258 	.db #0x07
+   0064 B4 08               259 	.dw #0x08B4
+   0066                     260 _string_bank_ptrs:
+   0066 06                  261 	.db #0x06
+   0067 00 00               262 	.dw #0x0000
+   0069 06                  263 	.db #0x06
+   006A 16 00               264 	.dw #0x0016
+   006C 06                  265 	.db #0x06
+   006D 36 00               266 	.dw #0x0036
+   006F 06                  267 	.db #0x06
+   0070 55 00               268 	.dw #0x0055
+   0072 06                  269 	.db #0x06
+   0073 5C 00               270 	.dw #0x005C
+   0075 06                  271 	.db #0x06
+   0076 80 00               272 	.dw #0x0080
+   0078 06                  273 	.db #0x06
+   0079 9E 00               274 	.dw #0x009E
+   007B 06                  275 	.db #0x06
+   007C BA 00               276 	.dw #0x00BA
+   007E 06                  277 	.db #0x06
+   007F DE 00               278 	.dw #0x00DE
+   0081 06                  279 	.db #0x06
+   0082 FB 00               280 	.dw #0x00FB
+   0084 06                  281 	.db #0x06
+   0085 1F 01               282 	.dw #0x011F
+   0087 06                  283 	.db #0x06
+   0088 31 01               284 	.dw #0x0131
+   008A 06                  285 	.db #0x06
+   008B 50 01               286 	.dw #0x0150
+   008D 06                  287 	.db #0x06
+   008E 79 01               288 	.dw #0x0179
+   0090 06                  289 	.db #0x06
+   0091 9B 01               290 	.dw #0x019B
+   0093 06                  291 	.db #0x06
+   0094 B9 01               292 	.dw #0x01B9
+   0096 06                  293 	.db #0x06
+   0097 DB 01               294 	.dw #0x01DB
+   0099 06                  295 	.db #0x06
+   009A FA 01               296 	.dw #0x01FA
+   009C 06                  297 	.db #0x06
+   009D 21 02               298 	.dw #0x0221
+   009F 06                  299 	.db #0x06
+   00A0 3D 02               300 	.dw #0x023D
+   00A2 06                  301 	.db #0x06
+   00A3 54 02               302 	.dw #0x0254
+   00A5 06                  303 	.db #0x06
+   00A6 6E 02               304 	.dw #0x026E
+   00A8 06                  305 	.db #0x06
+   00A9 90 02               306 	.dw #0x0290
+   00AB 06                  307 	.db #0x06
+   00AC B3 02               308 	.dw #0x02B3
+   00AE 06                  309 	.db #0x06
+   00AF C6 02               310 	.dw #0x02C6
+   00B1 06                  311 	.db #0x06
+   00B2 DD 02               312 	.dw #0x02DD
+   00B4 06                  313 	.db #0x06
+   00B5 04 03               314 	.dw #0x0304
+   00B7 06                  315 	.db #0x06
+   00B8 26 03               316 	.dw #0x0326
+   00BA                     317 _music_banks:
+   00BA 09                  318 	.db #0x09
+   00BB 00                  319 	.db #0x00
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+    __initrleblock                     **** GX
+  9 _background_bank_ptrs              0006 GR
+    _bank_6_data                       **** GX
+    _bank_7_data                       **** GX
+  1 _bank_data_ptrs                    0000 GR
+  9 _music_banks                       00BA GR
+    _music_edd10ca30_Data              **** GX
+  1 _music_tracks                      0010 GR
+  9 _scene_bank_ptrs                   004E GR
+  1 _script_variables                  0014 GR
+  9 _sprite_bank_ptrs                  001E GR
+  9 _string_bank_ptrs                  0066 GR
+  9 _tileset_bank_ptrs                 0000 GR
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size    0   flags 0
+   1 _DATA                              size   7B   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size   79   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0
+   9 _CODE_5                            size   BC   flags 0

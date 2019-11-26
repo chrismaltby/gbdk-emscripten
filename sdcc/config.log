@@ -1,0 +1,456 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:556: checking for mawk
+configure:556: checking for gawk
+configure:587: checking version of the package
+configure:651: checking for emcc
+configure:764: checking whether the C compiler (emcc  ) works
+configure:780: emcc -o conftest    conftest.c  1>&5
+configure:777:1: warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+main(){return(0);}
+^
+1 warning generated.
+configure:806: checking whether the C compiler (emcc  ) is a cross-compiler
+configure:811: checking whether we are using GNU C
+configure:820: emcc -E conftest.c
+configure:839: checking whether emcc accepts -g
+configure:875: checking for c++
+configure:907: checking whether the C++ compiler (g++  ) works
+configure:923: g++ -o conftest    conftest.C  1>&5
+configure:949: checking whether the C++ compiler (g++  ) is a cross-compiler
+configure:954: checking whether we are using GNU C++
+configure:963: g++ -E conftest.C
+configure:982: checking whether g++ accepts -g
+configure:1014: checking how to run the C preprocessor
+configure:1035: emcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1124: checking for a BSD compatible install
+configure:1179: checking for ranlib
+configure:1209: checking for flex
+configure:1243: checking for yywrap in -lfl
+configure:1262: emcc -o conftest -g -O2   conftest.c -lfl   1>&5
+WARNING:root:emcc: cannot find library "fl"
+error: unresolved symbol: yywrap
+Aborting compilation due to previous errors | undefined
+Traceback (most recent call last):
+  File "/opt/emsdk/emscripten/1.38.6/emcc.py", line 2916, in <module>
+    sys.exit(run())
+  File "/opt/emsdk/emscripten/1.38.6/emcc.py", line 1673, in run
+    final = shared.Building.emscripten(final, append_ext=False, extra_args=extra_args)
+  File "/opt/emsdk/emscripten/1.38.6/tools/shared.py", line 2042, in emscripten
+    emscripten._main(cmdline)
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 2383, in _main
+    temp_files.run_and_clean(lambda: main(
+  File "/opt/emsdk/emscripten/1.38.6/tools/tempfiles.py", line 93, in run_and_clean
+    return func()
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 2388, in <lambda>
+    DEBUG=DEBUG,
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 2296, in main
+    temp_files=temp_files, DEBUG=DEBUG)
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 89, in emscript
+    glue, forwarded_data = compiler_glue(metadata, settings, libraries, compiler_engine, temp_files, DEBUG)
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 221, in compiler_glue
+    glue, forwarded_data = compile_settings(compiler_engine, settings, libraries, temp_files)
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 536, in compile_settings
+    cwd=path_from_root('src'), error_limit=300)
+  File "/opt/emsdk/emscripten/1.38.6/tools/jsrun.py", line 132, in run_js
+    raise Exception('Expected the command ' + str(command) + ' to finish with return code ' + str(assert_returncode) + ', but it returned with code ' + str(proc.returncode) + ' instead! Output: ' + str(ret)[:error_limit])
+Exception: Expected the command ['/opt/emsdk/node/8.9.1_64bit/bin/node', '/opt/emsdk/emscripten/1.38.6/src/compiler.js', '/tmp/tmpVWPsv7.txt', '/opt/emsdk/emscripten/1.38.6/src/library_pthread_stub.js'] to finish with return code 0, but it returned with code 1 instead! Output: // The Module object: Our interface to the outside world. We import
+// and export values on it. There are various ways Module can be used:
+// 1. Not defined. We create it here
+// 2. A function parameter, function(Module) { ..generated code.. }
+// 3. pre-run appended it, var Module = {}; ..generated 
+configure: failed program was:
+#line 1251 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char yywrap();
+
+int main() {
+yywrap()
+; return 0; }
+configure:1287: checking for bison
+configure:1317: checking for autoconf
+configure:1347: checking for strip
+configure:1377: checking for as
+configure:1407: checking for cp
+configure:1457: checking for ANSI C header files
+configure:1470: emcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1537: emcc -o conftest -g -O2   conftest.c  1>&5
+configure:1532:67: error: implicitly declaring library function 'exit' with type 'void (int) __attribute__((noreturn))' [-Werror,-Wimplicit-function-declaration]
+if (XOR (islower (i), ISLOWER (i)) || toupper (i) != TOUPPER (i)) exit(2);
+                                                                  ^
+configure:1532:67: note: include the header <stdlib.h> or explicitly provide a declaration for 'exit'
+1 error generated.
+ERROR:root:compiler frontend failed to generate LLVM bitcode, halting
+configure: failed program was:
+#line 1526 "configure"
+#include "confdefs.h"
+#include <ctype.h>
+#define ISLOWER(c) ('a' <= (c) && (c) <= 'z')
+#define TOUPPER(c) (ISLOWER(c) ? 'A' + ((c) - 'a') : (c))
+#define XOR(e, f) (((e) && !(f)) || (!(e) && (f)))
+int main () { int i; for (i = 0; i < 256; i++)
+if (XOR (islower (i), ISLOWER (i)) || toupper (i) != TOUPPER (i)) exit(2);
+exit (0); }
+
+configure:1564: checking for getopt.h
+configure:1574: emcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1604: checking for unistd.h
+configure:1614: emcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1644: checking for endian.h
+configure:1654: emcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1684: checking for machine/endian.h
+configure:1694: emcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1690:10: fatal error: 'machine/endian.h' file not found
+#include <machine/endian.h>
+         ^~~~~~~~~~~~~~~~~~
+1 error generated.
+configure: failed program was:
+#line 1689 "configure"
+#include "confdefs.h"
+#include <machine/endian.h>
+configure:1724: checking for malloc.h
+configure:1734: emcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1764: checking for sys/isa_defs.h
+configure:1774: emcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1770:10: fatal error: 'sys/isa_defs.h' file not found
+#include <sys/isa_defs.h>
+         ^~~~~~~~~~~~~~~~
+1 error generated.
+configure: failed program was:
+#line 1769 "configure"
+#include "confdefs.h"
+#include <sys/isa_defs.h>
+configure:1804: checking for sys/socket.h
+configure:1814: emcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1845: checking for dirent.h that defines DIR
+configure:1858: emcc -c -g -O2  conftest.c 1>&5
+configure:1883: checking for opendir in -ldir
+configure:1902: emcc -o conftest -g -O2   conftest.c -ldir   1>&5
+WARNING:root:emcc: cannot find library "dir"
+configure:1969: checking which header file defines FD_ macros
+configure:2087: checking for strlen
+configure:2115: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2092:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2099:6: warning: incompatible redeclaration of library function 'strlen' [-Wincompatible-library-redeclaration]
+char strlen();
+     ^
+configure:2099:6: note: 'strlen' is a builtin with type 'unsigned int (const char *)'
+2 warnings generated.
+configure:2087: checking for strcpy
+configure:2115: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2092:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2099:6: warning: incompatible redeclaration of library function 'strcpy' [-Wincompatible-library-redeclaration]
+char strcpy();
+     ^
+configure:2099:6: note: 'strcpy' is a builtin with type 'char *(char *, const char *)'
+2 warnings generated.
+configure:2087: checking for strcat
+configure:2115: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2092:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2099:6: warning: incompatible redeclaration of library function 'strcat' [-Wincompatible-library-redeclaration]
+char strcat();
+     ^
+configure:2099:6: note: 'strcat' is a builtin with type 'char *(char *, const char *)'
+2 warnings generated.
+configure:2087: checking for strstr
+configure:2115: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2092:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2099:6: warning: incompatible redeclaration of library function 'strstr' [-Wincompatible-library-redeclaration]
+char strstr();
+     ^
+configure:2099:6: note: 'strstr' is a builtin with type 'char *(const char *, const char *)'
+2 warnings generated.
+configure:2087: checking for strcmp
+configure:2115: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2092:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2099:6: warning: incompatible redeclaration of library function 'strcmp' [-Wincompatible-library-redeclaration]
+char strcmp();
+     ^
+configure:2099:6: note: 'strcmp' is a builtin with type 'int (const char *, const char *)'
+2 warnings generated.
+configure:2087: checking for strerror
+configure:2115: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2092:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2099:6: warning: incompatible redeclaration of library function 'strerror' [-Wincompatible-library-redeclaration]
+char strerror();
+     ^
+configure:2099:6: note: 'strerror' is a builtin with type 'char *(int)'
+2 warnings generated.
+configure:2087: checking for strtok
+configure:2115: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2092:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2099:6: warning: incompatible redeclaration of library function 'strtok' [-Wincompatible-library-redeclaration]
+char strtok();
+     ^
+configure:2099:6: note: 'strtok' is a builtin with type 'char *(char *, const char *)'
+2 warnings generated.
+configure:2087: checking for strdup
+configure:2115: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2092:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2099:6: warning: incompatible redeclaration of library function 'strdup' [-Wincompatible-library-redeclaration]
+char strdup();
+     ^
+configure:2099:6: note: 'strdup' is a builtin with type 'char *(const char *)'
+2 warnings generated.
+configure:2142: checking for strchr
+configure:2170: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2147:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2154:6: warning: incompatible redeclaration of library function 'strchr' [-Wincompatible-library-redeclaration]
+char strchr();
+     ^
+configure:2154:6: note: 'strchr' is a builtin with type 'char *(const char *, int)'
+2 warnings generated.
+configure:2142: checking for memcpy
+configure:2170: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2147:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+configure:2154:6: warning: incompatible redeclaration of library function 'memcpy' [-Wincompatible-library-redeclaration]
+char memcpy();
+     ^
+configure:2154:6: note: 'memcpy' is a builtin with type 'void *(void *, const void *, unsigned int)'
+2 warnings generated.
+configure:2197: checking for fgets
+configure:2225: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2202:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+configure:2252: checking for yylex
+configure:2280: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2257:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+error: unresolved symbol: yylex
+Aborting compilation due to previous errors | undefined
+Traceback (most recent call last):
+  File "/opt/emsdk/emscripten/1.38.6/emcc.py", line 2916, in <module>
+    sys.exit(run())
+  File "/opt/emsdk/emscripten/1.38.6/emcc.py", line 1673, in run
+    final = shared.Building.emscripten(final, append_ext=False, extra_args=extra_args)
+  File "/opt/emsdk/emscripten/1.38.6/tools/shared.py", line 2042, in emscripten
+    emscripten._main(cmdline)
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 2383, in _main
+    temp_files.run_and_clean(lambda: main(
+  File "/opt/emsdk/emscripten/1.38.6/tools/tempfiles.py", line 93, in run_and_clean
+    return func()
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 2388, in <lambda>
+    DEBUG=DEBUG,
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 2296, in main
+    temp_files=temp_files, DEBUG=DEBUG)
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 89, in emscript
+    glue, forwarded_data = compiler_glue(metadata, settings, libraries, compiler_engine, temp_files, DEBUG)
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 221, in compiler_glue
+    glue, forwarded_data = compile_settings(compiler_engine, settings, libraries, temp_files)
+  File "/opt/emsdk/emscripten/1.38.6/emscripten.py", line 536, in compile_settings
+    cwd=path_from_root('src'), error_limit=300)
+  File "/opt/emsdk/emscripten/1.38.6/tools/jsrun.py", line 132, in run_js
+    raise Exception('Expected the command ' + str(command) + ' to finish with return code ' + str(assert_returncode) + ', but it returned with code ' + str(proc.returncode) + ' instead! Output: ' + str(ret)[:error_limit])
+Exception: Expected the command ['/opt/emsdk/node/8.9.1_64bit/bin/node', '/opt/emsdk/emscripten/1.38.6/src/compiler.js', '/tmp/tmpCitg3p.txt', '/opt/emsdk/emscripten/1.38.6/src/library_pthread_stub.js'] to finish with return code 0, but it returned with code 1 instead! Output: // The Module object: Our interface to the outside world. We import
+// and export values on it. There are various ways Module can be used:
+// 1. Not defined. We create it here
+// 2. A function parameter, function(Module) { ..generated code.. }
+// 3. pre-run appended it, var Module = {}; ..generated 
+configure: failed program was:
+#line 2257 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char yylex(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char yylex();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_yylex) || defined (__stub___yylex)
+choke me
+#else
+yylex();
+#endif
+
+; return 0; }
+configure:2308: checking for library containing socket
+configure:2326: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2315:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+configure:2370: checking for library containing inet_addr
+configure:2388: emcc -o conftest -g -O2   conftest.c  -ldir 1>&5
+WARNING:root:emcc: cannot find library "dir"
+In file included from configure:2377:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
+configure:2444: checking whether preprocessor accepts -MM or -M
+INFO:root:(Emscripten: Running sanity checks)
+clang version 6.0.1  (emscripten 1.38.6 : 1.38.6)
+Target: asmjs-unknown-emscripten
+Thread model: posix
+InstalledDir: /opt/emsdk/clang/e1.38.6_64bit
+ "/opt/emsdk/clang/e1.38.6_64bit/clang" -cc1 -triple asmjs-unknown-emscripten -Eonly -disable-free -disable-llvm-verifier -discard-value-names -main-file-name _test_.c -mrelocation-model static -mthread-model posix -mdisable-fp-elim -no-integrated-as -mconstructor-aliases -dwarf-column-info -debugger-tuning=gdb -target-linker-version 305 -v -nostdsysteminc -nobuiltininc -resource-dir /opt/emsdk/clang/lib/clang/6.0.1 -dependency-file - -w -MT _test_.o -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=38 -D __EMSCRIPTEN_tiny__=6 -D _LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -fno-dwarf-directory-asm -fdebug-compilation-dir /Users/cmaltby/Desktop/gbdk-mac/sdcc -ferror-limit 19 -fmessage-length 0 -fobjc-runtime=gnustep -fdiagnostics-show-option -nobuiltininc -nostdsysteminc -isystem/opt/emsdk/emscripten/1.38.6/system/include/libcxx -isystem/opt/emsdk/emscripten/1.38.6/system/lib/libcxxabi/include -isystem/opt/emsdk/emscripten/1.38.6/system/include/compat -isystem/opt/emsdk/emscripten/1.38.6/system/include -isystem/opt/emsdk/emscripten/1.38.6/system/include/SSE -isystem/opt/emsdk/emscripten/1.38.6/system/include/libc -isystem/opt/emsdk/emscripten/1.38.6/system/lib/libc/musl/arch/emscripten -isystem/opt/emsdk/emscripten/1.38.6/system/local/include -disable-O0-optnone -isystem/opt/emsdk/emscripten/1.38.6/system/include/SDL -x c _test_.c
+clang -cc1 version 6.0.1 based upon LLVM 6.0.1 default target x86_64-apple-darwin19.0.0
+#include "..." search starts here:
+#include <...> search starts here:
+ /opt/emsdk/emscripten/1.38.6/system/include/libcxx
+ /opt/emsdk/emscripten/1.38.6/system/lib/libcxxabi/include
+ /opt/emsdk/emscripten/1.38.6/system/include/compat
+ /opt/emsdk/emscripten/1.38.6/system/include
+ /opt/emsdk/emscripten/1.38.6/system/include/SSE
+ /opt/emsdk/emscripten/1.38.6/system/include/libc
+ /opt/emsdk/emscripten/1.38.6/system/lib/libc/musl/arch/emscripten
+ /opt/emsdk/emscripten/1.38.6/system/local/include
+ /opt/emsdk/emscripten/1.38.6/system/include/SDL
+End of search list.
+_test_.o: _test_.c
+configure:2466: checking whether emcc accepts -ggdb
+INFO:root:(Emscripten: Running sanity checks)
+Traceback (most recent call last):
+  File "/opt/emsdk/emscripten/1.38.6/emcc", line 11, in <module>
+    python_selector.run(__file__)
+  File "/opt/emsdk/emscripten/1.38.6/tools/python_selector.py", line 38, in run
+    sys.exit(run_by_import(filename, main) if on_allowed_version() else run_by_subprocess(filename))
+  File "/opt/emsdk/emscripten/1.38.6/tools/python_selector.py", line 13, in run_by_import
+    return getattr(importlib.import_module(os.path.basename(filename)), main)()
+  File "/opt/emsdk/emscripten/1.38.6/emcc.py", line 653, in run
+    options, settings_changes, newargs = parse_args(newargs)
+  File "/opt/emsdk/emscripten/1.38.6/emcc.py", line 2044, in parse_args
+    options.debug_level = validate_arg_level(requested_level, 4, 'Invalid debug level: ' + newargs[i])
+  File "/opt/emsdk/emscripten/1.38.6/emcc.py", line 2910, in validate_arg_level
+    raise Exception(err_msg)
+Exception: Invalid debug level: -ggdb
+configure:2491: checking whether emcc accepts -pipe
+INFO:root:(Emscripten: Running sanity checks)
+clang version 6.0.1  (emscripten 1.38.6 : 1.38.6)
+Target: asmjs-unknown-emscripten
+Thread model: posix
+InstalledDir: /opt/emsdk/clang/e1.38.6_64bit
+ "/opt/emsdk/clang/e1.38.6_64bit/clang" -cc1 -triple asmjs-unknown-emscripten -emit-llvm-bc -emit-llvm-uselists -disable-free -disable-llvm-verifier -discard-value-names -main-file-name _test_.c -mrelocation-model static -mthread-model posix -mdisable-fp-elim -no-integrated-as -mconstructor-aliases -dwarf-column-info -debugger-tuning=gdb -target-linker-version 305 -v -coverage-notes-file /Users/cmaltby/Desktop/gbdk-mac/sdcc/_test_.gcno -nostdsysteminc -nobuiltininc -resource-dir /opt/emsdk/clang/lib/clang/6.0.1 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=38 -D __EMSCRIPTEN_tiny__=6 -D _LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -fno-dwarf-directory-asm -fdebug-compilation-dir /Users/cmaltby/Desktop/gbdk-mac/sdcc -ferror-limit 19 -fmessage-length 0 -fobjc-runtime=gnustep -fdiagnostics-show-option -nobuiltininc -nostdsysteminc -isystem/opt/emsdk/emscripten/1.38.6/system/include/libcxx -isystem/opt/emsdk/emscripten/1.38.6/system/lib/libcxxabi/include -isystem/opt/emsdk/emscripten/1.38.6/system/include/compat -isystem/opt/emsdk/emscripten/1.38.6/system/include -isystem/opt/emsdk/emscripten/1.38.6/system/include/SSE -isystem/opt/emsdk/emscripten/1.38.6/system/include/libc -isystem/opt/emsdk/emscripten/1.38.6/system/lib/libc/musl/arch/emscripten -isystem/opt/emsdk/emscripten/1.38.6/system/local/include -disable-O0-optnone -isystem/opt/emsdk/emscripten/1.38.6/system/include/SDL -o _test_.o -x c _test_.c
+clang -cc1 version 6.0.1 based upon LLVM 6.0.1 default target x86_64-apple-darwin19.0.0
+#include "..." search starts here:
+#include <...> search starts here:
+ /opt/emsdk/emscripten/1.38.6/system/include/libcxx
+ /opt/emsdk/emscripten/1.38.6/system/lib/libcxxabi/include
+ /opt/emsdk/emscripten/1.38.6/system/include/compat
+ /opt/emsdk/emscripten/1.38.6/system/include
+ /opt/emsdk/emscripten/1.38.6/system/include/SSE
+ /opt/emsdk/emscripten/1.38.6/system/include/libc
+ /opt/emsdk/emscripten/1.38.6/system/lib/libc/musl/arch/emscripten
+ /opt/emsdk/emscripten/1.38.6/system/local/include
+ /opt/emsdk/emscripten/1.38.6/system/include/SDL
+End of search list.
+_test_.c:2:1: warning: return type of 'main' is not 'int' [-Wmain-return-type]
+void main(void) {}
+^
+_test_.c:2:1: note: change return type to 'int'
+void main(void) {}
+^~~~
+int
+1 warning generated.
+configure:2518: checking return type of signal handlers
+configure:2540: emcc -c -g -O2 -pipe  conftest.c 1>&5
+In file included from configure:2523:
+./confdefs.h:15:9: warning: 'FD_HEADER_OK' macro redefined [-Wmacro-redefined]
+#define FD_HEADER_OK 1
+        ^
+./confdefs.h:12:9: note: previous definition is here
+#define FD_HEADER_OK 0
+        ^
+1 warning generated.
