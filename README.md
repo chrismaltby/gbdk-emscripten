@@ -17,7 +17,7 @@ npm install gbdk-emscripten
 ## Quick Example
 
 ```
-const GBDK = require("../../dist/index");
+const GBDK = require("gbdk-emscripten");
 
 await GBDK.compile("galaxy.c", "galaxy.o", {
     include: ["include"]
