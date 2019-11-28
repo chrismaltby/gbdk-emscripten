@@ -30,6 +30,8 @@ await GBDK.link(["galaxy.o"], "galaxy1.gb", {
 });
 ```
 
+See `test/gbdk.test.js` for more examples.
+
 ## About GBDK
 
 "The GameBoy Developer's Kit (GBDK), is a set of tools that enable to

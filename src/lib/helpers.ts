@@ -1,5 +1,9 @@
 import fs from "fs";
 import Glob from "glob";
+import { TextEncoder, TextDecoder } from "util";
+
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
 
 export const requiredFolders = (files: string[]): string[] =>
   files
@@ -57,9 +61,29 @@ export const glob = (path: string): Promise<string[]> => {
   });
 };
 
-export const requireUncached = (module: any) => {
-  delete require.cache[require.resolve(module)];
+export const deleteModule = (moduleName: string) => {
+  const solvedName = require.resolve(moduleName),
+    nodeModule = require.cache[solvedName];
+  if (nodeModule) {
+    for (let i = 0; i < nodeModule.children.length; i++) {
+      const child = nodeModule.children[i];
+      deleteModule(child.filename);
+    }
+    delete require.cache[solvedName];
+  }
+};
+
+export const requireUncached = (module: string) => {
+  deleteModule(module);
   return require(module);
 };
 
 export const identity = <T>(x: T): T => x;
+
+export const arr82str = (buf: Uint8Array) => {
+  return decoder.decode(buf);
+};
+
+export const str2arr8 = (str: string) => {
+  return encoder.encode(str);
+};

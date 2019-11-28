@@ -1,19 +1,121 @@
-const fs = require("fs");
-const cwd = process.cwd();
-const glob = require("glob");
-const Path = require("path");
-import { readFile, writeFile } from "./lib/helpers";
-import link from "./lib/linkgbz80";
-import preProcess from "./lib/preprocess";
-import sdcc from "./lib/sdcc";
-import asgbz80 from "./lib/asgbz80";
+import { fork } from "child_process";
+import { readFile, writeFile, arr82str, str2arr8 } from "./lib/helpers";
 
-function requireUncached(module: any) {
-  delete require.cache[require.resolve(module)];
-  return require(module);
-}
+const preProcess = async (
+  file: Uint8Array,
+  filename: string,
+  options: IGBDKCompileOptions
+): Promise<Uint8Array> => {
+  return new Promise((resolve, reject) => {
+    const forked = fork(__dirname + "/lib/forked-child.js");
+    forked.on("message", msg => {
+      switch (msg.type) {
+        case "SUCCESS":
+          resolve(str2arr8(msg.data));
+          break;
+        case "ERROR":
+          reject(msg.error);
+          break;
+        default:
+          reject("Unknown msg type");
+      }
+      forked.kill();
+    });
+    forked.send({
+      type: "PRE-PROCESS",
+      file: arr82str(file),
+      filename,
+      options
+    });
+  });
+};
 
-const compile = async (
+const sdcc = async (
+  file: Uint8Array,
+  filename: string,
+  options: IGBDKCompileOptions
+): Promise<Uint8Array> => {
+  return new Promise((resolve, reject) => {
+    const forked = fork(__dirname + "/lib/forked-child.js");
+    forked.on("message", msg => {
+      switch (msg.type) {
+        case "SUCCESS":
+          resolve(str2arr8(msg.data));
+          break;
+        case "ERROR":
+          reject(msg.error);
+          break;
+        default:
+          reject("Unknown msg type");
+      }
+      forked.kill();
+    });
+    forked.send({
+      type: "SDCC",
+      file: arr82str(file),
+      filename,
+      options
+    });
+  });
+};
+
+const asgbz80 = async (
+  file: Uint8Array,
+  options: IGBDKCompileOptions
+): Promise<Uint8Array> => {
+  return new Promise((resolve, reject) => {
+    const forked = fork(__dirname + "/lib/forked-child.js");
+    forked.on("message", msg => {
+      switch (msg.type) {
+        case "SUCCESS":
+          resolve(str2arr8(msg.data));
+          break;
+        case "ERROR":
+          reject(msg.error);
+          break;
+        default:
+          reject("Unknown msg type");
+      }
+      forked.kill();
+    });
+    forked.send({
+      type: "ASGBZ80",
+      file: arr82str(file),
+      options
+    });
+  });
+};
+
+const linkgbz80 = async (
+  objPaths: string[],
+  romPath: string,
+  options: IGBDKCompileOptions
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const forked = fork(__dirname + "/lib/forked-child.js");
+    forked.on("message", msg => {
+      switch (msg.type) {
+        case "SUCCESS":
+          resolve();
+          break;
+        case "ERROR":
+          reject(msg.error);
+          break;
+        default:
+          reject("Unknown msg type");
+      }
+      forked.kill();
+    });
+    forked.send({
+      type: "LINKGBZ80",
+      objPaths,
+      romPath,
+      options
+    });
+  });
+};
+
+export const compile = async (
   inputPath: string,
   outputPath: string,
   options: IGBDKCompileOptions
@@ -25,7 +127,7 @@ const compile = async (
   await writeFile(outputPath, output);
 };
 
-const compileAsm = async (
+export const compileAsm = async (
   inputPath: string,
   outputPath: string,
   options: IGBDKCompileOptions
@@ -35,4 +137,10 @@ const compileAsm = async (
   await writeFile(outputPath, output);
 };
 
-export { compile, compileAsm, link };
+export const link = async (
+  objPaths: string[],
+  romPath: string,
+  options: IGBDKCompileOptions
+): Promise<void> => {
+  await linkgbz80(objPaths, romPath, options);
+};

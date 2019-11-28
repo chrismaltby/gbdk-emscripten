@@ -5,6 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var glob_1 = __importDefault(require("glob"));
+var util_1 = require("util");
+var encoder = new util_1.TextEncoder();
+var decoder = new util_1.TextDecoder();
 exports.requiredFolders = function (files) {
     return files
         .reduce(function (memo, file) {
@@ -57,8 +60,24 @@ exports.glob = function (path) {
         });
     });
 };
+exports.deleteModule = function (moduleName) {
+    var solvedName = require.resolve(moduleName), nodeModule = require.cache[solvedName];
+    if (nodeModule) {
+        for (var i = 0; i < nodeModule.children.length; i++) {
+            var child = nodeModule.children[i];
+            exports.deleteModule(child.filename);
+        }
+        delete require.cache[solvedName];
+    }
+};
 exports.requireUncached = function (module) {
-    delete require.cache[require.resolve(module)];
+    exports.deleteModule(module);
     return require(module);
 };
 exports.identity = function (x) { return x; };
+exports.arr82str = function (buf) {
+    return decoder.decode(buf);
+};
+exports.str2arr8 = function (str) {
+    return encoder.encode(str);
+};

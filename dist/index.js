@@ -35,38 +35,126 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = require("fs");
-var cwd = process.cwd();
-var glob = require("glob");
-var Path = require("path");
+var child_process_1 = require("child_process");
 var helpers_1 = require("./lib/helpers");
-var linkgbz80_1 = __importDefault(require("./lib/linkgbz80"));
-exports.link = linkgbz80_1.default;
-var preprocess_1 = __importDefault(require("./lib/preprocess"));
-var sdcc_1 = __importDefault(require("./lib/sdcc"));
-var asgbz80_1 = __importDefault(require("./lib/asgbz80"));
-function requireUncached(module) {
-    delete require.cache[require.resolve(module)];
-    return require(module);
-}
-var compile = function (inputPath, outputPath, options) { return __awaiter(void 0, void 0, void 0, function () {
+var preProcess = function (file, filename, options) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/, new Promise(function (resolve, reject) {
+                var forked = child_process_1.fork(__dirname + "/lib/forked-child.js");
+                forked.on("message", function (msg) {
+                    switch (msg.type) {
+                        case "SUCCESS":
+                            resolve(helpers_1.str2arr8(msg.data));
+                            break;
+                        case "ERROR":
+                            reject(msg.error);
+                            break;
+                        default:
+                            reject("Unknown msg type");
+                    }
+                    forked.kill();
+                });
+                forked.send({
+                    type: "PRE-PROCESS",
+                    file: helpers_1.arr82str(file),
+                    filename: filename,
+                    options: options
+                });
+            })];
+    });
+}); };
+var sdcc = function (file, filename, options) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/, new Promise(function (resolve, reject) {
+                var forked = child_process_1.fork(__dirname + "/lib/forked-child.js");
+                forked.on("message", function (msg) {
+                    switch (msg.type) {
+                        case "SUCCESS":
+                            resolve(helpers_1.str2arr8(msg.data));
+                            break;
+                        case "ERROR":
+                            reject(msg.error);
+                            break;
+                        default:
+                            reject("Unknown msg type");
+                    }
+                    forked.kill();
+                });
+                forked.send({
+                    type: "SDCC",
+                    file: helpers_1.arr82str(file),
+                    filename: filename,
+                    options: options
+                });
+            })];
+    });
+}); };
+var asgbz80 = function (file, options) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/, new Promise(function (resolve, reject) {
+                var forked = child_process_1.fork(__dirname + "/lib/forked-child.js");
+                forked.on("message", function (msg) {
+                    switch (msg.type) {
+                        case "SUCCESS":
+                            resolve(helpers_1.str2arr8(msg.data));
+                            break;
+                        case "ERROR":
+                            reject(msg.error);
+                            break;
+                        default:
+                            reject("Unknown msg type");
+                    }
+                    forked.kill();
+                });
+                forked.send({
+                    type: "ASGBZ80",
+                    file: helpers_1.arr82str(file),
+                    options: options
+                });
+            })];
+    });
+}); };
+var linkgbz80 = function (objPaths, romPath, options) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/, new Promise(function (resolve, reject) {
+                var forked = child_process_1.fork(__dirname + "/lib/forked-child.js");
+                forked.on("message", function (msg) {
+                    switch (msg.type) {
+                        case "SUCCESS":
+                            resolve();
+                            break;
+                        case "ERROR":
+                            reject(msg.error);
+                            break;
+                        default:
+                            reject("Unknown msg type");
+                    }
+                    forked.kill();
+                });
+                forked.send({
+                    type: "LINKGBZ80",
+                    objPaths: objPaths,
+                    romPath: romPath,
+                    options: options
+                });
+            })];
+    });
+}); };
+exports.compile = function (inputPath, outputPath, options) { return __awaiter(void 0, void 0, void 0, function () {
     var input, preCompiled, asmData, output;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, helpers_1.readFile(inputPath)];
             case 1:
                 input = _a.sent();
-                return [4 /*yield*/, preprocess_1.default(input, inputPath, options)];
+                return [4 /*yield*/, preProcess(input, inputPath, options)];
             case 2:
                 preCompiled = _a.sent();
-                return [4 /*yield*/, sdcc_1.default(preCompiled, outputPath + ".i", options)];
+                return [4 /*yield*/, sdcc(preCompiled, outputPath + ".i", options)];
             case 3:
                 asmData = _a.sent();
-                return [4 /*yield*/, asgbz80_1.default(asmData, options)];
+                return [4 /*yield*/, asgbz80(asmData, options)];
             case 4:
                 output = _a.sent();
                 return [4 /*yield*/, helpers_1.writeFile(outputPath, output)];
@@ -76,15 +164,14 @@ var compile = function (inputPath, outputPath, options) { return __awaiter(void 
         }
     });
 }); };
-exports.compile = compile;
-var compileAsm = function (inputPath, outputPath, options) { return __awaiter(void 0, void 0, void 0, function () {
+exports.compileAsm = function (inputPath, outputPath, options) { return __awaiter(void 0, void 0, void 0, function () {
     var asmData, output;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, helpers_1.readFile(inputPath)];
             case 1:
                 asmData = _a.sent();
-                return [4 /*yield*/, asgbz80_1.default(asmData, options)];
+                return [4 /*yield*/, asgbz80(asmData, options)];
             case 2:
                 output = _a.sent();
                 return [4 /*yield*/, helpers_1.writeFile(outputPath, output)];
@@ -94,4 +181,13 @@ var compileAsm = function (inputPath, outputPath, options) { return __awaiter(vo
         }
     });
 }); };
-exports.compileAsm = compileAsm;
+exports.link = function (objPaths, romPath, options) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, linkgbz80(objPaths, romPath, options)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
