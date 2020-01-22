@@ -1,0 +1,23 @@
+XL
+H 9 areas 1 global symbols
+M isalpha
+A _CODE size 40 flags 0
+S _isalpha Def0000
+A _DATA size 0 flags 0
+A _OVERLAY size 0 flags 0
+A _ISEG size 0 flags 0
+A _BSEG size 0 flags 0
+A _XSEG size 0 flags 0
+A _GSINIT size 0 flags 0
+A _GSFINAL size 0 flags 0
+A _HOME size 0 flags 0
+T 00 00 DD E5 DD 21 00 00 DD 39 DD 7E 04 EE 80 FE
+R 00 00 00 00
+T 0E 00 E1 DA 1F 00 2E FA DD 7E 04 EE 80 67 7D 94
+R 00 00 00 00 00 04 00 00
+T 1C 00 D2 36 00 DD 7E 04 EE 80 FE C1 DA 3B 00 2E
+R 00 00 00 00 00 03 00 00 00 0D 00 00
+T 2A 00 DA DD 7E 04 EE 80 67 7D 94 DA 3B 00 2E 01
+R 00 00 00 00 00 0C 00 00
+T 38 00 C3 3D 00 2E 00 DD E1 C9
+R 00 00 00 00 00 03 00 00

@@ -1,0 +1,19 @@
+XL
+H 9 areas 1 global symbols
+M strlen
+A _CODE size 0 flags 0
+A _DATA size 0 flags 0
+A _OVERLAY size 0 flags 0
+A _ISEG size 0 flags 0
+A _BSEG size 0 flags 0
+A _XSEG size 0 flags 0
+A _GSINIT size 0 flags 0
+A _GSFINAL size 0 flags 0
+A _HOME size 20 flags 0
+S _strlen Def0000
+T 00 00 DD E5 DD 21 00 00 DD 39 01 00 00 DD 5E 04
+R 00 00 08 00
+T 0E 00 DD 56 05 1A 13 B7 CA 1B 00 03 C3 11 00 69
+R 00 00 08 00 00 09 08 00 00 0D 08 00
+T 1C 00 60 DD E1 C9
+R 00 00 08 00

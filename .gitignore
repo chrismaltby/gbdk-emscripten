@@ -1,5 +1,11 @@
 build/*
-*.o
+gbdk-lib/**/*.o
+gbdk-lib/**/*.lst
+gbdk-lib/**/*.sym
+gbdk-lib/**/*.asm
+gbdk-support/**/*.o
+sdcc/**/*.o
+maccer/**/*.o
 test/out/**/*.o
 test/out/**/*.i
 test/out/**/*.asm
