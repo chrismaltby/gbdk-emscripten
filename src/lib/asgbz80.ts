@@ -1,4 +1,5 @@
 import { requireUncached } from "./helpers";
+import { IGBDKCompileOptions } from "../types";
 
 const awaitReady = async (): Promise<IEmscriptenModule> => {
   return new Promise(function(resolve) {

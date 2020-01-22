@@ -1,5 +1,6 @@
 import { fork } from "child_process";
 import { readFile, writeFile, arr82str, str2arr8 } from "./lib/helpers";
+import { IGBDKCompileOptions } from "./types";
 
 const preProcess = async (
   file: Uint8Array,

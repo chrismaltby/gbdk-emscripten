@@ -8,7 +8,7 @@ import {
   lstat,
   readFile
 } from "./helpers";
-import { GBDK_INCLUDE_PATH } from "../consts";
+import { IGBDKCompileOptions } from "../types";
 
 const awaitReady = async (): Promise<IEmscriptenModule> => {
   return new Promise(function(resolve) {
