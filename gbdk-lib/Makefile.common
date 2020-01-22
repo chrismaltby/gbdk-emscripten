@@ -33,7 +33,7 @@ CLEANSPEC = *.o *.cdb *.sym *.lst *~ *.asm
 CFLAGS = -I$(TOPDIR)/include --model-$(MODEL)
 CFLAGS += -m$(PORT) -DGBDK=1
 CC = 	$(SCC)
-BUILD = $(TOPDIR)/build/$(MODEL)/$(ASM)/$(THIS)
+BUILD = $(TOPDIR)/../dist/gbdk/lib/$(MODEL)/$(ASM)/$(THIS)
 LIB = 	$(BUILD)/$(THIS).lib
 
 OBJ = $(CSRC:%.c=$(BUILD)/%.o) $(ASSRC:%.s=$(BUILD)/%.o)
